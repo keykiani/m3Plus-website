@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Custom Properties ─────────────────────────────────────────────── */
+:root {
+  --font-manrope: 'Manrope', sans-serif;
+}
+
+/* ─── Base Reset ─────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-body text-neutral-900 bg-neutral-100;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold;
+  }
+}
+
+/* ─── Utility Classes ────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Max-width container */
+  .container-content {
+    @apply max-w-content mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Section vertical padding */
+  .section-pad {
+    @apply py-16 md:py-24;
+  }
+
+  /* Underline accent on M3+ brand name */
+  .brand-underline {
+    text-decoration: underline;
+    text-decoration-color: theme('colors.primary');
+    text-underline-offset: 4px;
+  }
+
+  /* Decorative blue quote marks used in testimonials */
+  .quote-mark {
+    @apply text-primary font-heading font-bold;
+    font-size: 5rem;
+    line-height: 1;
+  }
+}
+
+/* ─── Component Defaults ─────────────────────────────────────────────────── */
+@layer components {
+  /* Prose for markdown-rendered content */
+  .prose-m3 {
+    @apply text-neutral-700 leading-relaxed;
+  }
+  .prose-m3 p {
+    @apply mb-4;
+  }
+  .prose-m3 ul {
+    @apply list-disc list-inside mb-4 space-y-1;
+  }
+  .prose-m3 strong {
+    @apply font-bold text-neutral-900;
+  }
+}
