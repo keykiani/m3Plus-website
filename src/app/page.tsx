@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { getMarkdownFile } from "@/lib/markdown";
-import { getUpcomingEvents, getTestimonials } from "@/lib/markdown";
+import { getMarkdownFile, getTestimonials } from "@/lib/markdown";
+import { siteConfig } from "@/lib/siteConfig";
 import HeroSection from "@/components/sections/HeroSection";
-import EventPreviewCard from "@/components/sections/EventPreviewCard";
+import LumaEventSection from "@/components/sections/LumaEventSection";
 import TestimonialBlock from "@/components/sections/TestimonialBlock";
 import JourneyCards from "@/components/sections/JourneyCards";
 import MissionCTA from "@/components/sections/MissionCTA";
@@ -14,18 +14,14 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  // Load content from Markdown files
-  const [{ data: home }, upcomingEvents, testimonials] = await Promise.all([
+  const [{ data: home }, testimonials] = await Promise.all([
     getMarkdownFile("pages/home.md"),
-    getUpcomingEvents(),
     getTestimonials(),
   ]);
 
-  const nextEvent = upcomingEvents[0] ?? null;
   const testimonial1 = testimonials[0] ?? null;
   const testimonial2 = testimonials[1] ?? null;
 
-  // Type-cast frontmatter fields
   const h = home as {
     heroHeadline: string;
     heroSubtext: string;
@@ -54,13 +50,11 @@ export default async function HomePage() {
         imageSrc="/images/hero.jpg"
       />
 
-      {/* ── 2. Next Event Preview ────────────────────────────────────── */}
-      {nextEvent && (
-        <EventPreviewCard
-          event={nextEvent}
-          sectionLabel={h.nextEventLabel}
-        />
-      )}
+      {/* ── 2. Luma Event Embed — auto-updates when calendar URL is set ── */}
+      <LumaEventSection
+        embedUrl={siteConfig.lumaEmbedUrl}
+        sectionLabel={h.nextEventLabel}
+      />
 
       {/* ── 3. First Testimonial ─────────────────────────────────────── */}
       {testimonial1 && (
