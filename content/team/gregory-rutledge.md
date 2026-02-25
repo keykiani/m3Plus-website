@@ -1,7 +1,7 @@
 ---
 name: "Gregory Rutledge"
 title: "Mentorship Program Lead"
-bio: "Gregory oversees the M3+ mentorship matching program and develops the frameworks that help mentors and mentees get the most out of their connections."
+bio: "Gregory is the welcoming voice of M3+, nurturing relationships across the community and making sure every member feels seen, supported, and connected to opportunities."
 photo: "/images/team/gregory-rutledge.jpg"
-order: 3
+order: 2
 ---

@@ -1,7 +1,7 @@
 ---
 name: "Christian Knebel"
 title: "Events Lead"
-bio: "Christian manages the planning and execution of M3+'s monthly events, ensuring every gathering is engaging, inclusive, and memorable for designers at all levels."
+bio: "Christian oversees the M3+ mentorship matching program and develops the frameworks that help mentors and mentees get the most out of their connections."
 photo: "/images/team/christian-knebel.jpg"
-order: 2
+order: 3
 ---

@@ -1,7 +1,7 @@
 ---
 name: "Cozette Kosary"
 title: "Community Manager"
-bio: "Cozette is the welcoming voice of M3+, nurturing relationships across the community and making sure every member feels seen, supported, and connected to opportunities."
+bio: "Cozette manages the planning and execution of M3+'s monthly events, ensuring every gathering is engaging, inclusive, and memorable for designers at all levels. She brings years of design leadership and community-building experience to M3+. "
 photo: "/images/team/cozette-kosary.jpg"
 order: 5
 ---
