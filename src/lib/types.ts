@@ -17,6 +17,22 @@ export interface SiteConfig {
     twitter?: string;
   };
   formspreeId: string; // Formspree endpoint ID for contact form
+  /**
+   * Luma embed URL for the homepage "Next Event" section.
+   *
+   * Use your CALENDAR embed URL (not a single event URL) so it auto-updates
+   * every time you post a new event in Luma:
+   *
+   *   How to get it:
+   *   1. Go to your Luma calendar → Settings → Share → Embed
+   *   2. Copy the embed src URL — it looks like:
+   *      https://lu.ma/embed/calendar/CAL_xxxxxxxxxxxxxxxx/simple
+   *   3. Paste it here.
+   *
+   * Until you switch to the calendar URL, the single-event URL below works
+   * as a placeholder (it just won't auto-update).
+   */
+  lumaEmbedUrl: string;
 }
 
 // ─── Events ───────────────────────────────────────────────────────────────
