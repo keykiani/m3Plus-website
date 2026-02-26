@@ -2,13 +2,14 @@
 
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { Send } from "lucide-react";
+import { Send, CheckCircle2, AlertCircle } from "lucide-react";
 import Button from "@/components/ui/Button";
+import { Input, Textarea, InputWrapper } from "@/components/ui/Input";
 import { siteConfig } from "@/lib/siteConfig";
 
 interface ContactFormData {
-  name: string;
-  email: string;
+  name:    string;
+  email:   string;
   subject: string;
   message: string;
 }
@@ -26,84 +27,66 @@ export default function ContactForm() {
   const onSubmit = async (data: ContactFormData) => {
     setStatus("sending");
     try {
-      const res = await fetch(`https://formspree.io/f/${siteConfig.formspreeId}`, {
-        method: "POST",
+      const endpoint = siteConfig.formspreeId.startsWith("http")
+        ? siteConfig.formspreeId
+        : `https://formspree.io/f/${siteConfig.formspreeId}`;
+
+      const res = await fetch(endpoint, {
+        method:  "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(data),
+        body:    JSON.stringify(data),
       });
-      if (res.ok) {
-        setStatus("success");
-        reset();
-      } else {
-        setStatus("error");
-      }
+
+      if (res.ok) { setStatus("success"); reset(); }
+      else          setStatus("error");
     } catch {
       setStatus("error");
     }
   };
 
-  const inputClass =
-    "w-full px-4 py-3 rounded-btn border border-neutral-200 bg-white font-body text-neutral-900 placeholder:text-neutral-700/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition";
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="footer-name" className="sr-only">Name</label>
-          <input
+        <InputWrapper label="Name" htmlFor="footer-name" error={errors.name?.message} srOnly>
+          <Input
             id="footer-name"
             placeholder="Name"
-            className={inputClass}
-            aria-invalid={!!errors.name}
+            error={errors.name?.message}
             {...register("name", { required: "Name is required" })}
           />
-          {errors.name && (
-            <p className="text-error text-xs mt-1">{errors.name.message}</p>
-          )}
-        </div>
-        <div>
-          <label htmlFor="footer-email" className="sr-only">Email address</label>
-          <input
+        </InputWrapper>
+
+        <InputWrapper label="Email" htmlFor="footer-email" error={errors.email?.message} srOnly>
+          <Input
             id="footer-email"
             type="email"
             placeholder="Email Address"
-            className={inputClass}
-            aria-invalid={!!errors.email}
+            error={errors.email?.message}
             {...register("email", {
               required: "Email is required",
               pattern: { value: /\S+@\S+\.\S+/, message: "Enter a valid email" },
             })}
           />
-          {errors.email && (
-            <p className="text-error text-xs mt-1">{errors.email.message}</p>
-          )}
-        </div>
+        </InputWrapper>
       </div>
 
-      <div>
-        <label htmlFor="footer-subject" className="sr-only">Subject</label>
-        <input
+      <InputWrapper label="Subject" htmlFor="footer-subject" srOnly>
+        <Input
           id="footer-subject"
           placeholder="Subject"
-          className={inputClass}
           {...register("subject", { required: "Subject is required" })}
         />
-      </div>
+      </InputWrapper>
 
-      <div>
-        <label htmlFor="footer-message" className="sr-only">Message</label>
-        <textarea
+      <InputWrapper label="Message" htmlFor="footer-message" error={errors.message?.message} srOnly>
+        <Textarea
           id="footer-message"
           placeholder="Message"
           rows={4}
-          className={inputClass}
-          aria-invalid={!!errors.message}
+          error={errors.message?.message}
           {...register("message", { required: "Message is required" })}
         />
-        {errors.message && (
-          <p className="text-error text-xs mt-1">{errors.message.message}</p>
-        )}
-      </div>
+      </InputWrapper>
 
       <Button
         type="submit"
@@ -111,17 +94,19 @@ export default function ContactForm() {
         disabled={status === "sending"}
         className="gap-2"
       >
-        <Send size={16} />
-        {status === "sending" ? "Sending..." : "Send message"}
+        <Send size={16} aria-hidden="true" />
+        {status === "sending" ? "Sending…" : "Send message"}
       </Button>
 
       {status === "success" && (
-        <p className="text-success font-body text-sm">
+        <p className="flex items-center gap-2 text-success font-body text-sm">
+          <CheckCircle2 size={16} aria-hidden="true" />
           Message sent! We&apos;ll get back to you soon.
         </p>
       )}
       {status === "error" && (
-        <p className="text-error font-body text-sm">
+        <p className="flex items-center gap-2 text-error font-body text-sm">
+          <AlertCircle size={16} aria-hidden="true" />
           Something went wrong. Please try again or email us directly.
         </p>
       )}

@@ -41,7 +41,7 @@
   /* Underline accent on M3+ brand name */
   .brand-underline {
     text-decoration: underline;
-    text-decoration-color: theme('colors.primary');
+    text-decoration-color: theme('colors.primary.DEFAULT');
     text-underline-offset: 4px;
   }
 
