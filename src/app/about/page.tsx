@@ -1,13 +1,22 @@
 import type { Metadata } from "next";
 import { getMarkdownFile, getTeamMembers, getTestimonials } from "@/lib/markdown";
 import Image from "next/image";
+import {
+  CheckCircle2,
+  Shield,
+  Target,
+  Users,
+} from "lucide-react";
 import Button from "@/components/ui/Button";
 import SectionHeader from "@/components/ui/SectionHeader";
+import Avatar from "@/components/ui/Avatar";
+import Accordion from "@/components/ui/Accordion";
 import TestimonialBlock from "@/components/sections/TestimonialBlock";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "Learn about M3+ Mutual Mentoring — our mission, values, team, and the community we're building.",
+  description:
+    "Learn about M3+ Mutual Mentoring — our mission, values, team, and the community we're building.",
 };
 
 export default async function AboutPage() {
@@ -18,33 +27,41 @@ export default async function AboutPage() {
   ]);
 
   const a = about as {
-    heroLabel: string;
-    heroHeadline: string;
-    heroSubtext: string;
-    whatIsHeadline: string;
-    whatIsBody: string;
-    whatIsImage: string;
-    whatIsImageAlt: string;
-    whatIsCtaLabel: string;
-    whatIsCtaHref: string;
-    missionImage: string;
+    heroLabel:       string;
+    heroHeadline:    string;
+    heroSubtext:     string;
+    whatIsHeadline:  string;
+    whatIsBody:      string;
+    whatIsImage:     string;
+    whatIsImageAlt:  string;
+    whatIsCtaLabel:  string;
+    whatIsCtaHref:   string;
+    missionImage:    string;
     missionImageAlt: string;
     missionHeadline: string;
-    missionBody: string;
-    values: { text: string; style: string }[];
-    faqHeadline: string;
-    faqs: { question: string; answer: string }[];
+    missionBody:     string;
+    values:          { text: string; style: string }[];
+    faqHeadline:     string;
+    faqs:            { question: string; answer: string }[];
   };
 
   const testimonial1 = testimonials[0] ?? null;
   const testimonial2 = testimonials[1] ?? null;
 
-  // Value card color mapping
-  const valueStyles: Record<string, string> = {
-    yellow: "bg-yellow border-neutral-900",
-    green: "bg-success/20 border-neutral-900",
-    outline: "bg-white border-2 border-neutral-900",
+  // Map value card style names → Tailwind classes (Figma value cards)
+  const valueCardStyles: Record<string, string> = {
+    yellow:  "bg-secondary        border border-secondary-dark/30",
+    green:   "bg-success-subtle   border border-success/20",
+    outline: "bg-white            border-2 border-neutral-200",
   };
+
+  // Icon paired to each value by index (Lucide icons)
+  const valueIcons = [
+    <Users key="users"         size={22} className="text-foreground" aria-hidden="true" />,
+    <Shield key="shield"       size={22} className="text-foreground" aria-hidden="true" />,
+    <Target key="target"       size={22} className="text-foreground" aria-hidden="true" />,
+    <CheckCircle2 key="check"  size={22} className="text-success"    aria-hidden="true" />,
+  ];
 
   return (
     <>
@@ -54,10 +71,10 @@ export default async function AboutPage() {
           <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary mb-3">
             {a.heroLabel}
           </p>
-          <h1 className="text-4xl md:text-5xl font-heading font-bold text-neutral-900 leading-tight max-w-2xl mb-4">
+          <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground leading-tight max-w-2xl mb-4">
             {a.heroHeadline}
           </h1>
-          <p className="text-xl text-neutral-700 font-body leading-relaxed max-w-xl">
+          <p className="text-xl text-neutral font-body leading-relaxed max-w-xl">
             {a.heroSubtext}
           </p>
         </div>
@@ -68,7 +85,7 @@ export default async function AboutPage() {
         <div className="container-content grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <SectionHeader title={a.whatIsHeadline} className="mb-6" />
-            <p className="text-neutral-700 font-body text-lg leading-relaxed mb-8">
+            <p className="text-neutral font-body text-lg leading-relaxed mb-8">
               {a.whatIsBody}
             </p>
             <Button variant="primary" href={a.whatIsCtaHref}>
@@ -77,7 +94,13 @@ export default async function AboutPage() {
           </div>
           <div className="relative aspect-[4/3] rounded-card overflow-hidden bg-sky shadow-card">
             {a.whatIsImage && (
-              <Image src={a.whatIsImage} alt={a.whatIsImageAlt} fill className="object-cover" sizes="50vw" />
+              <Image
+                src={a.whatIsImage}
+                alt={a.whatIsImageAlt}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
             )}
           </div>
         </div>
@@ -91,17 +114,23 @@ export default async function AboutPage() {
         <div className="container-content grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="relative aspect-[4/3] rounded-card overflow-hidden bg-sky shadow-card">
             {a.missionImage && (
-              <Image src={a.missionImage} alt={a.missionImageAlt} fill className="object-cover" sizes="50vw" />
+              <Image
+                src={a.missionImage}
+                alt={a.missionImageAlt}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
             )}
           </div>
           <div>
             <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary mb-2">
               Our Mission
             </p>
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-neutral-900 leading-tight mb-6">
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground leading-tight mb-6">
               {a.missionHeadline}
             </h2>
-            <p className="text-neutral-700 font-body text-lg leading-relaxed">
+            <p className="text-neutral font-body text-lg leading-relaxed">
               {a.missionBody}
             </p>
           </div>
@@ -119,9 +148,10 @@ export default async function AboutPage() {
             {a.values?.map((v, i) => (
               <div
                 key={i}
-                className={`rounded-card p-8 border ${valueStyles[v.style] ?? "bg-white border-neutral-200"}`}
+                className={`rounded-card p-8 flex items-start gap-4 ${valueCardStyles[v.style] ?? "bg-white border border-neutral-200"}`}
               >
-                <p className="font-body text-lg text-neutral-900 leading-relaxed">
+                <span className="mt-0.5 shrink-0">{valueIcons[i % valueIcons.length]}</span>
+                <p className="font-body text-lg text-foreground leading-relaxed">
                   {v.text}
                 </p>
               </div>
@@ -136,9 +166,13 @@ export default async function AboutPage() {
           <SectionHeader title="Our Team" className="mb-10" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {teamMembers.map((member) => (
-              <article key={member.slug} className="bg-white rounded-card border border-neutral-200 overflow-hidden shadow-card hover:shadow-card-hover transition-shadow">
-                <div className="relative aspect-square bg-sky">
-                  {member.photo && (
+              <article
+                key={member.slug}
+                className="bg-white rounded-card border border-neutral-200 overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300"
+              >
+                {/* Photo area — Avatar fills if no image */}
+                <div className="relative aspect-square bg-primary-subtle flex items-center justify-center">
+                  {member.photo ? (
                     <Image
                       src={member.photo}
                       alt={member.name}
@@ -146,12 +180,21 @@ export default async function AboutPage() {
                       className="object-cover"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
+                  ) : (
+                    <Avatar name={member.name} size="xl" />
                   )}
                 </div>
+
                 <div className="p-5">
-                  <h3 className="font-heading font-bold text-lg text-neutral-900">{member.name}</h3>
-                  <p className="text-primary font-body text-sm font-semibold mb-3">{member.title}</p>
-                  <p className="text-neutral-700 font-body text-sm leading-relaxed">{member.bio}</p>
+                  <h3 className="font-heading font-bold text-lg text-foreground mb-0.5">
+                    {member.name}
+                  </h3>
+                  <p className="text-primary font-body text-sm font-semibold mb-3">
+                    {member.title}
+                  </p>
+                  <p className="text-neutral font-body text-sm leading-relaxed">
+                    {member.bio}
+                  </p>
                 </div>
               </article>
             ))}
@@ -159,25 +202,16 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* ── FAQ ───────────────────────────────────────────────────── */}
+      {/* ── FAQ ── Figma Accordion (blue header + ChevronDown) ────── */}
       <section className="bg-neutral-100 section-pad">
         <div className="container-content max-w-3xl mx-auto">
           <SectionHeader title={a.faqHeadline} className="mb-10" />
-          <div className="divide-y divide-neutral-200">
-            {a.faqs?.map((faq, i) => (
-              <details key={i} className="group py-5">
-                <summary className="flex justify-between items-center cursor-pointer list-none font-heading font-bold text-lg text-neutral-900 gap-4">
-                  {faq.question}
-                  <span className="shrink-0 text-primary transition-transform duration-200 group-open:rotate-45 text-2xl leading-none">
-                    +
-                  </span>
-                </summary>
-                <p className="mt-4 text-neutral-700 font-body leading-relaxed">
-                  {faq.answer}
-                </p>
-              </details>
-            ))}
-          </div>
+          {a.faqs && (
+            <Accordion
+              items={a.faqs}
+              variant="bold"
+            />
+          )}
         </div>
       </section>
     </>
