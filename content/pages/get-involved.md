@@ -7,7 +7,7 @@ platforms:
   - name: "LinkedIn"
     description: "Follow us for design insights, event announcements, and community highlights."
     buttonLabel: "Follow Us"
-    url: "https://linkedin.com/company/m3plus"
+    url: "https://www.linkedin.com/company/m3plusmentoring"
   - name: "Slack"
     description: "Join our Slack workspace for ongoing conversations, job postings, and peer support."
     buttonLabel: "Join Us"
