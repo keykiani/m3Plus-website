@@ -1,7 +1,7 @@
 ---
 name: "Key Kiani"
-title: "Founder & Executive Director"
+title: "Treasurer"
 bio: "Key With a background in UX and product design, Key has grown M3+ into a thriving community of designers across the Dallas area and beyond."
-photo: "/images/team/key-kiani.jpg"
+photo: "/images/team/key-kiani.png"
 order: 4
 ---

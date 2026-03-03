@@ -1,7 +1,7 @@
 ---
 name: "Melody Ramey"
-title: "Community Director"
+title: "Founder"
 bio: "Melody founded M3+ with a vision to make mentorship mutual and community-led. She is passionate about making the design profession more welcoming and connected for everyone."
-photo: "/images/team/melody-ramey.jpg"
+photo: "/images/team/melody-ramey.png"
 order: 1
 ---
