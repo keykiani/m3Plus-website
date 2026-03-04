@@ -154,11 +154,12 @@ export default async function EventsPage() {
                           {event.description}
                         </p>
 
-                        {/* Archive action buttons — use Button component */}
+                        {/* Archive action buttons — link to Google Drive if set, else internal page */}
                         <div className="flex flex-wrap gap-3">
                           <Button
                             variant="secondary"
-                            href={`/events/${event.slug}`}
+                            href={event.resourcesDriveUrl || `/events/${event.slug}`}
+                            external={!!event.resourcesDriveUrl}
                             size="sm"
                           >
                             <BookOpen size={14} aria-hidden="true" />
@@ -166,7 +167,8 @@ export default async function EventsPage() {
                           </Button>
                           <Button
                             variant="outline"
-                            href={`/events/${event.slug}/photos`}
+                            href={event.photosDriveUrl || `/events/${event.slug}/photos`}
+                            external={!!event.photosDriveUrl}
                             size="sm"
                           >
                             <Images size={14} aria-hidden="true" />

@@ -6,6 +6,8 @@ description: "A deep dive into practical AI experience design — from prompt en
 image: "/images/events/ai-experience-design.jpg"
 isUpcoming: false
 year: 2025
+resourcesDriveUrl: ""   # Paste Google Drive "Anyone with link" folder URL here
+photosDriveUrl: ""      # Paste Google Drive "Anyone with link" folder URL here
 pdfUrl: "/resources/ai-experience-design.pdf"
 slideshowUrl: "/images/events/ai-experience-design-slide.jpg"
 resourceLinks:

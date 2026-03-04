@@ -6,6 +6,8 @@ description: "Exploring the six key dimensions of a well-rounded product designe
 image: "/images/events/full-stack-designer.jpg"
 isUpcoming: false
 year: 2025
+resourcesDriveUrl: ""   # Paste Google Drive "Anyone with link" folder URL here
+photosDriveUrl: ""      # Paste Google Drive "Anyone with link" folder URL here
 pdfUrl: "/resources/full-stack-designer.pdf"
 slideshowUrl: "/images/events/full-stack-designer-slide.jpg"
 resourceLinks:
