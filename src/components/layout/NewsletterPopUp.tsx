@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import Button from "@/components/ui/Button";
+import NewsletterForm from "@/components/forms/NewsletterForm";
 
 const STORAGE_KEY = "m3plus_newsletter_dismissed";
 /** Show popup after this delay (ms) on first visit */
@@ -11,8 +11,7 @@ const SHOW_DELAY_MS = 4000;
 
 export default function NewsletterPopUp() {
   const [visible, setVisible] = useState(false);
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     // Only show if the user hasn't dismissed it before
@@ -28,15 +27,8 @@ export default function NewsletterPopUp() {
     localStorage.setItem(STORAGE_KEY, "true");
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    setStatus("sending");
-
-    // Replace with your actual newsletter signup endpoint (Mailchimp, ConvertKit, etc.)
-    // For now, simulates a successful signup
-    await new Promise((r) => setTimeout(r, 800));
-    setStatus("success");
+  const handleSuccess = () => {
+    setSuccess(true);
     setTimeout(dismiss, 2000);
   };
 
@@ -77,7 +69,7 @@ export default function NewsletterPopUp() {
                 <X size={20} />
               </button>
 
-              {status !== "success" ? (
+              {!success ? (
                 <>
                   <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary mb-2">
                     Stay Connected
@@ -93,28 +85,7 @@ export default function NewsletterPopUp() {
                     designers at every level. No spam, ever.
                   </p>
 
-                  <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-                    <label htmlFor="popup-email" className="sr-only">
-                      Email address
-                    </label>
-                    <input
-                      id="popup-email"
-                      type="email"
-                      required
-                      placeholder="Enter your email address"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-3 rounded-btn border border-neutral-200 bg-white font-body text-neutral-900 placeholder:text-neutral-700/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition"
-                    />
-                    <Button
-                      type="submit"
-                      variant="secondary"
-                      disabled={status === "sending"}
-                      className="w-full justify-center"
-                    >
-                      {status === "sending" ? "Subscribing..." : "Subscribe"}
-                    </Button>
-                  </form>
+                  <NewsletterForm onSuccess={handleSuccess} />
 
                   <button
                     onClick={dismiss}
