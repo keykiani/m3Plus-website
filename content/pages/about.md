@@ -1,7 +1,7 @@
 ---
 heroLabel: "About Us"
 heroHeadline: "Creating Deeper Connections within the Design Community"
-heroSubtext: "M3+ is where designers come to grow together — regardless of where they are in their career."
+heroSubtext: "Bridging the gap between senior and junior members by creating deeper connections within the SPD Design community."
 
 whatIsHeadline: "What is M3+?"
 whatIsBody: "M3+ (Mutual Mentorship Plus) bridges the gap between traditional networking and mentorship. Unlike one-directional mentoring, M3+ creates a community where designers at every level exchange knowledge, support one another's goals, and build lasting professional relationships. Whether you're just starting out or leading a team, there's a place for you here."
@@ -25,7 +25,7 @@ values:
   - text: "A community of #goal-getters."
     style: "green"
 
-faqHeadline: "Frequently Asked Questions"
+faqHeadline: "FAQ"
 faqs:
   - question: "How does mutual mentorship work?"
     answer: "M3+ pairs designers across experience levels so that both parties can teach and learn from each other. Senior designers gain fresh perspectives while newer designers get guidance — everyone benefits."

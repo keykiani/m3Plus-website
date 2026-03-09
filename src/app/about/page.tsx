@@ -66,7 +66,7 @@ export default async function AboutPage() {
   return (
     <>
       {/* ── Hero ──────────────────────────────────────────────────── */}
-      <section className="bg-sky section-pad">
+      <section className="bg-sky grid-bg section-pad">
         <div className="container-content">
           <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary mb-3">
             {a.heroLabel}
@@ -141,9 +141,11 @@ export default async function AboutPage() {
       {testimonial2 && <TestimonialBlock testimonial={testimonial2} bgVariant="sky" />}
 
       {/* ── Our Values ────────────────────────────────────────────── */}
-      <section className="bg-neutral-100 section-pad">
+      <section className="bg-navy section-pad">
         <div className="container-content">
-          <SectionHeader title="Our Values" centered className="mb-10" />
+          <h2 className="text-3xl md:text-4xl font-heading font-bold text-white uppercase tracking-widest text-center mb-10">
+            Our Values
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {a.values?.map((v, i) => (
               <div
@@ -164,7 +166,7 @@ export default async function AboutPage() {
       <section className="bg-cream section-pad">
         <div className="container-content">
           <SectionHeader title="Our Team" className="mb-10" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {teamMembers.map((member) => (
               <article
                 key={member.slug}
@@ -178,7 +180,7 @@ export default async function AboutPage() {
                       alt={member.name}
                       fill
                       className="object-cover"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, 50vw"
                     />
                   ) : (
                     <Avatar name={member.name} size="xl" />

@@ -29,13 +29,15 @@ export default async function HomePage() {
     heroCtaHref: string;
     heroImageAlt: string;
     nextEventLabel: string;
+    nextEventSubtext: string;
     missionLabel: string;
     missionHeadline: string;
     missionBody: string;
     missionCtaLabel: string;
     missionCtaHref: string;
     journeyHeadline: string;
-    journeyCards: { title: string; image: string; imageAlt: string }[];
+    journeySubtitle: string;
+    journeyCards: { title: string; description: string; image: string; imageAlt: string }[];
   };
 
   return (
@@ -54,6 +56,7 @@ export default async function HomePage() {
       <LumaEventSection
         embedUrl={siteConfig.lumaEmbedUrl}
         sectionLabel={h.nextEventLabel}
+        sectionSubtext={h.nextEventSubtext}
       />
 
       {/* ── 3. First Testimonial ─────────────────────────────────────── */}
@@ -64,12 +67,13 @@ export default async function HomePage() {
       {/* ── 4. How M3+ Supports Your Journey (image cards) ───────────── */}
       <JourneyCards
         headline={h.journeyHeadline}
+        subtitle={h.journeySubtitle}
         cards={h.journeyCards}
       />
 
       {/* ── 5. Second Testimonial ────────────────────────────────────── */}
       {testimonial2 && (
-        <TestimonialBlock testimonial={testimonial2} bgVariant="sky" />
+        <TestimonialBlock testimonial={testimonial2} bgVariant="sky" reversed />
       )}
 
       {/* ── 6. Mission CTA ───────────────────────────────────────────── */}
