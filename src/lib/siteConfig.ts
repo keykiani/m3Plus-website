@@ -12,7 +12,7 @@ export const siteConfig: SiteConfig = {
     slack: "https://join.slack.com/t/m3plus/shared_invite/zt-3qyjg994i-auPL8RoIY3ilA_ia2mO5Aw",                // Update with real URL
     instagram: "https://instagram.com/m3plus",        // Update with real URL
   },
-  lumaEmbedUrl: "https://lu.ma/embed/event/evt-60waSBmcS6OG9hI/simple",
+  lumaEmbedUrl: "https://luma.com/embed/calendar/cal-eA49a38rdSDAFZD/events",
   formspreeId: "https://formspree.io/f/meelpojy", // Replace after creating Formspree account at formspree.io
 };
 
