@@ -20,9 +20,9 @@ const config: Config = {
 
         // ── Secondary Yellow ──────────────────────────────────────────────
         secondary: {
-          DEFAULT: "#FFED89",
-          dark:    "#E6D470",
-          subtle:  "#FFFDF0",
+          DEFAULT: "#F8F5E8",
+          dark:    "#F4E591",
+          subtle:  "#FFFEF7",
         },
 
         // ── Tertiary (Dark Navy) ──────────────────────────────────────────
@@ -76,7 +76,7 @@ const config: Config = {
         cream:         "#F5F0DC",   // hero / testimonial sections
         sky:           "#E3F0FC",   // updated → matches primary.subtle
         navy:          "#122849",   // = tertiary.DEFAULT
-        yellow:        "#FFED89",   // = secondary.DEFAULT
+        yellow:        "#F8F5E8",   // = secondary.DEFAULT
         coral:         "#E86048",   // event card thumbnails
         "blue-flower": "#4A8FD5",   // decorative accents
 
@@ -110,9 +110,12 @@ const config: Config = {
 
       // ─── Box Shadows ──────────────────────────────────────────────────────
       boxShadow: {
-        card:         "0 2px 8px rgba(0,0,0,0.08)",
-        "card-hover": "0 8px 24px rgba(0,0,0,0.14)",
-        input:        "0 1px 2px rgba(0,0,0,0.04)",
+        card:             "0 2px 8px rgba(0,0,0,0.08)",
+        "card-hover":     "0 8px 24px rgba(0,0,0,0.14)",
+        input:            "0 1px 2px rgba(0,0,0,0.04)",
+        // Hard (no-blur) drop shadows for button hover — neo-brutalist style
+        "btn-hard":       "4px 4px 0px #122849",
+        "btn-hard-danger":"4px 4px 0px #991B1B",
       },
 
       // ─── Keyframes & Animations ───────────────────────────────────────────

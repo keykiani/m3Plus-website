@@ -28,7 +28,7 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full bg-neutral-100 transition-shadow duration-200",
+        "sticky top-0 z-50 w-full bg-sky transition-shadow duration-200",
         scrolled && "shadow-md"
       )}
     >
@@ -72,8 +72,8 @@ export default function Navbar() {
 
         {/* ── CTA Button ────────────────────────────────────────────── */}
         <div className="hidden md:block">
-          <Button variant="secondary" size="sm" href="/get-involved#newsletter">
-            Join Our Newsletter
+          <Button variant="secondary" size="sm" href="/get-involved">
+            Get Involved
           </Button>
         </div>
 
@@ -96,7 +96,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden bg-neutral-100 border-t border-neutral-200 px-4 pb-6"
+            className="md:hidden bg-sky border-t border-neutral-200 px-4 pb-6"
           >
             <ul className="flex flex-col gap-4 pt-4" role="list">
               {navLinks.map((link) => {
@@ -118,10 +118,10 @@ export default function Navbar() {
               <li className="pt-2">
                 <Button
                   variant="secondary"
-                  href="/get-involved#newsletter"
+                  href="/get-involved"
                   className="w-full justify-center"
                 >
-                  Join Our Newsletter
+                  Get Involved
                 </Button>
               </li>
             </ul>

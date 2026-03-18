@@ -5,37 +5,36 @@
  *
  * Embeds a Luma event (or calendar) iframe in the homepage "Next Event" slot.
  *
- * AUTO-UPDATING: To make this section update automatically every month when
- * a new event is posted, replace the URL in src/lib/siteConfig.ts with your
- * Luma CALENDAR embed URL (not a single-event URL).
- *
- * Calendar embed URL format:
+ * AUTO-UPDATING: Replace siteConfig.lumaEmbedUrl with your Luma CALENDAR embed
+ * URL so this section updates automatically each month:
  *   https://lu.ma/embed/calendar/cal-xxxxxxxxxxxxxxxx/simple
- *
  * Find it in Luma → your calendar → Settings → Share → Embed.
  */
 
 interface LumaEventSectionProps {
   embedUrl: string;
   sectionLabel?: string;
+  sectionSubtext?: string;
 }
 
 export default function LumaEventSection({
   embedUrl,
   sectionLabel = "Don't Miss Our Next Event!",
+  sectionSubtext = "Join fellow designers for learning, networking, and community building.",
 }: LumaEventSectionProps) {
   return (
-    <section className="bg-neutral-100 section-pad" aria-label="Upcoming event">
+    <section className="bg-neutral-100 section-pad" aria-labelledby="luma-heading">
       <div className="container-content">
-        <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary mb-6">
+        <h2
+          id="luma-heading"
+          className="text-3xl md:text-4xl font-heading font-bold text-neutral-900 leading-tight mb-3"
+        >
           {sectionLabel}
+        </h2>
+        <p className="text-lg text-neutral-700 font-body mb-8 max-w-xl">
+          {sectionSubtext}
         </p>
 
-        {/*
-          Responsive iframe wrapper.
-          The iframe expands to fill the container width up to 760px.
-          Height is fixed at 450px — Luma's "simple" embed is a fixed-height card.
-        */}
         <div className="w-full max-w-[760px]">
           <iframe
             src={embedUrl}
@@ -44,7 +43,7 @@ export default function LumaEventSection({
             frameBorder="0"
             style={{
               border: "1px solid #bfcbda88",
-              borderRadius: "12px",       // matches M3+ --radius-card
+              borderRadius: "12px",
               display: "block",
               width: "100%",
             }}
@@ -55,11 +54,10 @@ export default function LumaEventSection({
           />
         </div>
 
-        {/* Fallback link for users who can't see the embed */}
         <p className="mt-4 text-sm text-neutral-700 font-body">
           Can&apos;t see the embed?{" "}
           <a
-            href="https://lu.ma/m3plus"   /* ← update with your Luma calendar public URL */
+            href="https://lu.ma/m3plus"
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary underline underline-offset-2 hover:text-tertiary-dark transition-colors"

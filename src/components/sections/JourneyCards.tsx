@@ -3,22 +3,25 @@ import SectionHeader from "@/components/ui/SectionHeader";
 
 interface JourneyCard {
   title: string;
+  description?: string;
   image: string;
   imageAlt: string;
 }
 
 interface JourneyCardsProps {
   headline: string;
+  subtitle?: string;
   cards: JourneyCard[];
 }
 
-export default function JourneyCards({ headline, cards }: JourneyCardsProps) {
+export default function JourneyCards({ headline, subtitle, cards }: JourneyCardsProps) {
   return (
     <section className="bg-neutral-100 section-pad" aria-labelledby="journey-heading">
       <div className="container-content">
         <SectionHeader
           id="journey-heading"
           title={headline}
+          subtitle={subtitle}
           className="mb-10"
         />
 
@@ -43,15 +46,20 @@ export default function JourneyCards({ headline, cards }: JourneyCardsProps) {
 
               {/* Dark gradient overlay */}
               <div
-                className="absolute inset-0 bg-gradient-to-t from-neutral-900/80 via-neutral-900/20 to-transparent"
+                className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-900/30 to-transparent"
                 aria-hidden="true"
               />
 
-              {/* Title anchored to bottom */}
+              {/* Title + description anchored to bottom */}
               <div className="absolute bottom-0 left-0 right-0 p-5">
-                <h3 className="text-white font-heading font-bold text-xl leading-snug">
+                <h3 className="text-white font-heading font-bold text-xl leading-snug mb-1">
                   {card.title}
                 </h3>
+                {card.description && (
+                  <p className="text-white/80 font-body text-sm leading-relaxed">
+                    {card.description}
+                  </p>
+                )}
               </div>
             </div>
           ))}

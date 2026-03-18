@@ -6,6 +6,8 @@ description: "An interactive workshop exploring how designers can harness AI too
 image: "/images/events/designing-ai-creativity.jpg"
 isUpcoming: false
 year: 2025
+resourcesDriveUrl: ""   # Paste Google Drive "Anyone with link" folder URL here
+photosDriveUrl: ""      # Paste Google Drive "Anyone with link" folder URL here
 pdfUrl: "/resources/designing-ai-creativity.pdf"
 slideshowUrl: "/images/events/designing-ai-creativity-slide.jpg"
 resourceLinks:

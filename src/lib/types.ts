@@ -53,6 +53,8 @@ export interface Event {
   slideshowUrl?: string;
   pdfUrl?: string;
   resourceLinks?: ResourceLink[];
+  resourcesDriveUrl?: string;  // Google Drive folder — slides, PDFs, etc.
+  photosDriveUrl?: string;     // Google Drive folder — event photos
 }
 
 export interface ResourceLink {

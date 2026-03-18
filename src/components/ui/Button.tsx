@@ -4,7 +4,7 @@ import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 // Variants match the Figma primitives:
 //   primary   → solid blue  (#2977BD)
-//   secondary → solid yellow (#FFED89)
+//   secondary → solid yellow (#F8F5E8)
 //   outline   → bordered, transparent
 //   ghost     → no border, subtle hover
 //   danger    → red destructive action
@@ -20,22 +20,26 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
 }
 
+// Shared hard-shadow hover effect (neo-brutalist lift)
+const hardShadow =
+  "hover:shadow-btn-hard hover:-translate-y-0.5 active:shadow-none active:translate-y-0";
+
 const variantStyles: Record<Variant, string> = {
   // Blue — primary actions (Register, Join, Submit)
   primary:
-    "bg-primary text-white hover:bg-primary-dark active:bg-primary-dark focus-visible:ring-primary",
+    `bg-primary text-white hover:bg-primary-dark active:bg-primary-dark focus-visible:ring-primary ${hardShadow}`,
   // Yellow — high-visibility CTAs (Join Newsletter, Discover M3+)
   secondary:
-    "bg-secondary text-foreground hover:bg-secondary-dark active:bg-secondary-dark focus-visible:ring-secondary",
+    `bg-secondary text-foreground hover:bg-secondary-dark active:bg-secondary-dark focus-visible:ring-secondary ${hardShadow}`,
   // Outlined — bordered with primary colour, fills on hover
   outline:
-    "border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-white active:bg-primary active:text-white focus-visible:ring-primary",
-  // Ghost — low-emphasis, no border, subtle background on hover
+    `border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-white active:bg-primary active:text-white focus-visible:ring-primary ${hardShadow}`,
+  // Ghost — low-emphasis, no border, subtle background on hover (no hard shadow)
   ghost:
     "bg-transparent text-neutral-900 hover:bg-neutral-subtle active:bg-neutral-subtle focus-visible:ring-neutral",
   // Danger — destructive actions
   danger:
-    "bg-error text-white hover:bg-error-dark active:bg-error-dark focus-visible:ring-error",
+    `bg-error text-white hover:bg-error-dark active:bg-error-dark focus-visible:ring-error hover:shadow-btn-hard-danger hover:-translate-y-0.5 active:shadow-none active:translate-y-0`,
 };
 
 const sizeStyles: Record<Size, string> = {
