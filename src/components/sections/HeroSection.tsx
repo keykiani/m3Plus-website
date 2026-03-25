@@ -37,7 +37,17 @@ export default function HeroSection({
               {headlineParts[0]}
               {headlineParts.length > 1 && (
                 <>
-                  <span className="brand-underline text-primary">M3+</span>
+                  <span className="relative inline-block text-primary">
+                    M3+
+                    {/* Hand-drawn circle from Figma */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/images/m3-circle.svg"
+                      alt=""
+                      aria-hidden="true"
+                      className="pointer-events-none select-none absolute -inset-x-3 -inset-y-2 w-[calc(100%+24px)] h-[calc(100%+16px)]"
+                    />
+                  </span>
                   {headlineParts[1]}
                 </>
               )}

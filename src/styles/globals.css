@@ -38,12 +38,8 @@
     @apply py-16 md:py-24;
   }
 
-  /* Underline accent on M3+ brand name */
-  .brand-underline {
-    text-decoration: underline;
-    text-decoration-color: theme('colors.primary.DEFAULT');
-    text-underline-offset: 4px;
-  }
+  /* M3+ brand name — circle drawn via SVG overlay in HeroSection.tsx */
+  .brand-underline {}
 
   /* Decorative blue quote marks used in testimonials */
   .quote-mark {
