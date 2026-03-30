@@ -166,28 +166,32 @@ export default async function AboutPage() {
       <section className="bg-cream section-pad">
         <div className="container-content">
           <SectionHeader title="Our Team" className="mb-10" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto">
             {teamMembers.map((member) => (
               <article
                 key={member.slug}
-                className="bg-white rounded-card border border-neutral-200 overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300"
+                className="bg-white border-2 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
               >
-                {/* Photo area — Avatar fills if no image */}
-                <div className="relative aspect-square bg-primary-subtle flex items-center justify-center">
-                  {member.photo ? (
-                    <Image
-                      src={member.photo}
-                      alt={member.name}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 640px) 100vw, 50vw"
-                    />
-                  ) : (
-                    <Avatar name={member.name} size="xl" />
-                  )}
+                {/* Polaroid padding around photo */}
+                <div className="p-4">
+                  {/* Photo area — Avatar fills if no image */}
+                  <div className="relative aspect-square bg-primary-subtle flex items-center justify-center mb-4">
+                    {member.photo ? (
+                      <Image
+                        src={member.photo}
+                        alt={member.name}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                      />
+                    ) : (
+                      <Avatar name={member.name} size="xl" />
+                    )}
+                  </div>
                 </div>
 
-                <div className="p-5">
+                {/* Polaroid text area */}
+                <div className="px-4 pb-6">
                   <h3 className="font-heading font-bold text-lg text-foreground mb-0.5">
                     {member.name}
                   </h3>

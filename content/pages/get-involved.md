@@ -1,15 +1,15 @@
 ---
 heroHeadline: "Let's Grow Together"
-heroSubtext: "Whether you want to mentor, volunteer, or simply be part of our community — there's a role for you at M3+."
+heroSubtext: "Whether you're just starting your design journey or you're a seasoned professional, M3+ creates a supportive space where designers at every level can connect, learn, and grow together. Our mutual mentoring approach pairs emerging talent with experienced practitioners, fostering relationships that benefit everyone involved."
 
 platformsHeadline: "Find Us On"
 platforms:
   - name: "LinkedIn"
-    description: "Follow us for design insights, event announcements, and community highlights."
+    description: "Stay connected with our LinkedIn community for updates on upcoming M3+ events and never miss an opportunity to grow your skills."
     buttonLabel: "Follow Us"
     url: "https://www.linkedin.com/company/m3plusmentoring"
   - name: "Slack"
-    description: "Join our Slack workspace for ongoing conversations, job postings, and peer support."
+    description: "Join our inclusive community where questions are welcomed, insights are shared, and designers support each other's growth."
     buttonLabel: "Join Us"
     url: "https://m3plus.slack.com"
   - name: "Luma"

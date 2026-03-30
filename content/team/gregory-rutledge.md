@@ -3,5 +3,5 @@ name: "Gregory Rutledge"
 title: "Founder/Vice President"
 bio: "Gregory is the welcoming voice of M3+, nurturing relationships across the community and making sure every member feels seen, supported, and connected to opportunities."
 photo: "/images/team/gregory-rutledge.png"
-order: 2
+order: 3
 ---

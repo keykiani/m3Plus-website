@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Linkedin, GraduationCap, Compass, Heart } from "lucide-react";
+import Image from "next/image";
+import { GraduationCap, Compass, Heart } from "lucide-react";
 import { getMarkdownFile, getTestimonials } from "@/lib/markdown";
 import Button from "@/components/ui/Button";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -49,43 +50,68 @@ export default async function GetInvolvedPage() {
   return (
     <>
       {/* ── Hero ──────────────────────────────────────────────────── */}
-      <section className="bg-cream section-pad relative overflow-hidden">
-        {/* Decorative flower accents */}
-        <span aria-hidden="true" className="absolute top-8 right-12 text-blue-flower text-6xl opacity-30 select-none">✿</span>
-        <span aria-hidden="true" className="absolute bottom-8 left-8 text-blue-flower text-4xl opacity-20 select-none">✿</span>
-        <div className="container-content max-w-2xl">
-          <h1 className="text-4xl md:text-5xl font-heading font-bold text-neutral-900 leading-tight mb-6">
+      <section className="bg-sky grid-bg section-pad relative">
+        {/* Mobile: Single SVG clover */}
+        <img
+          src="/images/m3clover.svg"
+          alt=""
+          aria-hidden="true"
+          className="lg:hidden absolute -top-20 -left-20 w-80 h-80 opacity-60 pointer-events-none select-none"
+        />
+        {/* Desktop: PNG clovers */}
+        <img
+          src="/images/m3clover.png"
+          alt=""
+          aria-hidden="true"
+          className="hidden lg:block absolute -top-20 -left-20 w-80 h-80 opacity-60 pointer-events-none select-none"
+        />
+        <img
+          src="/images/m3clover.png"
+          alt=""
+          aria-hidden="true"
+          className="hidden lg:block absolute -top-10 -right-32 w-96 h-96 opacity-50 pointer-events-none select-none"
+        />
+        <div className="container-content max-w-3xl mx-auto relative z-10">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-neutral-900 leading-tight mb-4 text-center">
             {p.heroHeadline}
           </h1>
-          <p className="text-xl text-neutral-700 font-body leading-relaxed">
+          <p className="text-lg md:text-xl text-black font-body leading-relaxed max-w-2xl mx-auto">
             {p.heroSubtext}
           </p>
         </div>
       </section>
 
-      {/* ── Social Platforms ──────────────────────────────────────── */}
-      <section className="bg-neutral-100 section-pad">
-        <div className="container-content">
-          <SectionHeader title={p.platformsHeadline} centered className="mb-10" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            {p.platforms?.map((platform) => (
-              <div key={platform.name} className="bg-white rounded-card border border-neutral-200 p-8 flex flex-col gap-4 shadow-card">
-                <div className="flex items-center gap-3">
-                  {platform.name === "LinkedIn" ? (
-                    <Linkedin size={28} className="text-primary" aria-hidden="true" />
-                  ) : (
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" className="text-primary" aria-hidden="true">
-                      <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
-                    </svg>
-                  )}
-                  <h3 className="font-heading font-bold text-xl text-neutral-900">{platform.name}</h3>
+      {/* ── Social Platforms (overlapping hero) ────────────────────── */}
+      <section className="bg-sky relative -mt-24">
+        <div className="container-content relative z-20 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mx-auto">
+            {p.platforms?.map((platform) => {
+              const logoMap: Record<string, string> = {
+                LinkedIn: "/images/linkedIn_logo.png",
+                Slack: "/images/slack_logo.png",
+                Luma: "/images/luma_logo.png",
+              };
+              return (
+                <div key={platform.name} className="bg-cream border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-8 flex flex-col gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full border border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center bg-white shrink-0">
+                      <Image
+                        src={logoMap[platform.name] || ""}
+                        alt={`${platform.name} logo`}
+                        width={32}
+                        height={32}
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
+                    <h3 className="font-heading font-bold text-xl text-neutral-900">{platform.name}</h3>
+                  </div>
+                  <p className="text-neutral-700 font-body flex-1">{platform.description}</p>
+                  <Button variant="primary" href={platform.url} external size="sm">
+                    {platform.buttonLabel}
+                  </Button>
                 </div>
-                <p className="text-neutral-700 font-body flex-1">{platform.description}</p>
-                <Button variant="primary" href={platform.url} external size="sm">
-                  {platform.buttonLabel}
-                </Button>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
