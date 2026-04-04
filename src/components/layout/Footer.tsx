@@ -86,9 +86,17 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <p className="text-xs text-neutral-700 font-body">
-            &copy; {year} M3+ Mutual Mentoring. All rights reserved.
-          </p>
+          <div className="flex flex-col items-center sm:items-end gap-1">
+            <p className="text-xs text-neutral-700 font-body">
+              &copy; {year} M3+ Mutual Mentoring. All rights reserved.
+            </p>
+            <Link
+              href="/site-squad"
+              className="text-xs text-neutral-400 hover:text-neutral-600 transition-colors font-body"
+            >
+              Made by Site Squad
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
