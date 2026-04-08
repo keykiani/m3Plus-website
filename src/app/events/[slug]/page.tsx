@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Download, Presentation } from "lucide-react";
+import { ArrowLeft, Download, ExternalLink, Presentation } from "lucide-react";
 import { getEventBySlug, getArchiveEvents } from "@/lib/markdown";
 import Button from "@/components/ui/Button";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -24,8 +23,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/**
+ * Converts a Google Slides share URL to an embeddable iframe URL.
+ * Returns null if the URL is not a Google Slides link.
+ */
+function getGoogleSlidesEmbedUrl(url: string): string | null {
+  if (!url.includes("docs.google.com/presentation")) return null;
+  const match = url.match(/\/presentation\/d\/([a-zA-Z0-9_-]+)/);
+  if (!match) return null;
+  return `https://docs.google.com/presentation/d/${match[1]}/embed?start=false&loop=false`;
+}
+
 export default async function EventResourcesPage({ params }: Props) {
   const event = await getEventBySlug(params.slug, "archive");
+
+  const slidesEmbedUrl = event.slideshowUrl
+    ? getGoogleSlidesEmbedUrl(event.slideshowUrl)
+    : null;
+
+  const hasSlideshowContent = !!event.slideshowUrl;
 
   return (
     <>
@@ -43,47 +59,55 @@ export default async function EventResourcesPage({ params }: Props) {
       </div>
 
       {/* ── Slideshow Viewer ──────────────────────────────────────── */}
-      <section className="bg-neutral-100 section-pad">
-        <div className="container-content">
-          <SectionHeader title={`${event.title} Slideshow`} className="mb-8" />
+      {hasSlideshowContent && (
+        <section className="bg-neutral-100 section-pad">
+          <div className="container-content">
+            <SectionHeader title={`${event.title} Slideshow`} className="mb-8" />
 
-          {/* Main image viewer */}
-          <div className="relative aspect-video bg-sky rounded-card overflow-hidden shadow-card-hover mb-6">
-            {event.slideshowUrl ? (
-              <Image
-                src={event.slideshowUrl}
-                alt={`Slide from ${event.title}`}
-                fill
-                className="object-contain"
-                sizes="100vw"
-              />
+            {slidesEmbedUrl ? (
+              /* Google Slides embed */
+              <div className="relative w-full aspect-video rounded-card overflow-hidden shadow-card-hover mb-6 bg-sky">
+                <iframe
+                  src={slidesEmbedUrl}
+                  className="absolute inset-0 w-full h-full"
+                  allowFullScreen
+                  allow="fullscreen"
+                  title={`${event.title} slideshow`}
+                  loading="lazy"
+                />
+              </div>
             ) : (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-neutral-700 font-body opacity-50 text-center">
-                  Slideshow images coming soon.<br />
-                  Add images to <code className="font-mono text-sm">/public/images/events/</code>
+              /* Non-Slides Drive/PDF link — just show a button */
+              <div className="rounded-card bg-cream border border-neutral-200 p-10 text-center mb-6">
+                <Presentation size={36} className="text-primary mx-auto mb-4" aria-hidden="true" />
+                <p className="text-neutral font-body text-lg mb-6">
+                  View the slideshow from this event.
                 </p>
+                <Button variant="primary" href={event.slideshowUrl!} external>
+                  <ExternalLink size={16} aria-hidden="true" />
+                  Open Slideshow
+                </Button>
               </div>
             )}
-          </div>
 
-          {/* Download / Open buttons */}
-          <div className="flex flex-wrap gap-3">
-            {event.pdfUrl && (
-              <Button variant="primary" href={event.pdfUrl} external>
-                <Download size={16} aria-hidden="true" />
-                PDF Download
-              </Button>
-            )}
-            {event.slideshowUrl && (
-              <Button variant="primary" href={event.slideshowUrl} external>
-                <Presentation size={16} aria-hidden="true" />
-                Slideshow
-              </Button>
-            )}
+            {/* Download / Open buttons */}
+            <div className="flex flex-wrap gap-3">
+              {event.pdfUrl && (
+                <Button variant="primary" href={event.pdfUrl} external>
+                  <Download size={16} aria-hidden="true" />
+                  PDF Download
+                </Button>
+              )}
+              {slidesEmbedUrl && (
+                <Button variant="outline" href={event.slideshowUrl!} external>
+                  <ExternalLink size={16} aria-hidden="true" />
+                  Open in Google Slides
+                </Button>
+              )}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── Additional Links ──────────────────────────────────────── */}
       {event.resourceLinks && event.resourceLinks.length > 0 && (
