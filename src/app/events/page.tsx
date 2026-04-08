@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { MapPin, Clock, BookOpen, Images } from "lucide-react";
-import { getUpcomingEvents, getArchiveEvents } from "@/lib/markdown";
+import { getArchiveEvents } from "@/lib/markdown";
+import { siteConfig } from "@/lib/siteConfig";
 import Button from "@/components/ui/Button";
 import SectionHeader from "@/components/ui/SectionHeader";
+import LumaEventSection from "@/components/sections/LumaEventSection";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -12,10 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default async function EventsPage() {
-  const [upcoming, archive] = await Promise.all([
-    getUpcomingEvents(),
-    getArchiveEvents(),
-  ]);
+  const archive = await getArchiveEvents();
 
   // Group archive events by year (most recent first)
   const archiveByYear = archive.reduce<Record<number, typeof archive>>(
@@ -74,7 +73,7 @@ export default async function EventsPage() {
                 aria-hidden="true"
               >
                 <Image
-                  src="/images/hero-sticker-curser.png"
+                  src="/images/hero-sticker-cursor.png"
                   alt=""
                   fill
                   className="object-contain drop-shadow-lg"
@@ -87,74 +86,12 @@ export default async function EventsPage() {
         </div>
       </section>
 
-      {/* ── Upcoming Events ───────────────────────────────────────── */}
-      {upcoming.length > 0 && (
-        <section className="bg-neutral-100 section-pad">
-          <div className="container-content">
-            <SectionHeader title="Upcoming Events" className="mb-8" />
-            <div className="space-y-6">
-              {upcoming.map((event) => (
-                <article
-                  key={event.slug}
-                  className="border-2 border-foreground rounded-card overflow-hidden grid grid-cols-1 md:grid-cols-[240px_1fr] shadow-card"
-                >
-                  {/* Thumbnail */}
-                  <div className="relative aspect-[4/3] md:aspect-auto bg-coral">
-                    {event.image ? (
-                      <Image
-                        src={event.image}
-                        alt={event.title}
-                        fill
-                        className="object-cover"
-                        sizes="240px"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 bg-coral flex items-center justify-center">
-                        <span className="text-white font-heading font-bold text-3xl opacity-30">M3+</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Details */}
-                  <div className="p-6 flex flex-col justify-between gap-4">
-                    <div>
-                      <h2 className="text-2xl font-heading font-bold text-foreground mb-3 leading-tight">
-                        {event.title}
-                      </h2>
-                      <ul className="space-y-1.5 text-neutral font-body text-sm mb-3">
-                        {event.displayDate && (
-                          <li className="flex items-center gap-2">
-                            <Clock size={14} className="text-primary shrink-0" aria-hidden="true" />
-                            {event.displayDate}{event.time && `, ${event.time}`}
-                          </li>
-                        )}
-                        {event.location && (
-                          <li className="flex items-center gap-2">
-                            <MapPin size={14} className="text-primary shrink-0" aria-hidden="true" />
-                            {event.location}
-                          </li>
-                        )}
-                      </ul>
-                      {event.description && (
-                        <p className="text-neutral font-body text-sm leading-relaxed">
-                          {event.description}
-                        </p>
-                      )}
-                    </div>
-                    {event.registerUrl && (
-                      <div>
-                        <Button variant="primary" href={event.registerUrl} external size="sm">
-                          Register
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      {/* ── Upcoming Events — auto-updated via Luma ───────────────── */}
+      <LumaEventSection
+        embedUrl={siteConfig.lumaEmbedUrl}
+        sectionLabel="Upcoming Events"
+        sectionSubtext="Join our free monthly meetups — register on Luma to save your spot."
+      />
 
       {/* ── Event Archive ─────────────────────────────────────────── */}
       {archiveYears.length > 0 && (
