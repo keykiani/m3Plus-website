@@ -6,7 +6,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 
 export const metadata: Metadata = {
   title: "Made by Site Squad",
-  description: "Meet the team that designed and built the M3+ website.",
+  description: "Meet the team that designed the M3+ website.",
   robots: { index: false, follow: false },
 };
 
@@ -18,16 +18,15 @@ interface SquadMember {
 }
 
 const squadMembers: SquadMember[] = [
-  { name: "Name TBD", role: "Role TBD", photo: undefined, href: undefined },
-  { name: "Name TBD", role: "Role TBD", photo: undefined, href: undefined },
-  { name: "Name TBD", role: "Role TBD", photo: undefined, href: undefined },
-  { name: "Name TBD", role: "Role TBD", photo: undefined, href: undefined },
-  { name: "Name TBD", role: "Role TBD", photo: undefined, href: undefined },
-  { name: "Name TBD", role: "Role TBD", photo: undefined, href: undefined },
+  { name: "Ivy Nguyen", role: "Product Designer", photo: undefined, href: undefined },
+  { name: "Kyle Rubens", role: "UI/UX Designer", photo: undefined, href: undefined },
+  { name: "Carissa Francisco", role: "UX Product Designer", photo: undefined, href: undefined },
+  { name: "Kashvi Patel", role: "UX Designer", photo: undefined, href: undefined },
+  { name: "Riya Arun", role: "UX Designer", photo: undefined, href: undefined },
 ];
 
 const missionStatement =
-  "Site Squad is a group of designers and developers who came together to craft a digital home for M3+. Our mission is to build thoughtful, accessible experiences that amplify communities doing meaningful work — turning ideas into beautifully functional realities, one project at a time.";
+  "Site Squad is a group of designers who came together to craft a digital home for M3+. Our mission is to bring thoughtful communities doing meaningful work. We want to be an avenue for turning ideas into beautifully functional realities, one project at a time.";
 
 export default function SiteSquadPage() {
   return (
