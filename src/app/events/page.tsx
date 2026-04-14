@@ -73,7 +73,7 @@ export default async function EventsPage() {
                 aria-hidden="true"
               >
                 <Image
-                  src="/images/hero-sticker-cursor.png"
+                  src="/images/hero-sticker-curser.png"
                   alt=""
                   fill
                   className="object-contain drop-shadow-lg"
