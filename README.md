@@ -19,8 +19,8 @@ M3+ Mutual Mentoring bridges the gap between networking and mentorship through c
 
 | I want to… | Jump to |
 |---|---|
-| Add or edit an event | [→ Add an event](#add-or-edit-an-upcoming-event) |
-| Archive a past event | [→ Archive an event](#move-an-event-to-the-archive) |
+| Add a new upcoming event | [→ Add an event](#add-an-upcoming-event) |
+| Archive a past event | [→ Archive an event](#archive-a-past-event) |
 | Update page text | [→ Update page copy](#update-page-copy) |
 | Add a team member | [→ Add team member](#add-a-team-member) |
 | Add a testimonial | [→ Add a testimonial](#add-a-testimonial) |
@@ -42,46 +42,57 @@ Most day-to-day changes (events, team, testimonials, page copy) happen entirely 
 ## ✏️ For Content Editors
 *No coding required for any of the tasks below.*
 
-### Add or Edit an Upcoming Event
+### Add an Upcoming Event
 
-Create a new file in `content/events/upcoming/` named after your event (e.g., `your-event-name.md`):
+Upcoming events are managed entirely through **Luma** — no file changes needed.
+
+1. Go to [lu.ma/m3plus](https://lu.ma/m3plus) and sign in
+2. Create a new event in the M3+ calendar
+3. The event will appear automatically on the website's Events page
+
+The Luma calendar embed updates in real time. No code edits or markdown files required.
+
+---
+
+### Archive a Past Event
+
+After an event has taken place, add it to the archive so the community can access photos and resources:
+
+1. **Copy the template:** Duplicate `content/events/archive/_template.md` and rename it to match the event (e.g., `my-event-name.md`). The slug (filename without `.md`) becomes the URL: `/events/my-event-name`.
+
+2. **Fill in the required fields:**
 
 ```yaml
 ---
 title: "Your Event Title"
-date: "2025-10-30"
+date: "2025-10-30"           # Used for sorting — YYYY-MM-DD format
 displayDate: "Thursday, October 30"
 time: "6:00 PM – 8:30 PM"
 location: "5445 Legacy Dr, Plano, Texas"
 description: "A short description of the event."
-image: "/images/events/your-event.jpg"
-registerUrl: "https://lu.ma/your-event-link"
-isUpcoming: true
+isUpcoming: false
 year: 2025
+image: "/images/events/your-event-slug.jpg"   # Optional thumbnail
 ---
 ```
 
-Add the event image to `public/images/events/` using the same filename you used in the `image` field above.
-
----
-
-### Move an Event to the Archive
-
-When an event has passed:
-
-1. Move its `.md` file from `content/events/upcoming/` → `content/events/archive/`
-2. Set `isUpcoming: false`
-3. Add any post-event resources:
+3. **Add Google Drive links** (fill these in after uploading to Drive):
 
 ```yaml
-isUpcoming: false
-pdfUrl: "/resources/your-event-recap.pdf"
-slideshowUrl: "/images/events/your-event-slide.jpg"
+# Upload photos to a Drive folder, set sharing to "Anyone with the link", paste URL here:
 photosDriveUrl: "https://drive.google.com/drive/folders/..."
-resourceLinks:
-  - label: "Download Slides"
-    url: "/resources/your-event-slides.pdf"
+
+# Upload slides/handouts to a Drive folder, paste URL here:
+resourcesDriveUrl: "https://drive.google.com/drive/folders/..."
+
+# For the slideshow viewer — paste the Google Slides share URL:
+# (The site automatically embeds it as an interactive slideshow)
+slideshowUrl: "https://docs.google.com/presentation/d/.../edit?usp=sharing"
 ```
+
+4. **Commit and push to GitHub** → Netlify deploys automatically.
+
+> See `content/events/archive/_template.md` for the full list of optional fields with inline documentation.
 
 ---
 
@@ -138,14 +149,17 @@ Add their photo to `public/images/testimonials/`.
 
 Upload images to the appropriate folder under `public/images/`:
 
-| Image type | Folder | Recommended size |
-|---|---|---|
-| Hero image | `public/images/` | 1200 × 900 px |
-| Event thumbnails | `public/images/events/` | 800 × 600 px |
-| Event slideshow covers | `public/images/events/` | 1200 × 675 px |
-| Team headshots | `public/images/team/` | 500 × 500 px (square) |
-| Testimonial photos | `public/images/testimonials/` | 400 × 400 px (square) |
-| Event photos (gallery) | `public/images/events/photos/` | 1200 × 900 px |
+| Image type | Folder | Format | Recommended size |
+|---|---|---|---|
+| Homepage hero | `public/images/` | JPG | 1200 × 900 px (4:3) |
+| Events page hero | `public/images/` | JPG | 800 × 600 px (4:3) |
+| Event thumbnails | `public/images/events/` | JPG | 800 × 600 px (4:3) |
+| Team headshots | `public/images/team/` | PNG | 500 × 500 px (square) |
+| Testimonial photos | `public/images/testimonials/` | JPG | 400 × 400 px (square) |
+| Site Squad portraits | `public/images/squad/` | JPG | 400 × 400 px (square) |
+| Sponsor logos | `public/images/sponsors/` | PNG (transparent bg) | 200 × 200 px (square) |
+
+> **Event photos and slideshows are hosted on Google Drive — not in this repo.** Paste the Drive folder URL into the event's `photosDriveUrl` / `resourcesDriveUrl` fields instead.
 
 Image filenames must match exactly what's written in the `image:` or `photo:` field of the content file.
 
@@ -180,28 +194,31 @@ m3plus-website/
 ├── content/                  ← Edit these to update site content
 │   ├── pages/                  Page copy (hero text, mission, etc.)
 │   ├── events/
-│   │   ├── upcoming/           Active upcoming events
-│   │   └── archive/            Past events with resources
+│   │   ├── upcoming/           Deprecated — upcoming events are now managed via Luma
+│   │   └── archive/            Past events with Google Drive links + resources
+│   │       └── _template.md    Copy this when archiving a new event
 │   ├── team/                   Team member profiles
-│   ├── testimonials/           Community quotes
-│   └── photos/albums.md        Photo gallery metadata
+│   └── testimonials/           Community quotes
 ├── public/
 │   ├── images/                 ← Add images here
 │   │   ├── team/               Team headshots
-│   │   ├── events/             Event thumbnails + slideshow covers
-│   │   ├── events/photos/      Event photo galleries
+│   │   ├── events/             Event thumbnails only (photos hosted on Drive)
+│   │   ├── squad/              Site Squad portrait photos
+│   │   ├── sponsors/           Sponsor logo files
 │   │   └── logos/              Brand logo files
 │   └── resources/              PDFs and downloadable files
 └── src/
     ├── app/                    Pages (Next.js App Router)
+    │   ├── site-squad/         Hidden "Made by Site Squad" page (linked from footer)
+    │   └── events/[slug]/      Archive event detail + photos pages
     ├── components/
     │   ├── layout/             Navbar, Footer, NewsletterPopUp
     │   ├── ui/                 Button, Card, Badge, M3Logo, SectionHeader
-    │   ├── sections/           HeroSection, TestimonialBlock, JourneyCards…
+    │   ├── sections/           HeroSection, LumaEventSection, TestimonialBlock…
     │   └── forms/              ContactForm, GetInvolvedForm, NewsletterForm
     ├── lib/
     │   ├── markdown.ts         Content loading utilities
-    │   ├── siteConfig.ts       ← Nav links, social URLs, email, Formspree ID
+    │   ├── siteConfig.ts       ← Nav links, social URLs, email, Formspree ID, Luma URL
     │   ├── types.ts            TypeScript interfaces for all content types
     │   └── utils.ts            Class merge + date formatting helpers
     ├── styles/globals.css      Global styles and font imports
@@ -218,7 +235,8 @@ m3plus-website/
 | `src/lib/types.ts` | Adding new content types — define the interface here first |
 | `src/lib/markdown.ts` | Content loaders — add new `get*()` functions here for new content types |
 | `tailwind.config.ts` | Colors, fonts, spacing, shadows — the design token source of truth |
-| `src/components/ui/M3Logo.tsx` | Replace the placeholder SVG with the real exported logo |
+| `src/app/site-squad/page.tsx` | Update Site Squad member names, photos, and links directly in this file |
+| `src/app/get-involved/page.tsx` | Swap sponsor logo placeholders for real `<Image>` components when logos are ready |
 
 ---
 
@@ -235,6 +253,15 @@ m3plus-website/
 
 #### 3. Verify social links
 All social URLs and the contact email are in `src/lib/siteConfig.ts` → `socialLinks` and `email`.
+
+#### 4. Add sponsor logos
+When sponsor logos are ready:
+1. Add PNG files (transparent background, 200 × 200 px min) to `public/images/sponsors/`
+2. In `src/app/get-involved/page.tsx`, replace the CSS placeholder circles (lines ~172–182) with `<Image>` components pointing to those files
+
+#### 5. Complete the Site Squad page
+1. Add portrait photos (square, 400 × 400 px min) to `public/images/squad/`
+2. Update the `squadMembers` array in `src/app/site-squad/page.tsx` with each member's name, role, photo path, and link
 
 ---
 
@@ -278,6 +305,7 @@ No environment variables are required for basic operation.
 | Animations | Framer Motion |
 | Icons | Lucide React |
 | Fonts | Manrope (headings), Gill Sans (body) |
+| Event calendar | Luma embed (auto-updating) |
 | Hosting | Netlify |
 
 ---
@@ -288,10 +316,14 @@ No environment variables are required for basic operation.
 
 | Task | Role |
 |---|---|
-| Add/edit events, team, testimonials | Content editor — no code needed |
+| Add upcoming events | Content — create in Luma, no code needed |
+| Archive past events | Content — copy template, fill in Drive links, push to GitHub |
+| Update team, testimonials, page copy | Content — edit markdown files, no code needed |
 | Update nav links, social URLs, email | Developer (edit `siteConfig.ts`) |
 | Change colors or fonts | Developer (edit `tailwind.config.ts`) |
 | Add new pages or components | Developer |
+| Add sponsor logos | Developer (swap placeholders in `get-involved/page.tsx`) |
+| Update Site Squad page | Developer (edit `site-squad/page.tsx` directly) |
 | Deploy the site | Automatic on push to `main` |
 
 ### Accounts to transfer
@@ -303,13 +335,17 @@ When handing off to a new maintainer, transfer access to:
 | **GitHub** — `keykiani/m3Plus-website` | Code hosting and auto-deploy trigger |
 | **Netlify** | Hosting and deployment |
 | **Formspree** | Contact form and Get Involved form submissions |
-| **Luma** | Event calendar embed on the homepage |
+| **Luma** — [lu.ma/m3plus](https://lu.ma/m3plus) | Upcoming event calendar (auto-embeds on website) |
+| **Google Drive** | Event photos and slideshows (linked from archive event pages) |
 | **Figma** | Design assets and logo source files |
 
 ### If something looks broken
 
 | Symptom | Where to look |
 |---|---|
+| Upcoming events not showing | Check the Luma calendar at lu.ma/m3plus — confirm events are published. Also verify `lumaEmbedUrl` in `siteConfig.ts` is a calendar embed URL, not a single-event URL. |
+| Archive event photos not working | Confirm `photosDriveUrl` in the event's `.md` file is set and shared as "Anyone with the link" |
+| Slideshow not embedding | Paste the Google Slides share URL (`.../edit?usp=sharing`) into `slideshowUrl` — the site converts it automatically |
 | Content not showing up | Check YAML frontmatter in `content/` — watch for tabs vs spaces |
 | Images not loading | Verify the filename in `image:` / `photo:` matches exactly what's in `public/images/` |
 | Forms not submitting | Check `formspreeId` in `siteConfig.ts`; verify the Formspree account is active |
