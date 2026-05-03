@@ -64,25 +64,27 @@ export default function HeroSection({
 
           {/* ── Image Collage Column ──────────────────────────────────── */}
           <div className="order-1 lg:order-2 relative flex items-center justify-center py-8">
-            {/* Main photo — slight tilt for collage feel */}
-            <div className="relative w-full max-w-sm aspect-[4/3] rounded-2xl overflow-hidden shadow-card-hover rotate-1">
-              {imageSrc ? (
-                <Image
-                  src={imageSrc}
-                  alt={imageAlt}
-                  fill
-                  className="object-cover"
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center bg-primary-subtle">
-                  <p className="text-primary font-heading font-bold text-sm opacity-60 text-center px-4">
-                    Add hero image to<br />
-                    <code className="font-mono">/public/images/hero.jpg</code>
-                  </p>
-                </div>
-              )}
+            {/* Polaroid frame — thick white border + soft shadow + slight tilt */}
+            <div className="relative w-full max-w-sm rotate-1 bg-white p-4 shadow-[0px_12px_16px_0px_rgba(10,13,18,0.08),0px_4px_6px_0px_rgba(10,13,18,0.03)]">
+              <div className="relative aspect-[4/3] overflow-hidden">
+                {imageSrc ? (
+                  <Image
+                    src={imageSrc}
+                    alt={imageAlt}
+                    fill
+                    className="object-cover"
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center bg-primary-subtle">
+                    <p className="text-primary font-heading font-bold text-sm opacity-60 text-center px-4">
+                      Add hero image to<br />
+                      <code className="font-mono">/public/images/hero.jpg</code>
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Handshake sticker — top-left */}

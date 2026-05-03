@@ -18,11 +18,11 @@ interface SquadMember {
 }
 
 const squadMembers: SquadMember[] = [
-  { name: "Ivy Nguyen", role: "Product Designer", photo: undefined, href: undefined },
-  { name: "Kyle Rubens", role: "UI/UX Designer", photo: undefined, href: undefined },
-  { name: "Carissa Francisco", role: "UX Product Designer", photo: undefined, href: undefined },
-  { name: "Kashvi Patel", role: "UX Designer", photo: undefined, href: undefined },
-  { name: "Riya Arun", role: "UX Designer", photo: undefined, href: undefined },
+  { name: "Ivy Nguyen", role: "Product Designer", photo: "/images/squad/ivy-nguyen.jpg", href: undefined },
+  { name: "Kyle Rubens", role: "UI/UX Designer", photo: "/images/squad/kyle-rubens.jpg", href: undefined },
+  { name: "Carissa Francisco", role: "UX Product Designer", photo: "/images/squad/carrisa-francisco.jpg", href: undefined },
+  { name: "Kashvi Patel", role: "UX Designer", photo: "/images/squad/kashvi-patel.jpg", href: undefined },
+  { name: "Riya Arun", role: "UX Designer", photo: "/images/squad/riya-arun.jpg", href: undefined },
 ];
 
 const missionStatement =
@@ -41,7 +41,7 @@ export default function SiteSquadPage() {
             Made by Site Squad
           </h1>
           <p className="text-xl text-neutral font-body leading-relaxed max-w-xl">
-            Six designers and developers who brought the M3+ vision to life on the web.
+            Five designers who brought the M3+ vision to life on the web.
           </p>
         </div>
       </section>
