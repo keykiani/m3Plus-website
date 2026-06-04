@@ -1,0 +1,64 @@
+---
+description: Rules for implementing Figma designs in this Next.js 14 + Tailwind project with markdown-driven content and reusable section/UI components.
+globs: ["src/**/*.tsx", "src/**/*.ts"]
+alwaysApply: false
+---
+
+# Figma MCP Integration Rules
+
+These rules define how to translate Figma inputs into code for this project and must be followed for every Figma-driven change.
+
+## Required Flow (do not skip)
+
+1. Run `get_design_context` first for the exact node(s) being implemented.
+2. If the response is too large, run `get_metadata`, then re-fetch only the required node(s) with `get_design_context`.
+3. Run `get_screenshot` for visual reference and parity checks.
+4. Only after context + screenshot are available, implement in the codebase.
+5. Treat generated React+Tailwind output as a reference, then adapt to this repository's conventions.
+6. Validate visual parity and behavior before completion.
+
+## Component Organization Rules
+
+- IMPORTANT: Reuse existing components before creating new ones.
+- Shared layout components belong in `src/components/layout/`.
+- Reusable primitives belong in `src/components/ui/`.
+- Page sections belong in `src/components/sections/`.
+- Form components belong in `src/components/forms/`.
+- App Router pages live in `src/app/`.
+- Prefer server components by default; only use `'use client'` when interactivity/state requires it.
+
+## Styling + Token Rules
+
+- IMPORTANT: Use Tailwind utility classes and project tokens from `tailwind.config.ts`.
+- IMPORTANT: Never hardcode arbitrary hex values when an existing token exists (`primary`, `secondary`, `tertiary`, `neutral`, semantic colors).
+- Typography should follow project fonts (Manrope headings, Gill Sans body).
+- Keep spacing, shadows, and animation usage aligned with the Tailwind theme extension.
+- Use `src/lib/utils.ts` helpers (e.g., class merge helpers) where appropriate.
+
+## Content Architecture Rules
+
+- IMPORTANT: Keep content in markdown when possible instead of hardcoding editorial copy in components.
+- Markdown-backed collections are loaded via `src/lib/markdown.ts`.
+- Type contracts must be defined/updated in `src/lib/types.ts` for new content structures.
+- Upcoming events come from the Luma embed URL in `src/lib/siteConfig.ts`; do not reintroduce markdown-driven upcoming event rendering.
+- Archive event detail data should continue using `content/events/archive/*.md` fields.
+
+## Implementation Conventions
+
+- Use TypeScript consistently and follow existing component prop patterns.
+- Prefer existing path alias import conventions (`@/` imports) used in this codebase.
+- Keep component APIs minimal and composable; avoid duplicate variants if an existing `ui` component can be extended.
+- Preserve accessibility semantics (landmarks, heading structure, button/link semantics, form labels).
+
+## Asset Handling Rules
+
+- If Figma MCP provides localhost asset sources, use those sources directly.
+- Do not install new icon libraries for Figma implementations; use existing project conventions and provided assets.
+- Place static assets under `public/` using existing directory patterns.
+
+## Verification Checklist
+
+- Compare implementation against Figma screenshot for spacing, typography, color, and interaction states.
+- Confirm responsive behavior across common breakpoints.
+- Run linting for touched files and resolve introduced issues.
+- Ensure no regressions to markdown-driven content flow or site configuration conventions.
