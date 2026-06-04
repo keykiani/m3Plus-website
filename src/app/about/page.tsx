@@ -99,7 +99,7 @@ export default async function AboutPage() {
                 alt={a.whatIsImageAlt}
                 fill
                 className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                sizes="(max-width: 1024px) 100vw, 640px"
               />
             )}
           </div>
@@ -119,7 +119,7 @@ export default async function AboutPage() {
                 alt={a.missionImageAlt}
                 fill
                 className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                sizes="(max-width: 1024px) 100vw, 640px"
               />
             )}
           </div>
@@ -182,7 +182,7 @@ export default async function AboutPage() {
                         alt={member.name}
                         fill
                         className="object-cover"
-                        sizes="(max-width: 640px) 100vw, 50vw"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 500px"
                       />
                     ) : (
                       <Avatar name={member.name} size="xl" />

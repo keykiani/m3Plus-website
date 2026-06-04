@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 import M3Logo from "@/components/ui/M3Logo";
 import Button from "@/components/ui/Button";
 import { navLinks } from "@/lib/siteConfig";
@@ -88,46 +87,45 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* ── Mobile Drawer ─────────────────────────────────────────────── */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden bg-sky border-t border-neutral-200 px-4 pb-6"
-          >
-            <ul className="flex flex-col gap-4 pt-4" role="list">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className={cn(
-                        "block font-heading font-semibold text-lg py-2",
-                        isActive ? "text-primary" : "text-neutral-900"
-                      )}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
-              <li className="pt-2">
-                <Button
-                  variant="secondary"
-                  href="/get-involved"
-                  className="w-full justify-center"
-                >
-                  Get Involved
-                </Button>
-              </li>
-            </ul>
-          </motion.div>
+      {/* ── Mobile Drawer — CSS grid-rows transition, no Framer Motion ── */}
+      <div
+        className={cn(
+          "md:hidden overflow-hidden",
+          "grid transition-[grid-template-rows,opacity] duration-200 ease-in-out",
+          mobileOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         )}
-      </AnimatePresence>
+        aria-hidden={!mobileOpen}
+      >
+        <div className="min-h-0 bg-sky border-t border-neutral-200 px-4 pb-6">
+          <ul className="flex flex-col gap-4 pt-4" role="list">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={cn(
+                      "block font-heading font-semibold text-lg py-2",
+                      isActive ? "text-primary" : "text-neutral-900"
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              );
+            })}
+            <li className="pt-2">
+              <Button
+                variant="secondary"
+                href="/get-involved"
+                className="w-full justify-center"
+              >
+                Get Involved
+              </Button>
+            </li>
+          </ul>
+        </div>
+      </div>
     </header>
   );
 }
