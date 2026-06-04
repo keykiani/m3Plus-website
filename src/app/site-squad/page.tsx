@@ -23,6 +23,7 @@ const squadMembers: SquadMember[] = [
   { name: "Carissa Francisco", role: "UX Product Designer", photo: "/images/squad/carrisa-francisco.jpg", href: undefined },
   { name: "Kashvi Patel", role: "UX Designer", photo: "/images/squad/kashvi-patel.jpg", href: undefined },
   { name: "Riya Arun", role: "UX Designer", photo: "/images/squad/riya-arun.jpg", href: undefined },
+  { name: "Whitney Allen", role: "Designer", photo: undefined, href: undefined },
 ];
 
 const missionStatement =
@@ -41,7 +42,7 @@ export default function SiteSquadPage() {
             Made by Site Squad
           </h1>
           <p className="text-xl text-neutral font-body leading-relaxed max-w-xl">
-            Five designers who brought the M3+ vision to life on the web.
+            Six designers who brought the M3+ vision to life on the web.
           </p>
         </div>
       </section>

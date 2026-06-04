@@ -1,13 +1,25 @@
 import type { Metadata } from "next";
+import { Manrope } from "next/font/google";
+import dynamic from "next/dynamic";
 import "@/styles/globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import NewsletterPopUp from "@/components/layout/NewsletterPopUp";
 import { siteConfig } from "@/lib/siteConfig";
 
-// ─── Fonts ────────────────────────────────────────────────────────────────
-// Manrope is loaded via @import in globals.css (browser-side, no build-time fetch).
-// Gill Sans is a system font — loaded via CSS font stack in tailwind.config.ts.
+// Manrope loaded at build time — no render-blocking Google Fonts request.
+// Gill Sans is a system font stack in tailwind.config.ts.
+const manrope = Manrope({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-manrope",
+  display: "swap",
+});
+
+// Lazy-load the newsletter popup — it's never visible on initial paint.
+const NewsletterPopUp = dynamic(
+  () => import("@/components/layout/NewsletterPopUp"),
+  { ssr: false }
+);
 
 // ─── Metadata ─────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
@@ -30,7 +42,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={manrope.variable}>
+      <head>
+        {/* Preconnect to Luma embed origin to reduce connection latency */}
+        <link rel="preconnect" href="https://lu.ma" />
+      </head>
       <body className="flex flex-col min-h-screen">
         <a
           href="#main-content"
