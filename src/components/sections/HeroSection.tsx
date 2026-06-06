@@ -80,7 +80,7 @@ export default function HeroSection({
                   <div className="absolute inset-0 flex items-center justify-center bg-primary-subtle">
                     <p className="text-primary font-heading font-bold text-sm opacity-60 text-center px-4">
                       Add hero image to<br />
-                      <code className="font-mono">/public/images/hero.jpg</code>
+                      <code className="font-mono">/public/images/hero.webp</code>
                     </p>
                   </div>
                 )}
@@ -93,7 +93,7 @@ export default function HeroSection({
               aria-hidden="true"
             >
               <Image
-                src="/images/hero-sticker-handshake.png"
+                src="/images/hero-sticker-handshake.webp"
                 alt=""
                 fill
                 className="object-contain drop-shadow-lg"
@@ -107,7 +107,7 @@ export default function HeroSection({
               aria-hidden="true"
             >
               <Image
-                src="/images/hero-sticker-badge.png"
+                src="/images/hero-sticker-badge.webp"
                 alt=""
                 fill
                 className="object-contain drop-shadow-lg"

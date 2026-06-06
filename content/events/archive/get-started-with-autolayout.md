@@ -3,7 +3,7 @@ title: "Get Started with Auto-Layout: A Figma Workshop "
 date: "2025-10-30"
 displayDate: "Thursday, October 30"
 description: "A deep dive into practical AI experience design — from prompt engineering for prototyping to building accessible AI-powered interfaces."
-image: "/images/events/ai-experience-design.jpg"
+image: "/images/events/ai-experience-design.webp"
 isUpcoming: false
 year: 2025
 pdfUrl: "/resources/ai-experience-design.pdf"

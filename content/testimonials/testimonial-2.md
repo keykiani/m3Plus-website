@@ -3,6 +3,6 @@ quote: "M3 is one of those places to connect with designers at any level and to 
 boldPhrase: "to have a problem that's on my mind, and consult the people"
 author: "James B."
 role: "Design Lead @ Capital One"
-photo: "/images/testimonials/james-brinson.jpg"
+photo: "/images/testimonials/james-brinson.webp"
 order: 2
 ---

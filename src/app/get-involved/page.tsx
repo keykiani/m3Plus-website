@@ -60,13 +60,13 @@ export default async function GetInvolvedPage() {
         />
         {/* Desktop: PNG clovers */}
         <img
-          src="/images/m3clover.png"
+          src="/images/m3clover.webp"
           alt=""
           aria-hidden="true"
           className="hidden lg:block absolute -top-20 -left-20 w-80 h-80 opacity-60 pointer-events-none select-none"
         />
         <img
-          src="/images/m3clover.png"
+          src="/images/m3clover.webp"
           alt=""
           aria-hidden="true"
           className="hidden lg:block absolute -top-10 -right-32 w-96 h-96 opacity-50 pointer-events-none select-none"
@@ -87,9 +87,9 @@ export default async function GetInvolvedPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mx-auto">
             {p.platforms?.map((platform) => {
               const logoMap: Record<string, string> = {
-                LinkedIn: "/images/linkedIn_logo.png",
-                Slack: "/images/slack_logo.png",
-                Luma: "/images/luma_logo.png",
+                LinkedIn: "/images/linkedIn_logo.webp",
+                Slack: "/images/slack_logo.webp",
+                Luma: "/images/luma_logo.webp",
               };
               return (
                 <div key={platform.name} className="bg-cream border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-8 flex flex-col gap-4">

@@ -49,7 +49,7 @@ export default async function HomePage() {
         ctaLabel={h.heroCtaLabel}
         ctaHref={h.heroCtaHref}
         imageAlt={h.heroImageAlt}
-        imageSrc="/images/hero.jpg"
+        imageSrc="/images/hero.webp"
       />
 
       {/* ── 2. Luma Event Embed — auto-updates when calendar URL is set ── */}

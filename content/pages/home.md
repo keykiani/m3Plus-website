@@ -19,14 +19,14 @@ journeySubtitle: "Our community welcomes designers at every stage of their journ
 journeyCards:
   - title: "Starting Your Design Journey"
     description: "New to design? You belong here! Connect with welcoming mentors and peers who understand your challenges."
-    image: "/images/journey-starting.jpg"
+    image: "/images/journey-starting.webp"
     imageAlt: "Beginner designers collaborating"
   - title: "Growing Your Impact & Skills"
     description: "Ready to level up? Our community offers opportunities to mentor others while continuing to learn."
-    image: "/images/journey-growing.jpg"
+    image: "/images/journey-growing.webp"
     imageAlt: "Designers working on projects"
   - title: "Leading Through Connection"
     description: "Expand your professional network by connecting with designers at every career stage."
-    image: "/images/journey-leading.jpg"
+    image: "/images/journey-leading.webp"
     imageAlt: "Design leaders presenting"
 ---
