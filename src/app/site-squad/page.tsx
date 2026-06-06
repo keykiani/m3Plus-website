@@ -18,11 +18,11 @@ interface SquadMember {
 }
 
 const squadMembers: SquadMember[] = [
-  { name: "Ivy Nguyen", role: "Product Designer", photo: "/images/squad/ivy-nguyen.jpg", href: undefined },
-  { name: "Kyle Rubens", role: "UI/UX Designer", photo: "/images/squad/kyle-rubens.jpg", href: undefined },
-  { name: "Carissa Francisco", role: "UX Product Designer", photo: "/images/squad/carrisa-francisco.jpg", href: undefined },
-  { name: "Kashvi Patel", role: "UX Designer", photo: "/images/squad/kashvi-patel.jpg", href: undefined },
-  { name: "Riya Arun", role: "UX Designer", photo: "/images/squad/riya-arun.jpg", href: undefined },
+  { name: "Ivy Nguyen", role: "Product Designer", photo: "/images/squad/ivy-nguyen.webp", href: undefined },
+  { name: "Kyle Rubens", role: "UI/UX Designer", photo: "/images/squad/kyle-rubens.webp", href: undefined },
+  { name: "Carissa Francisco", role: "UX Product Designer", photo: "/images/squad/carrisa-francisco.webp", href: undefined },
+  { name: "Kashvi Patel", role: "UX Designer", photo: "/images/squad/kashvi-patel.webp", href: undefined },
+  { name: "Riya Arun", role: "UX Designer", photo: "/images/squad/riya-arun.webp", href: undefined },
   { name: "Whitney Allen", role: "Designer", photo: undefined, href: undefined },
 ];
 

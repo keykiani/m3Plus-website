@@ -3,6 +3,6 @@ quote: "There's always something new to learn, something new to 'aha moments' an
 boldPhrase: "something new to 'aha moments'"
 author: "Victoria A."
 role: "UX Researcher @ New American Funding"
-photo: "/images/testimonials/victoria-apostol.jpg"
+photo: "/images/testimonials/victoria-apostol.webp"
 order: 1
 ---

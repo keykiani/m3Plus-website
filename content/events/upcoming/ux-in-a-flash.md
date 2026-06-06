@@ -5,7 +5,7 @@ displayDate: "Thursday, March 26"
 time: "6:00 PM – 8:30 PM"
 location: "5445 Legacy Dr, Plano, Texas"
 description: "TBA"
-image: "/images/events/ux-in-a-flash.jpg"
+image: "/images/events/ux-in-a-flash.webp"
 registerUrl: "https://api2.luma.com/ics/get?entity=calendar&id=cal-eA49a38rdSDAFZD"  # Update with real registration link
 isUpcoming: true
 year: 2026

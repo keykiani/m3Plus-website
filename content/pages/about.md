@@ -5,12 +5,12 @@ heroSubtext: "Bridging the gap between senior and junior members by creating dee
 
 whatIsHeadline: "What is M3+?"
 whatIsBody: "M3+ (Multidimensional Mutual Mentorship) bridges the gap between traditional networking and mentorship. Unlike one-directional mentoring, M3+ creates a community where designers at every level exchange knowledge, support one another's goals, and build lasting professional relationships. Whether you're just starting out or leading a team, there's a place for you here."
-whatIsImage: "/images/about-workshop.jpg"
+whatIsImage: "/images/about-workshop.webp"
 whatIsImageAlt: "M3+ workshop presentation"
 whatIsCtaLabel: "Join Us"
 whatIsCtaHref: "/get-involved"
 
-missionImage: "/images/about-mission.jpg"
+missionImage: "/images/about-mission.webp"
 missionImageAlt: "M3+ community gathering"
 missionHeadline: "Our Mission"
 missionBody: "To empower designers at every career stage through mutual mentorship, community-driven events, and accessible professional development — because growth is better together."

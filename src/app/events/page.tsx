@@ -62,7 +62,7 @@ export default async function EventsPage() {
                 <div className="relative aspect-[4/3] bg-primary-subtle flex items-center justify-center">
                   <p className="text-primary font-heading font-bold text-sm opacity-60 text-center px-4">
                     Add events hero photo to<br />
-                    <code className="font-mono">/public/images/events-hero.jpg</code>
+                    <code className="font-mono">/public/images/events-hero.webp</code>
                   </p>
                 </div>
               </div>
@@ -73,7 +73,7 @@ export default async function EventsPage() {
                 aria-hidden="true"
               >
                 <Image
-                  src="/images/hero-sticker-curser.png"
+                  src="/images/hero-sticker-curser.webp"
                   alt=""
                   fill
                   className="object-contain drop-shadow-lg"
