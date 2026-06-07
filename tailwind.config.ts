@@ -128,6 +128,10 @@ const config: Config = {
           "0%":   { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        "popup-in": {
+          "0%":   { opacity: "0", transform: "scale(0.95) translateY(20px)" },
+          "100%": { opacity: "1", transform: "scale(1) translateY(0)" },
+        },
         "accordion-down": {
           from: { height: "0px", opacity: "0" },
           to:   { height: "var(--radix-accordion-content-height, 100%)", opacity: "1" },
@@ -140,6 +144,7 @@ const config: Config = {
       animation: {
         "fade-up":        "fade-up 0.5s ease-out forwards",
         "fade-in":        "fade-in 0.4s ease-out forwards",
+        "popup-in":       "popup-in 0.25s ease-out forwards",
         "accordion-down": "accordion-down 0.22s ease-out",
         "accordion-up":   "accordion-up 0.22s ease-out",
       },
