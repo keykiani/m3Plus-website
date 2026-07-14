@@ -7,7 +7,7 @@ image: "/images/events/ai-experience-design.webp"
 isUpcoming: false
 year: 2025
 pdfUrl: "/resources/ai-experience-design.pdf"
-slideshowUrl: "/images/events/ai-experience-design-slide.jpg"
+slideshowUrl: ""
 resourceLinks:
   - emoji: "📄"
     title: "Session Notes PDF"
