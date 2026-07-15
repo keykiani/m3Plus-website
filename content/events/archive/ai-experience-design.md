@@ -9,7 +9,7 @@ year: 2025
 resourcesDriveUrl: ""   # Paste Google Drive "Anyone with link" folder URL here
 photosDriveUrl: ""      # Paste Google Drive "Anyone with link" folder URL here
 pdfUrl: "/resources/ai-experience-design.pdf"
-slideshowUrl: "/images/events/ai-experience-design-slide.jpg"
+slideshowUrl: ""
 resourceLinks:
   - emoji: "📄"
     title: "Session Notes PDF"

@@ -10,9 +10,9 @@ isUpcoming: false
 year: 2025
 
 # ── Event thumbnail image (optional) ─────────────────────────────────────────
-# Drop a 4:3 JPG in /public/images/events/ and paste the path below.
+# Drop a 4:3 WebP in /public/images/events/ and paste the path below.
 # If left blank, a coral M3+ placeholder is shown automatically.
-image: "/images/events/your-event-slug.jpg"
+image: "/images/events/your-event-slug.webp"
 
 # ── Google Drive links (fill in after the event) ─────────────────────────────
 # Share each folder/file with "Anyone with the link can view", then paste here.

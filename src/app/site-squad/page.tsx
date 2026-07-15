@@ -23,7 +23,7 @@ const squadMembers: SquadMember[] = [
   { name: "Carissa Francisco", role: "UX Product Designer", photo: "/images/squad/carrisa-francisco.webp", href: undefined },
   { name: "Kashvi Patel", role: "UX Designer", photo: "/images/squad/kashvi-patel.webp", href: undefined },
   { name: "Riya Arun", role: "UX Designer", photo: "/images/squad/riya-arun.webp", href: undefined },
-  { name: "Whitney Allen", role: "Designer", photo: undefined, href: undefined },
+  { name: "Whitney Allen", role: "Designer", photo: "/images/squad/whitney-allen.webp", href: undefined },
 ];
 
 const missionStatement =

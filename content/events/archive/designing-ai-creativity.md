@@ -3,13 +3,13 @@ title: "Designing AI for Creativity"
 date: "2025-07-31"
 displayDate: "Thursday, July 31"
 description: "An interactive workshop exploring how designers can harness AI tools to enhance — not replace — creative thinking and design processes."
-image: "/images/events/designing-ai-creativity.jpg"
+image: "/images/events/design-ai-creativity.webp"
 isUpcoming: false
 year: 2025
 resourcesDriveUrl: ""   # Paste Google Drive "Anyone with link" folder URL here
 photosDriveUrl: ""      # Paste Google Drive "Anyone with link" folder URL here
 pdfUrl: "/resources/designing-ai-creativity.pdf"
-slideshowUrl: "/images/events/designing-ai-creativity-slide.jpg"
+slideshowUrl: ""
 resourceLinks:
   - emoji: "📄"
     title: "Workshop Overview PDF"

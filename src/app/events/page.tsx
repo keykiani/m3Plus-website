@@ -59,11 +59,14 @@ export default async function EventsPage() {
                   <span className="w-3 h-3 rounded-full border-2 border-foreground" aria-hidden="true" />
                 </div>
                 {/* Photo area */}
-                <div className="relative aspect-[4/3] bg-primary-subtle flex items-center justify-center">
-                  <p className="text-primary font-heading font-bold text-sm opacity-60 text-center px-4">
-                    Add events hero photo to<br />
-                    <code className="font-mono">/public/images/events-hero.webp</code>
-                  </p>
+                <div className="relative aspect-[4/3] bg-primary-subtle overflow-hidden">
+                  <Image
+                    src="/images/events-hero.webp"
+                    alt="M3+ community members at an event"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 400px"
+                  />
                 </div>
               </div>
 
