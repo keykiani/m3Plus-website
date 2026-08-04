@@ -4,6 +4,8 @@ import { ArrowLeft, Download, ExternalLink, Presentation } from "lucide-react";
 import { getEventBySlug, getArchiveEvents } from "@/lib/markdown";
 import Button from "@/components/ui/Button";
 import SectionHeader from "@/components/ui/SectionHeader";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbSchema, eventSchema } from "@/lib/schema";
 import type { ResourceLink } from "@/lib/types";
 
 interface Props {
@@ -25,9 +27,19 @@ export const dynamicParams = false;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const event = await getEventBySlug(params.slug, "archive");
+  const canonical = `/events/${params.slug}`;
+
   return {
     title: event.title,
     description: event.description,
+    alternates: { canonical },
+    openGraph: {
+      type: "article",
+      title: event.title,
+      description: event.description,
+      url: canonical,
+      ...(event.image && { images: [{ url: event.image }] }),
+    },
   };
 }
 
@@ -65,6 +77,15 @@ export default async function EventResourcesPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={eventSchema(event)} />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Events", path: "/events" },
+          { name: event.title, path: `/events/${params.slug}` },
+        ])}
+      />
+
       {/* ── Back nav ──────────────────────────────────────────────── */}
       <div className="bg-neutral-100 border-b border-neutral-200">
         <div className="container-content py-4">
@@ -78,17 +99,21 @@ export default async function EventResourcesPage({ params }: Props) {
         </div>
       </div>
 
-      {/* ── Page heading — every page needs a top-level h1 ────────── */}
+      {/* ── Page header ── the page's h1, plus the event's own copy so
+             it isn't just a grid of outbound links. ─────────────────── */}
       <section className="bg-neutral-100 pt-10 pb-2">
         <div className="container-content">
+          <SectionHeader as="h1" label="Event Recap" title={event.title} />
           {event.displayDate && (
-            <p className="text-sm text-neutral-700 font-body mb-2">{event.displayDate}</p>
+            <p className="mt-4 text-sm font-heading font-bold uppercase tracking-widest text-neutral-700">
+              <time dateTime={event.date}>
+                {`${event.displayDate}${event.year ? `, ${event.year}` : ""}`}
+              </time>
+              {event.location && <> · {event.location}</>}
+            </p>
           )}
-          <h1 className="text-3xl md:text-4xl font-heading font-bold text-foreground leading-tight">
-            {event.title}
-          </h1>
           {event.description && (
-            <p className="mt-3 text-lg text-neutral-700 font-body leading-relaxed max-w-2xl">
+            <p className="mt-4 max-w-2xl text-lg text-neutral-700 font-body leading-relaxed">
               {event.description}
             </p>
           )}

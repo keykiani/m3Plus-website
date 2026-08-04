@@ -7,10 +7,18 @@ import Button from "@/components/ui/Button";
 import SectionHeader from "@/components/ui/SectionHeader";
 import LumaEventSection from "@/components/sections/LumaEventSection";
 
+const description =
+  "Explore upcoming M3+ design events in Plano and the Dallas–Fort Worth area, and browse our archive of past sessions, slideshows, and resources.";
+
 export const metadata: Metadata = {
   title: "Events",
-  description:
-    "Explore upcoming M3+ community events and browse our archive of past sessions, slideshows, and resources.",
+  description,
+  alternates: { canonical: "/events" },
+  openGraph: {
+    title: "M3+ Events — Upcoming and Past Sessions",
+    description,
+    url: "/events",
+  },
 };
 
 export default async function EventsPage() {
@@ -147,7 +155,9 @@ export default async function EventsPage() {
                             size="sm"
                           >
                             <BookOpen size={14} aria-hidden="true" />
-                            View Resources
+                            {/* Only promise resources when a Drive folder is
+                                actually linked; otherwise it's the recap page. */}
+                            {event.resourcesDriveUrl ? "View Resources" : "Event Details"}
                           </Button>
                           <Button
                             variant="outline"

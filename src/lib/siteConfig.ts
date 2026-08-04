@@ -6,6 +6,8 @@ export const siteConfig: SiteConfig = {
   tagline: "Connect. Grow. Lead.",
   description:
     "M3+ bridges the gap between networking and mentorship through community-driven events, mutual mentorship, and resources for designers at every level.",
+  // Override with NEXT_PUBLIC_SITE_URL in Netlify if the live domain differs.
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://m3plus.org").replace(/\/$/, ""),
   email: "team@m3plus.org", // Update with real email
   socialLinks: {
     linkedin: "https://www.linkedin.com/company/m3plusmentoring/",  // Update with real URL

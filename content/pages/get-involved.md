@@ -44,6 +44,7 @@ sponsorsBody: "Our sponsors make events and mentor opportunities possible. Your 
 sponsorCtaLabel: "Give Today"
 # Was https://donate.stripe.com/yourlink — an unregistered placeholder shipped on a
 # live "Give Today" button. Routed to email until a real Stripe link exists.
+# The button is also hidden entirely if this is ever emptied out.
 sponsorCtaHref: "mailto:team@m3plus.org?subject=Sponsoring%20M3%2B"
 
 newsletterHeadline: "Stay updated with our latest news."
