@@ -43,7 +43,14 @@
     #   style-src  'unsafe-inline'  Tailwind + Next.js inject inline <style>.
     #   font-src   'self'           Manrope is self-hosted via next/font.
     #   connect-src formspree.io    All three forms POST there via fetch().
-    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; frame-src https://lu.ma https://luma.com https://docs.google.com; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; frame-ancestors 'none'"
+    #   frame-src  *.lu.ma/*.luma.com
+    #                               The calendar loads from luma.com today. A CSP
+    #                               wildcard does NOT cover the bare domain, so
+    #                               both forms are listed: the bare hosts for what
+    #                               ships now, the wildcards so the calendar keeps
+    #                               working if Luma ever moves the embed to a
+    #                               subdomain. Still only Luma either way.
+    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; frame-src https://lu.ma https://*.lu.ma https://luma.com https://*.luma.com https://docs.google.com; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; frame-ancestors 'none'"
 
 # Hashed build assets are immutable — cache them hard.
 [[headers]]
