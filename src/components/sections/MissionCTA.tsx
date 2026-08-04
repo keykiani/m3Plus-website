@@ -18,7 +18,7 @@ export default function MissionCTA({
   return (
     <section className="bg-sky section-pad" aria-labelledby="mission-heading">
       <div className="container-content max-w-3xl mx-auto text-center">
-        <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary mb-3">
+        <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary-dark mb-3">
           {label}
         </p>
         <h2

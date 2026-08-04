@@ -30,7 +30,12 @@ export async function getMarkdownCollection(relativeDir: string) {
   const dirPath = path.join(contentDir, relativeDir);
   if (!fs.existsSync(dirPath)) return [];
 
-  const filenames = fs.readdirSync(dirPath).filter((f) => f.endsWith(".md"));
+  // Skip underscore-prefixed files — `_template.md` is scaffolding, not content.
+  // Without this it renders as a phantom archive event whose placeholder image
+  // path ("your-event-slug.webp") 500s the Next.js image optimizer.
+  const filenames = fs
+    .readdirSync(dirPath)
+    .filter((f) => f.endsWith(".md") && !f.startsWith("_"));
 
   const items = await Promise.all(
     filenames.map(async (filename) => {

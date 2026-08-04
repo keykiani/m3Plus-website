@@ -168,15 +168,17 @@ export default async function GetInvolvedPage() {
             centered
             className="mb-8"
           />
-          {/* Sponsor logo placeholders — replace with real logos */}
-          <div className="flex flex-wrap justify-center gap-6 mb-8" aria-label="Sponsor logos">
+          {/* Sponsor logo placeholders — replace with real logos.
+              `aria-label` was on plain <div>s, where ARIA prohibits naming, so it
+              was silently ignored. Placeholder text is now solid success-dark
+              (was success/40, which measured 1.51:1). */}
+          <div className="flex flex-wrap justify-center gap-6 mb-8">
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
                 className="w-20 h-20 rounded-full bg-success/20 border-2 border-success/30 flex items-center justify-center"
-                aria-label={`Sponsor ${i}`}
               >
-                <span className="text-success/40 font-heading font-bold text-xs">LOGO</span>
+                <span className="text-tertiary font-heading font-bold text-xs">LOGO</span>
               </div>
             ))}
           </div>

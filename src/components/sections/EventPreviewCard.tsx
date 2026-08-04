@@ -15,7 +15,7 @@ export default function EventPreviewCard({
   return (
     <section className="bg-neutral-100 section-pad" aria-label="Next event">
       <div className="container-content">
-        <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary mb-6">
+        <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary-dark mb-6">
           {sectionLabel}
         </p>
 

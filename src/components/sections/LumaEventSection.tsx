@@ -47,9 +47,13 @@ export default function LumaEventSection({
               display: "block",
               width: "100%",
             }}
-            allow="fullscreen; payment"
-            aria-label="M3+ upcoming event details via Luma"
-            title="M3+ Upcoming Event"
+            // `allow-top-navigation` is deliberately omitted so lu.ma cannot
+            // navigate a visitor's tab away from m3plus.org. `payment` was
+            // dropped from `allow` — nothing here takes payment through Luma.
+            sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms"
+            allow="fullscreen"
+            referrerPolicy="strict-origin-when-cross-origin"
+            title="M3+ upcoming events calendar"
             loading="lazy"
           />
         </div>
@@ -60,7 +64,7 @@ export default function LumaEventSection({
             href="https://lu.ma/m3plus"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary underline underline-offset-2 hover:text-tertiary-dark transition-colors"
+            className="text-primary-dark underline underline-offset-2 hover:text-tertiary-dark transition-colors"
           >
             View events on Luma
           </a>

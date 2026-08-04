@@ -1,0 +1,53 @@
+# Netlify configuration — security headers.
+#
+# Build settings are intentionally NOT specified here so the existing Netlify UI
+# configuration (and the Next.js runtime's auto-detection) keeps working. This
+# file only adds response headers, which Netlify merges on top of its defaults.
+
+[[headers]]
+  for = "/*"
+
+  [headers.values]
+    # ── Clickjacking ────────────────────────────────────────────────────────
+    # Without this, anyone can frame m3plus.org and overlay the contact /
+    # newsletter forms to harvest submissions. This is the one realistic
+    # attack against a static marketing site, so it is enforced immediately.
+    X-Frame-Options = "DENY"
+
+    # ── MIME sniffing ───────────────────────────────────────────────────────
+    X-Content-Type-Options = "nosniff"
+
+    # ── Referrer leakage ────────────────────────────────────────────────────
+    # Stops full URLs leaking to lu.ma, Google, Formspree, LinkedIn and Slack.
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # ── Feature delegation ──────────────────────────────────────────────────
+    # Nothing on this site uses these. Denying them at the document level also
+    # constrains what the embedded Luma / Google Slides iframes can request.
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+
+    # ── Transport security ──────────────────────────────────────────────────
+    # 1 year. Add `preload` only once you are certain every subdomain is HTTPS.
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+    # ── Content Security Policy ─────────────────────────────────────────────
+    # Shipped in Report-Only first. Load the homepage, the events page and an
+    # archive event detail page, confirm the Luma calendar and a Google Slides
+    # embed both still render and the console is clean, then rename this key to
+    # `Content-Security-Policy` to enforce it. The Luma embed is the likely
+    # breaker — widen `frame-src` / `connect-src` if its console reports blocks.
+    #
+    # Notes on the directives:
+    #   script-src 'unsafe-inline'  Next.js App Router injects inline hydration
+    #                               bootstrap scripts and does not use nonces here.
+    #   style-src  'unsafe-inline'  Tailwind + Next.js inject inline <style>.
+    #   font-src   'self'           Manrope is self-hosted via next/font.
+    #   connect-src formspree.io    All three forms POST there via fetch().
+    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; frame-src https://lu.ma https://luma.com https://docs.google.com; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; frame-ancestors 'none'"
+
+# Hashed build assets are immutable — cache them hard.
+[[headers]]
+  for = "/_next/static/*"
+
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

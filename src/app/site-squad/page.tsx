@@ -35,7 +35,7 @@ export default function SiteSquadPage() {
       {/* ── Hero ──────────────────────────────────────────────────── */}
       <section className="bg-sky grid-bg section-pad">
         <div className="container-content">
-          <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary mb-3">
+          <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary-dark mb-3">
             Behind the Scenes
           </p>
           <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground leading-tight max-w-2xl mb-4">
@@ -50,7 +50,7 @@ export default function SiteSquadPage() {
       {/* ── Mission ───────────────────────────────────────────────── */}
       <section className="bg-cream section-pad">
         <div className="container-content max-w-3xl">
-          <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary mb-3">
+          <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary-dark mb-3">
             Our Mission
           </p>
           <p className="text-neutral font-body text-lg leading-relaxed">
@@ -92,7 +92,7 @@ export default function SiteSquadPage() {
                     <h3 className="font-heading font-bold text-lg text-foreground mb-0.5">
                       {member.name}
                     </h3>
-                    <p className="text-primary font-body text-sm font-semibold">
+                    <p className="text-primary-dark font-body text-sm font-semibold">
                       {member.role}
                     </p>
                   </div>

@@ -53,11 +53,15 @@ export default function Navbar() {
                   href={link.href}
                   className={cn(
                     "font-heading font-semibold text-base transition-colors duration-150",
-                    "hover:text-primary focus:outline-none focus-visible:text-primary",
+                    "hover:text-primary",
+                    // Visible focus ring — colour alone is not a sufficient indicator,
+                    // and the active link is already text-primary (no change on focus).
+                    "rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-sky",
                     "relative after:absolute after:bottom-[-2px] after:left-0 after:h-[2px] after:bg-primary",
                     "after:transition-all after:duration-200",
+                    // primary-dark: #2977BD on bg-sky measured 4.05:1 (needs 4.5:1).
                     isActive
-                      ? "text-primary after:w-full"
+                      ? "text-primary-dark after:w-full"
                       : "text-neutral-900 after:w-0 hover:after:w-full"
                   )}
                   aria-current={isActive ? "page" : undefined}
@@ -81,6 +85,7 @@ export default function Navbar() {
           className="md:hidden p-2 rounded-btn text-neutral-900 hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           onClick={() => setMobileOpen((prev) => !prev)}
           aria-expanded={mobileOpen}
+          aria-controls="mobile-nav-drawer"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -89,10 +94,17 @@ export default function Navbar() {
 
       {/* ── Mobile Drawer — CSS grid-rows transition, no Framer Motion ── */}
       <div
+        id="mobile-nav-drawer"
         className={cn(
           "md:hidden overflow-hidden",
-          "grid transition-[grid-template-rows,opacity] duration-200 ease-in-out",
-          mobileOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+          "grid transition-[grid-template-rows,opacity,visibility] duration-200 ease-in-out",
+          // `invisible` (visibility: hidden) is what actually removes the collapsed
+          // drawer's links from the tab order — grid-rows-[0fr] + opacity-0 do not.
+          // Transitioning visibility keeps the fade-out: it flips to `visible`
+          // immediately on open, and waits out the duration on close.
+          mobileOpen
+            ? "grid-rows-[1fr] opacity-100 visible"
+            : "grid-rows-[0fr] opacity-0 invisible"
         )}
         aria-hidden={!mobileOpen}
       >

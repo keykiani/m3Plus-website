@@ -20,7 +20,7 @@ resourceLinks:
     title: "AI UX Template"
     description: "A Figma template for mapping AI-assisted design workflows."
     buttonLabel: "Get Template"
-    url: "https://figma.com/your-template-link"
+    url: "#"   # TODO: unregistered placeholder domain removed — paste the real Figma template URL
   - emoji: "📚"
     title: "Case Study Examples"
     description: "Real-world examples of AI-enhanced design projects from the community."
