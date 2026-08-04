@@ -44,9 +44,13 @@ export default function JourneyCards({ headline, subtitle, cards }: JourneyCards
                 <div className="absolute inset-0 bg-sky" />
               )}
 
-              {/* Dark gradient overlay */}
+              {/* Dark gradient scrim. Measured against the real rendered photos:
+                  at via-30% the caption area bottomed out at 3.98:1 over the
+                  lightest pixel of journey-starting, under the 4.5:1 minimum.
+                  Deepening the midpoint keeps the text legible whatever photo
+                  is swapped in later. */}
               <div
-                className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-900/30 to-transparent"
+                className="absolute inset-0 bg-gradient-to-t from-neutral-900/95 via-neutral-900/60 to-transparent"
                 aria-hidden="true"
               />
 
@@ -56,7 +60,9 @@ export default function JourneyCards({ headline, subtitle, cards }: JourneyCards
                   {card.title}
                 </h3>
                 {card.description && (
-                  <p className="text-white/80 font-body text-sm leading-relaxed">
+                  /* Full white, not white/80 — the 20% transparency was costing
+                     roughly a full point of contrast over a mid-tone photo. */
+                  <p className="text-white font-body text-sm leading-relaxed">
                     {card.description}
                   </p>
                 )}
