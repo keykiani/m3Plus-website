@@ -68,6 +68,7 @@ interface InputWrapperProps {
   htmlFor:   string;
   error?:    string;
   srOnly?:   boolean;       // hide label visually (still accessible)
+  required?: boolean;       // adds aria-required + the visual asterisk
   children:  React.ReactNode;
   className?: string;
 }
@@ -77,24 +78,29 @@ export function InputWrapper({
   htmlFor,
   error,
   srOnly = false,
+  required = false,
   children,
   className,
 }: InputWrapperProps) {
   const errorId = error ? `${htmlFor}-error` : undefined;
 
   /**
-   * Tie the error message to the field with aria-describedby. Without this a
-   * screen reader returning to an invalid input announces "invalid entry" with
-   * no explanation — role="alert" only fires once, at render.
+   * Tie the error message to the field with aria-describedby, and mark required
+   * fields with aria-required. Without the former a screen reader returning to
+   * an invalid input announces "invalid entry" with no explanation — role="alert"
+   * only fires once, at render.
    *
-   * Cloning here means every field in every form gets the association from a
-   * single place, rather than each call site having to remember it.
+   * Cloning here means every field in every form gets both from a single place,
+   * rather than each call site having to remember them.
    */
   const field =
-    errorId && isValidElement<{ "aria-describedby"?: string }>(children)
+    isValidElement<{ "aria-describedby"?: string; "aria-required"?: boolean }>(children)
       ? cloneElement(children, {
-          "aria-describedby":
-            [children.props["aria-describedby"], errorId].filter(Boolean).join(" "),
+          ...(errorId && {
+            "aria-describedby":
+              [children.props["aria-describedby"], errorId].filter(Boolean).join(" "),
+          }),
+          ...(required && { "aria-required": true }),
         })
       : children;
 
@@ -108,6 +114,13 @@ export function InputWrapper({
         )}
       >
         {label}
+        {/* Decorative only — aria-required carries this to assistive tech.
+            Baked into the label string it was announced as "First Name star". */}
+        {required && (
+          <span aria-hidden="true" className="text-error ml-0.5">
+            *
+          </span>
+        )}
       </label>
       {field}
       {error && (
@@ -116,6 +129,20 @@ export function InputWrapper({
         </p>
       )}
     </div>
+  );
+}
+
+// ─── RequiredLegend ───────────────────────────────────────────────────────────
+
+/**
+ * Key for the asterisk. An unexplained `*` is meaningless on its own — WCAG
+ * 3.3.2 wants the convention identified, not just the fields decorated.
+ */
+export function RequiredLegend({ className }: { className?: string }) {
+  return (
+    <p className={cn("font-body text-sm text-neutral-700", className)}>
+      <span aria-hidden="true" className="text-error">*</span> Required
+    </p>
   );
 }
 

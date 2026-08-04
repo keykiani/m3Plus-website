@@ -11,7 +11,7 @@
  *   <Accordion items={faqs} variant="subtle" />   // light border style
  */
 
-import { useState } from "react";
+import { useState, useId } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -34,13 +34,17 @@ export default function Accordion({
   className,
 }: AccordionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  /** Unique per instance, so two accordions on one page can't collide. */
+  const baseId = useId();
 
   const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
 
   return (
     <div className={cn("w-full", className)} role="list">
       {items.map((item, i) => {
-        const isOpen = openIndex === i;
+        const isOpen    = openIndex === i;
+        const triggerId = `${baseId}-trigger-${i}`;
+        const panelId   = `${baseId}-panel-${i}`;
 
         return (
           <div
@@ -54,8 +58,10 @@ export default function Accordion({
             {/* ── Trigger ──────────────────────────────────────────── */}
             <button
               type="button"
+              id={triggerId}
               onClick={() => toggle(i)}
               aria-expanded={isOpen}
+              aria-controls={panelId}
               className={cn(
                 "w-full flex items-center justify-between gap-4 px-5 py-4",
                 "font-heading font-bold text-left transition-colors duration-150",
@@ -86,17 +92,26 @@ export default function Accordion({
               />
             </button>
 
-            {/* ── Content — CSS height animation ───────────────────── */}
+            {/* ── Content — grid-rows animation, no height ceiling ──────
+                grid-rows-[1fr]/[0fr] animates to the content's natural height,
+                so there is no max-height to outgrow. `invisible` is what keeps
+                collapsed content out of the tab order if an answer ever gains a
+                link — the exact bug that hit the mobile nav drawer. */}
             <div
+              id={panelId}
+              role="region"
+              aria-labelledby={triggerId}
               className={cn(
-                "overflow-hidden transition-all duration-300 ease-in-out",
-                isOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+                "grid overflow-hidden",
+                "transition-[grid-template-rows,opacity,visibility] duration-300 ease-in-out",
+                isOpen
+                  ? "grid-rows-[1fr] opacity-100 visible"
+                  : "grid-rows-[0fr] opacity-0 invisible"
               )}
-              aria-hidden={!isOpen}
             >
               <div
                 className={cn(
-                  "font-body leading-relaxed text-base",
+                  "min-h-0 font-body leading-relaxed text-base",
                   variant === "bold"   && "bg-white text-neutral-700 px-5 py-4 rounded-b-btn border border-t-0 border-primary/20",
                   variant === "subtle" && "text-neutral-700 pb-5 px-0"
                 )}

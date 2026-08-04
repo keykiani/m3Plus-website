@@ -177,9 +177,10 @@ export default async function AboutPage() {
                   {/* Photo area — Avatar fills if no image */}
                   <div className="relative aspect-square bg-primary-subtle flex items-center justify-center mb-4">
                     {member.photo ? (
+                      /* Decorative: the name is the <h3> directly below. */
                       <Image
                         src={member.photo}
-                        alt={member.name}
+                        alt=""
                         fill
                         className="object-cover"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 500px"

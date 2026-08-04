@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Send, CheckCircle2, AlertCircle } from "lucide-react";
 import Button from "@/components/ui/Button";
-import { Input, Textarea, InputWrapper } from "@/components/ui/Input";
+import { Input, Textarea, InputWrapper, RequiredLegend } from "@/components/ui/Input";
 import HoneypotField from "@/components/forms/HoneypotField";
 import { siteConfig } from "@/lib/siteConfig";
 
@@ -53,8 +53,10 @@ export default function ContactForm() {
 
       {/* Labels are visible rather than sr-only: a placeholder is not a label —
           it disappears on input, and at the required contrast it was ~2:1. */}
+      <RequiredLegend />
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <InputWrapper label="Name" htmlFor="footer-name" error={errors.name?.message}>
+        <InputWrapper label="Name" htmlFor="footer-name" required error={errors.name?.message}>
           <Input
             id="footer-name"
             placeholder="Name"
@@ -63,7 +65,7 @@ export default function ContactForm() {
           />
         </InputWrapper>
 
-        <InputWrapper label="Email" htmlFor="footer-email" error={errors.email?.message}>
+        <InputWrapper label="Email" htmlFor="footer-email" required error={errors.email?.message}>
           <Input
             id="footer-email"
             type="email"
@@ -77,7 +79,7 @@ export default function ContactForm() {
         </InputWrapper>
       </div>
 
-      <InputWrapper label="Subject" htmlFor="footer-subject" error={errors.subject?.message}>
+      <InputWrapper label="Subject" htmlFor="footer-subject" required error={errors.subject?.message}>
         <Input
           id="footer-subject"
           placeholder="Subject"
@@ -86,7 +88,7 @@ export default function ContactForm() {
         />
       </InputWrapper>
 
-      <InputWrapper label="Message" htmlFor="footer-message" error={errors.message?.message}>
+      <InputWrapper label="Message" htmlFor="footer-message" required error={errors.message?.message}>
         <Textarea
           id="footer-message"
           placeholder="Message"

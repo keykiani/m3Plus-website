@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -13,6 +13,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   // Add shadow on scroll
   useEffect(() => {
@@ -23,6 +24,30 @@ export default function Navbar() {
 
   // Close mobile menu on route change
   useEffect(() => setMobileOpen(false), [pathname]);
+
+  /**
+   * Close on Escape and hand focus back to the toggle.
+   *
+   * Deliberately not a focus trap: this is a disclosure, not a dialog. There is
+   * no role="dialog"/aria-modal here and the page behind it stays legitimately
+   * reachable, so trapping Tab would strand keyboard users rather than help
+   * them. NewsletterPopUp is the modal pattern; this is not that.
+   */
+  const closeMenu = useCallback(() => {
+    setMobileOpen(false);
+    menuButtonRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      closeMenu();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [mobileOpen, closeMenu]);
 
   return (
     <header
@@ -82,6 +107,7 @@ export default function Navbar() {
 
         {/* ── Mobile Hamburger ──────────────────────────────────────── */}
         <button
+          ref={menuButtonRef}
           className="md:hidden p-2 rounded-btn text-neutral-900 hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           onClick={() => setMobileOpen((prev) => !prev)}
           aria-expanded={mobileOpen}
@@ -118,8 +144,15 @@ export default function Navbar() {
                     href={link.href}
                     className={cn(
                       "block font-heading font-semibold text-lg py-2",
-                      isActive ? "text-primary" : "text-neutral-900"
+                      // The desktop links got a focus ring; these did not, so
+                      // keyboard focus inside the open drawer was invisible.
+                      "rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-sky",
+                      // primary (#2977BD) on the drawer's bg-sky (#E3F0FC) is
+                      // 4.06:1 — the same failure fixed on the desktop nav and
+                      // missed here. primary-dark (#1E5A94) gives 6.16:1.
+                      isActive ? "text-primary-dark" : "text-neutral-900"
                     )}
+                    aria-current={isActive ? "page" : undefined}
                   >
                     {link.label}
                   </Link>

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect, useRef } from "react";
 import { Send, CheckCircle2, AlertCircle } from "lucide-react";
 import Button from "@/components/ui/Button";
-import { Input, Textarea, Select, InputWrapper } from "@/components/ui/Input";
+import { Input, Textarea, Select, InputWrapper, RequiredLegend } from "@/components/ui/Input";
 import HoneypotField from "@/components/forms/HoneypotField";
 import { siteConfig } from "@/lib/siteConfig";
 
@@ -89,8 +89,10 @@ export default function GetInvolvedForm({ contributionOptions }: GetInvolvedForm
     >
       <HoneypotField register={register("_gotcha")} />
 
+      <RequiredLegend />
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <InputWrapper label="First Name *" htmlFor="gi-firstName" error={errors.firstName?.message}>
+        <InputWrapper label="First Name" htmlFor="gi-firstName" required error={errors.firstName?.message}>
           <Input
             id="gi-firstName"
             placeholder="First Name"
@@ -99,7 +101,7 @@ export default function GetInvolvedForm({ contributionOptions }: GetInvolvedForm
           />
         </InputWrapper>
 
-        <InputWrapper label="Last Name *" htmlFor="gi-lastName" error={errors.lastName?.message}>
+        <InputWrapper label="Last Name" htmlFor="gi-lastName" required error={errors.lastName?.message}>
           <Input
             id="gi-lastName"
             placeholder="Last Name"
@@ -109,7 +111,7 @@ export default function GetInvolvedForm({ contributionOptions }: GetInvolvedForm
         </InputWrapper>
       </div>
 
-      <InputWrapper label="Email Address *" htmlFor="gi-email" error={errors.email?.message}>
+      <InputWrapper label="Email Address" htmlFor="gi-email" required error={errors.email?.message}>
         <Input
           id="gi-email"
           type="email"
@@ -139,8 +141,9 @@ export default function GetInvolvedForm({ contributionOptions }: GetInvolvedForm
       </InputWrapper>
 
       <InputWrapper
-        label="How would you like to contribute? *"
+        label="How would you like to contribute?"
         htmlFor="gi-contribution"
+        required
         error={errors.contribution?.message}
       >
         <Select
@@ -164,8 +167,9 @@ export default function GetInvolvedForm({ contributionOptions }: GetInvolvedForm
       </InputWrapper>
 
       <InputWrapper
-        label="What excites you about contributing to M3+? *"
+        label="What excites you about contributing to M3+?"
         htmlFor="gi-motivation"
+        required
         error={errors.motivation?.message}
       >
         <Textarea

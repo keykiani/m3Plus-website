@@ -30,7 +30,25 @@ export default function NewsletterPopUp() {
   useEffect(() => {
     const dismissed = localStorage.getItem(STORAGE_KEY);
     if (dismissed) return;
-    const timer = setTimeout(() => setVisible(true), SHOW_DELAY_MS);
+
+    /**
+     * Don't interrupt someone mid-form. Opening moves focus to the close button,
+     * so firing while a visitor is typing in the footer contact form yanks focus
+     * away and sends their next keystrokes into the newsletter email field.
+     * Re-arm instead of cancelling, so the popup still appears once they stop.
+     */
+    const isTyping = () => {
+      const el = document.activeElement;
+      return !!el?.closest("form") &&
+        ["INPUT", "TEXTAREA", "SELECT"].includes(el.tagName);
+    };
+
+    let timer: ReturnType<typeof setTimeout>;
+    const arm = () => {
+      timer = setTimeout(() => (isTyping() ? arm() : setVisible(true)), SHOW_DELAY_MS);
+    };
+    arm();
+
     return () => clearTimeout(timer);
   }, []);
 
