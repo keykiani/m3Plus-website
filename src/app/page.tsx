@@ -10,7 +10,8 @@ import MissionCTA from "@/components/sections/MissionCTA";
 export const metadata: Metadata = {
   title: "Home",
   description:
-    "M3+ Mutual Mentoring — Connect with designers at every level through mentorship, events, and community support.",
+    "M3+ Mutual Mentoring — Connect with designers at every level through mentorship, events, and community support in the Dallas–Fort Worth area.",
+  alternates: { canonical: "/" },
 };
 
 export default async function HomePage() {

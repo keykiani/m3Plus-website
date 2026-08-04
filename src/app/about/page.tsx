@@ -11,12 +11,24 @@ import Button from "@/components/ui/Button";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Avatar from "@/components/ui/Avatar";
 import Accordion from "@/components/ui/Accordion";
+import JsonLd from "@/components/seo/JsonLd";
+import { faqSchema } from "@/lib/schema";
 import TestimonialBlock from "@/components/sections/TestimonialBlock";
+
+const description =
+  "Learn about M3+ Mutual Mentoring — our mission, values, team, and the free monthly design community we're building in Plano, Texas.";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description:
-    "Learn about M3+ Mutual Mentoring — our mission, values, team, and the community we're building.",
+  description,
+  alternates: { canonical: "/about" },
+  // Without an explicit openGraph block the page inherits the layout's
+  // og:title/og:url, so shared links show the homepage instead.
+  openGraph: {
+    title: "About M3+ Mutual Mentoring",
+    description,
+    url: "/about",
+  },
 };
 
 export default async function AboutPage() {
@@ -213,10 +225,16 @@ export default async function AboutPage() {
         <div className="container-content max-w-3xl mx-auto">
           <SectionHeader title={a.faqHeadline} className="mb-10" />
           {a.faqs && (
-            <Accordion
-              items={a.faqs}
-              variant="bold"
-            />
+            <>
+              {/* Answers are present in the SSR HTML (the Accordion collapses
+                  with CSS, it doesn't conditionally render), so this markup
+                  matches what crawlers actually see. */}
+              <JsonLd data={faqSchema(a.faqs)} />
+              <Accordion
+                items={a.faqs}
+                variant="bold"
+              />
+            </>
           )}
         </div>
       </section>

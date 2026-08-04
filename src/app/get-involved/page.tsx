@@ -8,9 +8,18 @@ import TestimonialBlock from "@/components/sections/TestimonialBlock";
 import GetInvolvedForm from "@/components/forms/GetInvolvedForm";
 import NewsletterForm from "@/components/forms/NewsletterForm";
 
+const description =
+  "Join M3+ as a mentor, volunteer, or guide. Find your role in our Dallas–Fort Worth design community.";
+
 export const metadata: Metadata = {
   title: "Get Involved",
-  description: "Join M3+ as a mentor, volunteer, or guide. Find your role in our design community.",
+  description,
+  alternates: { canonical: "/get-involved" },
+  openGraph: {
+    title: "Get Involved with M3+",
+    description,
+    url: "/get-involved",
+  },
 };
 
 // Map icon name strings from content to Lucide components
@@ -51,20 +60,17 @@ export default async function GetInvolvedPage() {
     <>
       {/* ── Hero ──────────────────────────────────────────────────── */}
       <section className="bg-sky grid-bg section-pad relative">
-        {/* Mobile: Single SVG clover */}
-        <img
-          src="/images/m3clover.svg"
-          alt=""
-          aria-hidden="true"
-          className="lg:hidden absolute -top-20 -left-20 w-80 h-80 opacity-60 pointer-events-none select-none"
-        />
-        {/* Desktop: PNG clovers */}
+        {/* Decorative clovers. One format at every breakpoint — the previous
+            mobile/desktop pair pointed at a non-existent .svg and downloaded
+            both files regardless of viewport (CSS visibility doesn't cancel
+            the request). */}
         <img
           src="/images/m3clover.webp"
           alt=""
           aria-hidden="true"
-          className="hidden lg:block absolute -top-20 -left-20 w-80 h-80 opacity-60 pointer-events-none select-none"
+          className="absolute -top-20 -left-20 w-80 h-80 opacity-60 pointer-events-none select-none"
         />
+        {/* Second clover on large screens only */}
         <img
           src="/images/m3clover.webp"
           alt=""
@@ -180,9 +186,12 @@ export default async function GetInvolvedPage() {
               </div>
             ))}
           </div>
-          <Button variant="primary" href={p.sponsorCtaHref} external size="md">
-            {p.sponsorCtaLabel}
-          </Button>
+          {/* Hidden until a real donation link is configured in content. */}
+          {p.sponsorCtaHref && (
+            <Button variant="primary" href={p.sponsorCtaHref} external size="md">
+              {p.sponsorCtaLabel}
+            </Button>
+          )}
         </div>
       </section>
 

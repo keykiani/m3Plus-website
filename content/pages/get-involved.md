@@ -42,7 +42,9 @@ contributionOptions:
 sponsorsHeadline: "Our Sponsors"
 sponsorsBody: "Our sponsors make events and mentor opportunities possible. Your contribution helps us keep events free and accessible to all designers."
 sponsorCtaLabel: "Give Today"
-sponsorCtaHref: "https://donate.stripe.com/yourlink"  # Update with real donation link
+# Paste the real donation link here — the "Give Today" button stays hidden
+# while this is empty, so the site never ships a button that goes nowhere.
+sponsorCtaHref: ""
 
 newsletterHeadline: "Stay updated with our latest news."
 newsletterSubtext: "Monthly digest. No spam. Unsubscribe anytime."

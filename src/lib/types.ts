@@ -9,6 +9,14 @@ export interface SiteConfig {
   name: string;
   tagline: string;
   description: string;
+  /**
+   * Canonical production origin, no trailing slash.
+   *
+   * Used as Next.js `metadataBase` so canonical URLs, Open Graph images, and
+   * the sitemap all resolve to absolute URLs. Set `NEXT_PUBLIC_SITE_URL` in
+   * Netlify if the live domain ever differs from the default.
+   */
+  url: string;
   email: string;
   socialLinks: {
     linkedin?: string;

@@ -8,17 +8,5 @@ isUpcoming: false
 year: 2025
 resourcesDriveUrl: ""   # Paste Google Drive "Anyone with link" folder URL here
 photosDriveUrl: ""      # Paste Google Drive "Anyone with link" folder URL here
-pdfUrl: "/resources/full-stack-designer.pdf"
-slideshowUrl: ""
-resourceLinks:
-  - emoji: "📄"
-    title: "Archetypes Framework PDF"
-    description: "The full framework for assessing and developing your designer skill set."
-    buttonLabel: "Download Framework"
-    url: "/resources/full-stack-designer.pdf"
-  - emoji: "🗺️"
-    title: "Self-Assessment Template"
-    description: "Map your current skills across the 6 archetypes and plan your growth."
-    buttonLabel: "Get Template"
-    url: "#"
+slideshowUrl: ""        # Paste the Google Slides share URL here
 ---

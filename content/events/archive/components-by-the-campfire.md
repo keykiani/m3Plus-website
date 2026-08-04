@@ -6,17 +6,7 @@ description: "Fireside-style workshop focusing on how designers and developers b
 image: "/images/events/ai-experience-design.webp"
 isUpcoming: false
 year: 2026
-pdfUrl: "/resources/ai-experience-design.pdf"
-slideshowUrl: ""
-resourceLinks:
-  - emoji: "📄"
-    title: "Session Notes PDF"
-    description: "Full notes and key takeaways from the event."
-    buttonLabel: "Download Notes"
-    url: "/resources/ai-experience-design.pdf"
-  - emoji: "🎨"
-    title: "Design Prompt Cheatsheet"
-    description: "50+ design prompts for AI tools tested by the community."
-    buttonLabel: "Get Cheatsheet"
-    url: "#"
+resourcesDriveUrl: ""   # Paste Google Drive "Anyone with link" folder URL here
+photosDriveUrl: ""      # Paste Google Drive "Anyone with link" folder URL here
+slideshowUrl: ""        # Paste the Google Slides share URL here
 ---

@@ -25,12 +25,21 @@ export async function getMarkdownFile(relativePath: string) {
   };
 }
 
-/** Read all .md files in a directory, returning an array of parsed results */
+/**
+ * Read all .md files in a directory, returning an array of parsed results.
+ *
+ * Files prefixed with `_` are skipped — that's the convention for scaffolding
+ * that lives alongside real content (e.g. `_template.md`). Without this,
+ * `content/events/archive/_template.md` renders as a real event on /events
+ * and prerenders at /events/_template.
+ */
 export async function getMarkdownCollection(relativeDir: string) {
   const dirPath = path.join(contentDir, relativeDir);
   if (!fs.existsSync(dirPath)) return [];
 
-  const filenames = fs.readdirSync(dirPath).filter((f) => f.endsWith(".md"));
+  const filenames = fs
+    .readdirSync(dirPath)
+    .filter((f) => f.endsWith(".md") && !f.startsWith("_"));
 
   const items = await Promise.all(
     filenames.map(async (filename) => {

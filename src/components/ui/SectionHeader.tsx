@@ -7,6 +7,12 @@ interface SectionHeaderProps {
   centered?: boolean;
   className?: string;
   id?: string;         // Optional id for aria-labelledby targets
+  /**
+   * Heading level to render. Defaults to `h2` — pages that use this component
+   * for their primary heading (event detail, event photos) pass `h1` so the
+   * document doesn't start at h2.
+   */
+  as?: "h1" | "h2";
 }
 
 export default function SectionHeader({
@@ -16,6 +22,7 @@ export default function SectionHeader({
   centered = false,
   className,
   id,
+  as: Heading = "h2",
 }: SectionHeaderProps) {
   return (
     <div className={cn(centered && "text-center", className)}>
@@ -24,9 +31,9 @@ export default function SectionHeader({
           {label}
         </p>
       )}
-      <h2 id={id} className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-neutral-900 leading-tight">
+      <Heading id={id} className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-neutral-900 leading-tight">
         {title}
-      </h2>
+      </Heading>
       {subtitle && (
         <p className="mt-4 text-lg text-neutral-700 max-w-2xl leading-relaxed">
           {subtitle}
