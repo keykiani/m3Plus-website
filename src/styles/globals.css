@@ -8,6 +8,24 @@
     scroll-behavior: smooth;
   }
 
+  /* Respect the OS "reduce motion" setting. Covers every Tailwind animation
+     (fade-up, fade-in, popup-in, accordion), all transitions, and the smooth
+     scroll used by the skip link and in-page anchors. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   body {
     @apply font-body text-neutral-900 bg-neutral-100;
     -webkit-font-smoothing: antialiased;

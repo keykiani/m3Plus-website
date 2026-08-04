@@ -16,6 +16,9 @@ export async function generateStaticParams() {
   return events.map((e) => ({ slug: e.slug }));
 }
 
+/** See the note in ../page.tsx — the slug reaches a filesystem path. */
+export const dynamicParams = false;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const event = await getEventBySlug(params.slug, "archive");
 
@@ -76,7 +79,8 @@ export default async function EventPhotosPage({ params }: Props) {
               <p className="text-neutral font-body text-lg mb-2">
                 Photos from this event are available on Google Drive.
               </p>
-              <p className="text-sm text-neutral/60 font-body mb-8">
+              {/* /60 over bg-cream measured 2.18:1 — use the solid token. */}
+              <p className="text-sm text-neutral font-body mb-8">
                 Opens in a new tab — no sign-in required.
               </p>
               <Button variant="primary" href={event.photosDriveUrl} external>
@@ -91,7 +95,7 @@ export default async function EventPhotosPage({ params }: Props) {
               <p className="text-neutral font-body text-lg">
                 Photos for this event are coming soon.
               </p>
-              <p className="text-sm text-neutral/60 mt-2 font-body">
+              <p className="text-sm text-neutral mt-2 font-body">
                 Upload photos to Google Drive and add the folder link to this event&apos;s markdown file.
               </p>
             </div>

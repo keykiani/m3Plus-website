@@ -17,6 +17,14 @@ export async function generateStaticParams() {
   return events.map((e) => ({ slug: e.slug }));
 }
 
+/**
+ * Only the slugs from generateStaticParams may be rendered. `getEventBySlug`
+ * interpolates this param into a filesystem path, so leaving the default
+ * (`true`) would let an on-demand request for `../..`-style slug traverse
+ * outside content/ on the Netlify SSR runtime.
+ */
+export const dynamicParams = false;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const event = await getEventBySlug(params.slug, "archive");
   const canonical = `/events/${params.slug}`;
@@ -40,9 +48,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
  * Returns null if the URL is not a Google Slides link.
  */
 function getGoogleSlidesEmbedUrl(url: string): string | null {
-  if (!url.includes("docs.google.com/presentation")) return null;
-  const match = url.match(/\/presentation\/d\/([a-zA-Z0-9_-]+)/);
+  let parsed: URL;
+  try {
+    parsed = new URL(url);
+  } catch {
+    return null;
+  }
+  // Match on the parsed hostname, not a substring of the whole URL — otherwise
+  // `https://evil.com/#docs.google.com/presentation/d/X` slips past the guard.
+  if (parsed.hostname !== "docs.google.com") return null;
+
+  const match = parsed.pathname.match(/^\/presentation\/d\/([a-zA-Z0-9_-]+)/);
   if (!match) return null;
+
+  // Only the extracted ID is reused; the origin is hardcoded, so the iframe src
+  // can never become a javascript:/data: URI or a third-party origin.
   return `https://docs.google.com/presentation/d/${match[1]}/embed?start=false&loop=false`;
 }
 
@@ -84,15 +104,19 @@ export default async function EventResourcesPage({ params }: Props) {
       <section className="bg-neutral-100 pt-10 pb-2">
         <div className="container-content">
           <SectionHeader as="h1" label="Event Recap" title={event.title} />
-          <p className="mt-4 text-sm font-heading font-bold uppercase tracking-widest text-neutral-700">
-            <time dateTime={event.date}>
-              {`${event.displayDate}${event.year ? `, ${event.year}` : ""}`}
-            </time>
-            {event.location && <> · {event.location}</>}
-          </p>
-          <p className="mt-4 max-w-2xl text-lg text-neutral-700 font-body leading-relaxed">
-            {event.description}
-          </p>
+          {event.displayDate && (
+            <p className="mt-4 text-sm font-heading font-bold uppercase tracking-widest text-neutral-700">
+              <time dateTime={event.date}>
+                {`${event.displayDate}${event.year ? `, ${event.year}` : ""}`}
+              </time>
+              {event.location && <> · {event.location}</>}
+            </p>
+          )}
+          {event.description && (
+            <p className="mt-4 max-w-2xl text-lg text-neutral-700 font-body leading-relaxed">
+              {event.description}
+            </p>
+          )}
         </div>
       </section>
 
@@ -110,6 +134,9 @@ export default async function EventResourcesPage({ params }: Props) {
                   className="absolute inset-0 w-full h-full"
                   allowFullScreen
                   allow="fullscreen"
+                  // No `allow-top-navigation` — the embed cannot redirect the tab.
+                  sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+                  referrerPolicy="strict-origin-when-cross-origin"
                   title={`${event.title} slideshow`}
                   loading="lazy"
                 />

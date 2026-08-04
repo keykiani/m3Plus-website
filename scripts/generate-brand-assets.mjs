@@ -1,12 +1,15 @@
 /**
- * Generates favicon, Apple touch icon, and the Open Graph share card from the
- * brand logo. Run with: node scripts/generate-brand-assets.mjs
+ * Generates the Apple touch icon and the Open Graph share card.
+ * Run with: node scripts/generate-brand-assets.mjs
  *
  * Outputs (committed to the repo, so this only needs re-running when the logo
  * or brand colors change):
- *   src/app/icon.png        512x512  — browser tab / PWA icon
  *   src/app/apple-icon.png  180x180  — iOS home screen
  *   public/og-image.png    1200x630  — link previews (LinkedIn, Slack, X)
+ *
+ * `src/app/icon.png` is NOT generated here — it is a hand-made favicon
+ * committed to the repo. The Apple icon is derived from it so the two stay
+ * visually identical; replace icon.png and re-run to update both.
  *
  * NOTE ON TYPE: the brand heading font is Manrope, which is loaded at runtime
  * via `next/font/google` and is not available to this script as a font file.
@@ -22,6 +25,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 const LOGO = path.join(root, "public/images/m3-circle.svg");
+const FAVICON = path.join(root, "src/app/icon.png");
 
 // Brand tokens — keep in sync with tailwind.config.ts
 const CREAM = "#F8F5E8";
@@ -47,16 +51,9 @@ async function logoBuffer(height) {
     .toBuffer();
 }
 
-async function writeIcon(size, outPath, background) {
-  // Logo occupies ~72% of the canvas, leaving optical padding.
-  const logo = await logoBuffer(Math.round(size * 0.72));
-
-  await sharp({
-    create: { width: size, height: size, channels: 4, background },
-  })
-    .composite([{ input: logo, gravity: "center" }])
-    .png()
-    .toFile(outPath);
+/** Apple touch icon — a straight downscale of the committed favicon. */
+async function writeAppleIcon(size, outPath) {
+  await sharp(FAVICON).resize(size, size, { fit: "cover" }).png().toFile(outPath);
 
   console.log(`✓ ${path.relative(root, outPath)} (${size}x${size})`);
 }
@@ -84,23 +81,13 @@ async function writeOgImage(outPath) {
 }
 
 async function main() {
-  if (!fs.existsSync(LOGO)) {
-    throw new Error(`Logo not found at ${LOGO}`);
+  for (const [label, file] of [["Logo", LOGO], ["Favicon", FAVICON]]) {
+    if (!fs.existsSync(file)) throw new Error(`${label} not found at ${file}`);
   }
 
-  fs.mkdirSync(path.join(root, "src/app"), { recursive: true });
   fs.mkdirSync(path.join(root, "public"), { recursive: true });
 
-  // Transparent favicon reads correctly on light and dark browser chrome.
-  await writeIcon(512, path.join(root, "src/app/icon.png"), {
-    r: 0, g: 0, b: 0, alpha: 0,
-  });
-
-  // iOS composites transparency onto black, so give the Apple icon a solid bg.
-  await writeIcon(180, path.join(root, "src/app/apple-icon.png"), {
-    r: 248, g: 245, b: 232, alpha: 1, // cream
-  });
-
+  await writeAppleIcon(180, path.join(root, "src/app/apple-icon.png"));
   await writeOgImage(path.join(root, "public/og-image.png"));
 }
 

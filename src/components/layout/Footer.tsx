@@ -14,7 +14,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Left — prompt */}
           <div>
-            <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary mb-3">
+            <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary-dark mb-3">
               Get in Touch
             </p>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-neutral-900 leading-tight mb-4">
@@ -92,7 +92,7 @@ export default function Footer() {
             </p>
             <Link
               href="/site-squad"
-              className="text-xs text-neutral-400 hover:text-neutral-600 transition-colors font-body"
+              className="text-xs text-neutral-700 hover:text-neutral-900 transition-colors font-body"
             >
               Made by Site Squad
             </Link>

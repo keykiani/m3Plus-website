@@ -84,9 +84,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={manrope.variable}>
       <head>
-        {/* Preconnect to Luma embed origin to reduce connection latency */}
+        {/* Preconnect to the Luma embed origin to reduce connection latency.
+            Derived from siteConfig.lumaEmbedUrl rather than hardcoded, so the
+            hint can't drift from the URL it's meant to warm up — it previously
+            pointed at lu.ma while the embed loads from luma.com. */}
         <link rel="preconnect" href={lumaOrigin} />
-        <link rel="dns-prefetch" href={lumaOrigin} />
+        <link rel="preconnect" href={lumaOrigin} crossOrigin="anonymous" />
         <JsonLd data={organizationSchema()} />
         <JsonLd data={webSiteSchema()} />
       </head>

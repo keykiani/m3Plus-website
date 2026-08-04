@@ -80,7 +80,7 @@ export default async function AboutPage() {
       {/* ── Hero ──────────────────────────────────────────────────── */}
       <section className="bg-sky grid-bg section-pad">
         <div className="container-content">
-          <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary mb-3">
+          <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary-dark mb-3">
             {a.heroLabel}
           </p>
           <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground leading-tight max-w-2xl mb-4">
@@ -136,7 +136,7 @@ export default async function AboutPage() {
             )}
           </div>
           <div>
-            <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary mb-2">
+            <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary-dark mb-2">
               Our Mission
             </p>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground leading-tight mb-6">
@@ -207,7 +207,7 @@ export default async function AboutPage() {
                   <h3 className="font-heading font-bold text-lg text-foreground mb-0.5">
                     {member.name}
                   </h3>
-                  <p className="text-primary font-body text-sm font-semibold mb-3">
+                  <p className="text-primary-dark font-body text-sm font-semibold mb-3">
                     {member.title}
                   </p>
                   <p className="text-neutral font-body text-sm leading-relaxed">

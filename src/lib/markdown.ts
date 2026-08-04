@@ -31,7 +31,8 @@ export async function getMarkdownFile(relativePath: string) {
  * Files prefixed with `_` are skipped — that's the convention for scaffolding
  * that lives alongside real content (e.g. `_template.md`). Without this,
  * `content/events/archive/_template.md` renders as a real event on /events
- * and prerenders at /events/_template.
+ * and prerenders at /events/_template, and its placeholder image path
+ * ("your-event-slug.webp") 500s the Next.js image optimizer.
  */
 export async function getMarkdownCollection(relativeDir: string) {
   const dirPath = path.join(contentDir, relativeDir);
