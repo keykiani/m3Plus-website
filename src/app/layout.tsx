@@ -44,8 +44,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={manrope.variable}>
       <head>
-        {/* Preconnect to Luma embed origin to reduce connection latency */}
-        <link rel="preconnect" href="https://lu.ma" />
+        {/* Preconnect to the Luma embed origin to reduce connection latency.
+            Must match siteConfig.lumaEmbedUrl — this pointed at lu.ma while the
+            embed loads from luma.com, so the hint was doing nothing. */}
+        <link rel="preconnect" href="https://luma.com" />
+        <link rel="preconnect" href="https://luma.com" crossOrigin="anonymous" />
       </head>
       <body className="flex flex-col min-h-screen">
         <a

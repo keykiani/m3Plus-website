@@ -1,3 +1,6 @@
+"use client";
+
+import { useId } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
 
 /**
@@ -11,6 +14,12 @@ import type { UseFormRegisterReturn } from "react-hook-form";
  * that are not rendered at all. `aria-hidden` + `tabIndex={-1}` keep it out of
  * the accessibility tree and the tab order.
  *
+ * The DOM id comes from useId(), not from `register.name`: the name is always
+ * the literal "_gotcha", so reusing it emitted duplicate ids on any page with
+ * more than one form (/get-involved renders three). Duplicate ids are invalid
+ * HTML and make `<label for>` resolve to whichever element comes first.
+ * Formspree matches on the *name*, which is unchanged, so the trap still works.
+ *
  * Usage: <HoneypotField register={register("_gotcha")} />
  */
 export default function HoneypotField({
@@ -18,6 +27,8 @@ export default function HoneypotField({
 }: {
   register: UseFormRegisterReturn;
 }) {
+  const id = useId();
+
   return (
     <div
       aria-hidden="true"
@@ -29,9 +40,9 @@ export default function HoneypotField({
         overflow: "hidden",
       }}
     >
-      <label htmlFor={register.name}>Leave this field empty</label>
+      <label htmlFor={id}>Leave this field empty</label>
       <input
-        id={register.name}
+        id={id}
         type="text"
         tabIndex={-1}
         autoComplete="off"
