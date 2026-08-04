@@ -9,14 +9,15 @@
  */
 
 import { cn } from "@/lib/utils";
-import { forwardRef } from "react";
+import { forwardRef, cloneElement, isValidElement } from "react";
 import type { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
 
 // ─── Shared style ─────────────────────────────────────────────────────────────
 const baseClass =
   "w-full rounded-btn border border-neutral-200 bg-white px-4 py-3 " +
   "font-body text-base text-foreground shadow-input " +
-  "placeholder:text-neutral-700/50 " +
+  // Full-strength token: neutral-700 at 50% opacity measured ~1.97:1 on white.
+  "placeholder:text-neutral-700 " +
   "transition-colors duration-150 " +
   "focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 " +
   "disabled:cursor-not-allowed disabled:opacity-50 " +
@@ -79,6 +80,24 @@ export function InputWrapper({
   children,
   className,
 }: InputWrapperProps) {
+  const errorId = error ? `${htmlFor}-error` : undefined;
+
+  /**
+   * Tie the error message to the field with aria-describedby. Without this a
+   * screen reader returning to an invalid input announces "invalid entry" with
+   * no explanation — role="alert" only fires once, at render.
+   *
+   * Cloning here means every field in every form gets the association from a
+   * single place, rather than each call site having to remember it.
+   */
+  const field =
+    errorId && isValidElement<{ "aria-describedby"?: string }>(children)
+      ? cloneElement(children, {
+          "aria-describedby":
+            [children.props["aria-describedby"], errorId].filter(Boolean).join(" "),
+        })
+      : children;
+
   return (
     <div className={cn("flex flex-col gap-1", className)}>
       <label
@@ -90,9 +109,9 @@ export function InputWrapper({
       >
         {label}
       </label>
-      {children}
+      {field}
       {error && (
-        <p role="alert" className="text-error text-xs mt-0.5">
+        <p id={errorId} role="alert" className="text-error text-xs mt-0.5">
           {error}
         </p>
       )}

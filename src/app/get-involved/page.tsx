@@ -82,8 +82,19 @@ export default async function GetInvolvedPage() {
       </section>
 
       {/* ── Social Platforms (overlapping hero) ────────────────────── */}
-      <section className="bg-sky relative -mt-24">
+      <section className="bg-sky relative -mt-24" aria-labelledby="platforms-heading">
         <div className="container-content relative z-20 py-8">
+          {/* platformsHeadline ("Find Us On") is defined in content and typed on
+              PageData but was never rendered, leaving this section unheaded and
+              skipping the outline straight from h1 to the h3 card titles. */}
+          {p.platformsHeadline && (
+            <h2
+              id="platforms-heading"
+              className="text-2xl md:text-3xl font-heading font-bold text-foreground mb-6"
+            >
+              {p.platformsHeadline}
+            </h2>
+          )}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mx-auto">
             {p.platforms?.map((platform) => {
               const logoMap: Record<string, string> = {
@@ -168,15 +179,17 @@ export default async function GetInvolvedPage() {
             centered
             className="mb-8"
           />
-          {/* Sponsor logo placeholders — replace with real logos */}
-          <div className="flex flex-wrap justify-center gap-6 mb-8" aria-label="Sponsor logos">
+          {/* Sponsor logo placeholders — replace with real logos.
+              `aria-label` was on plain <div>s, where ARIA prohibits naming, so it
+              was silently ignored. Placeholder text is now solid success-dark
+              (was success/40, which measured 1.51:1). */}
+          <div className="flex flex-wrap justify-center gap-6 mb-8">
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
                 className="w-20 h-20 rounded-full bg-success/20 border-2 border-success/30 flex items-center justify-center"
-                aria-label={`Sponsor ${i}`}
               >
-                <span className="text-success/40 font-heading font-bold text-xs">LOGO</span>
+                <span className="text-tertiary font-heading font-bold text-xs">LOGO</span>
               </div>
             ))}
           </div>

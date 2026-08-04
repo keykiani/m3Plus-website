@@ -29,11 +29,16 @@ const variantStyles: Record<Variant, string> = {
   primary:
     `bg-primary text-white hover:bg-primary-dark active:bg-primary-dark focus-visible:ring-primary ${hardShadow}`,
   // Yellow — high-visibility CTAs (Join Newsletter, Discover M3+)
+  // Ring is primary, NOT secondary: ring-secondary (#F8F5E8) is the button's own
+  // fill, which measured 1.04–1.09:1 against every surface it sits on. Since the
+  // native outline is removed below, that made keyboard focus invisible.
   secondary:
-    `bg-secondary text-foreground hover:bg-secondary-dark active:bg-secondary-dark focus-visible:ring-secondary ${hardShadow}`,
-  // Outlined — bordered with primary colour, fills on hover
+    `bg-secondary text-foreground hover:bg-secondary-dark active:bg-secondary-dark focus-visible:ring-primary ${hardShadow}`,
+  // Outlined — bordered with primary colour, fills on hover.
+  // Label uses primary-dark: #2977BD label text measured 4.11:1 on bg-cream.
+  // The border keeps `primary` — non-text only needs 3:1, which it clears.
   outline:
-    `border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-white active:bg-primary active:text-white focus-visible:ring-primary ${hardShadow}`,
+    `border-2 border-primary text-primary-dark bg-transparent hover:bg-primary hover:text-white active:bg-primary active:text-white focus-visible:ring-primary ${hardShadow}`,
   // Ghost — low-emphasis, no border, subtle background on hover (no hard shadow)
   ghost:
     "bg-transparent text-neutral-900 hover:bg-neutral-subtle active:bg-neutral-subtle focus-visible:ring-neutral",

@@ -29,7 +29,12 @@ export default function TestimonialBlock({
   };
 
   return (
-    <section className={`${bg} section-pad`} aria-label="Community testimonial">
+    // Name includes the author: the homepage renders several of these, and
+    // identically-labelled landmarks are indistinguishable in a landmark list.
+    <section
+      className={`${bg} section-pad`}
+      aria-label={`Community testimonial from ${testimonial.author}`}
+    >
       <div className="container-content max-w-4xl mx-auto">
         <div
           className={`flex flex-col md:flex-row items-center gap-8 md:gap-12 ${

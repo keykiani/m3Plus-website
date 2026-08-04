@@ -1,10 +1,11 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Send, CheckCircle2, AlertCircle } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { Input, Textarea, Select, InputWrapper } from "@/components/ui/Input";
+import HoneypotField from "@/components/forms/HoneypotField";
 import { siteConfig } from "@/lib/siteConfig";
 
 interface FormData {
@@ -16,6 +17,8 @@ interface FormData {
   contribution: string;
   expertise:    string;
   motivation:   string;
+  /** Honeypot — must stay empty; Formspree drops the submission if filled. */
+  _gotcha?:     string;
 }
 
 interface GetInvolvedFormProps {
@@ -24,6 +27,7 @@ interface GetInvolvedFormProps {
 
 export default function GetInvolvedForm({ contributionOptions }: GetInvolvedFormProps) {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const successRef = useRef<HTMLDivElement>(null);
 
   const {
     register,
@@ -31,6 +35,12 @@ export default function GetInvolvedForm({ contributionOptions }: GetInvolvedForm
     reset,
     formState: { errors },
   } = useForm<FormData>();
+
+  // The success card replaces the whole form, destroying the focused submit
+  // button. Without this, focus drops to <body> and nothing is announced.
+  useEffect(() => {
+    if (status === "success") successRef.current?.focus();
+  }, [status]);
 
   const onSubmit = async (data: FormData) => {
     setStatus("sending");
@@ -54,7 +64,12 @@ export default function GetInvolvedForm({ contributionOptions }: GetInvolvedForm
 
   if (status === "success") {
     return (
-      <div className="bg-white rounded-card p-10 text-center shadow-card border border-success/20">
+      <div
+        ref={successRef}
+        role="status"
+        tabIndex={-1}
+        className="bg-white rounded-card p-10 text-center shadow-card border border-success/20 focus:outline-none"
+      >
         <CheckCircle2 size={48} className="text-success mx-auto mb-4" aria-hidden="true" />
         <h3 className="text-2xl font-heading font-bold text-foreground mb-2">
           Application Received!
@@ -72,6 +87,8 @@ export default function GetInvolvedForm({ contributionOptions }: GetInvolvedForm
       noValidate
       className="bg-white rounded-card p-8 shadow-card border border-neutral-200 space-y-5"
     >
+      <HoneypotField register={register("_gotcha")} />
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <InputWrapper label="First Name *" htmlFor="gi-firstName" error={errors.firstName?.message}>
           <Input
@@ -170,12 +187,14 @@ export default function GetInvolvedForm({ contributionOptions }: GetInvolvedForm
         {status === "sending" ? "Submitting…" : "Submit Application"}
       </Button>
 
-      {status === "error" && (
-        <p className="flex items-center justify-center gap-2 text-error font-body text-sm">
-          <AlertCircle size={16} aria-hidden="true" />
-          Something went wrong. Please try again or email us directly.
-        </p>
-      )}
+      <div role="status" aria-live="polite">
+        {status === "error" && (
+          <p className="flex items-center justify-center gap-2 text-error font-body text-sm">
+            <AlertCircle size={16} aria-hidden="true" />
+            Something went wrong. Please try again or email us directly.
+          </p>
+        )}
+      </div>
     </form>
   );
 }

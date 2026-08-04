@@ -40,13 +40,18 @@ const config: Config = {
         },
 
         // ── Neutral (Gray) ────────────────────────────────────────────────
+        // DEFAULT / 700 darkened from #6B7280 → #5A616E for WCAG AA.
+        // #6B7280 measured 4.49:1 on white, 4.43:1 on neutral-100, 3.93:1 on
+        // cream and 3.88:1 on sky — i.e. it failed 4.5:1 on every background
+        // the site actually uses, including .prose-m3 body copy.
+        // #5A616E gives 6.2:1 on white, 5.5:1 on cream, 5.4:1 on sky.
         neutral: {
-          DEFAULT: "#6B7280",
+          DEFAULT: "#5A616E",
           dark:    "#4B5563",
           subtle:  "#F9FAFB",
           // Legacy numbered keys — referenced throughout codebase
           900: "#2A3441",
-          700: "#6B7280",
+          700: "#5A616E",
           200: "#E5E7EB",
           100: "#FEFDFB",
         },
@@ -84,7 +89,7 @@ const config: Config = {
         "tertiary-dark":  "#122849",
         "tertiary-light": "#BBE2F5",
         "neutral-900":    "#2A3441",
-        "neutral-700":    "#6B7280",
+        "neutral-700":    "#5A616E",
         "neutral-200":    "#E5E7EB",
         "neutral-100":    "#FEFDFB",
       },

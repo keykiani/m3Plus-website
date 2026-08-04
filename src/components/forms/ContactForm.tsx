@@ -5,13 +5,16 @@ import { useState } from "react";
 import { Send, CheckCircle2, AlertCircle } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { Input, Textarea, InputWrapper } from "@/components/ui/Input";
+import HoneypotField from "@/components/forms/HoneypotField";
 import { siteConfig } from "@/lib/siteConfig";
 
 interface ContactFormData {
-  name:    string;
-  email:   string;
-  subject: string;
-  message: string;
+  name:     string;
+  email:    string;
+  subject:  string;
+  message:  string;
+  /** Honeypot — must stay empty; Formspree drops the submission if filled. */
+  _gotcha?: string;
 }
 
 export default function ContactForm() {
@@ -46,8 +49,12 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
+      <HoneypotField register={register("_gotcha")} />
+
+      {/* Labels are visible rather than sr-only: a placeholder is not a label —
+          it disappears on input, and at the required contrast it was ~2:1. */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <InputWrapper label="Name" htmlFor="footer-name" error={errors.name?.message} srOnly>
+        <InputWrapper label="Name" htmlFor="footer-name" error={errors.name?.message}>
           <Input
             id="footer-name"
             placeholder="Name"
@@ -56,7 +63,7 @@ export default function ContactForm() {
           />
         </InputWrapper>
 
-        <InputWrapper label="Email" htmlFor="footer-email" error={errors.email?.message} srOnly>
+        <InputWrapper label="Email" htmlFor="footer-email" error={errors.email?.message}>
           <Input
             id="footer-email"
             type="email"
@@ -70,15 +77,16 @@ export default function ContactForm() {
         </InputWrapper>
       </div>
 
-      <InputWrapper label="Subject" htmlFor="footer-subject" srOnly>
+      <InputWrapper label="Subject" htmlFor="footer-subject" error={errors.subject?.message}>
         <Input
           id="footer-subject"
           placeholder="Subject"
+          error={errors.subject?.message}
           {...register("subject", { required: "Subject is required" })}
         />
       </InputWrapper>
 
-      <InputWrapper label="Message" htmlFor="footer-message" error={errors.message?.message} srOnly>
+      <InputWrapper label="Message" htmlFor="footer-message" error={errors.message?.message}>
         <Textarea
           id="footer-message"
           placeholder="Message"
@@ -98,18 +106,21 @@ export default function ContactForm() {
         {status === "sending" ? "Sending…" : "Send message"}
       </Button>
 
-      {status === "success" && (
-        <p className="flex items-center gap-2 text-success font-body text-sm">
-          <CheckCircle2 size={16} aria-hidden="true" />
-          Message sent! We&apos;ll get back to you soon.
-        </p>
-      )}
-      {status === "error" && (
-        <p className="flex items-center gap-2 text-error font-body text-sm">
-          <AlertCircle size={16} aria-hidden="true" />
-          Something went wrong. Please try again or email us directly.
-        </p>
-      )}
+      {/* Live region so the outcome is announced, not just shown. */}
+      <div role="status" aria-live="polite">
+        {status === "success" && (
+          <p className="flex items-center gap-2 text-success font-body text-sm">
+            <CheckCircle2 size={16} aria-hidden="true" />
+            Message sent! We&apos;ll get back to you soon.
+          </p>
+        )}
+        {status === "error" && (
+          <p className="flex items-center gap-2 text-error font-body text-sm">
+            <AlertCircle size={16} aria-hidden="true" />
+            Something went wrong. Please try again or email us directly.
+          </p>
+        )}
+      </div>
     </form>
   );
 }
