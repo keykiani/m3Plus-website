@@ -47,6 +47,14 @@ export default function Avatar({
 }: AvatarProps) {
   const { px, text } = sizeMap[size];
   const label = alt ?? name ?? "Avatar";
+  /**
+   * Initials are decorative: every call site renders the person's name as text
+   * right beside the avatar, so naming it here would just duplicate. The old
+   * aria-label lived on this bare <div> — ARIA ignores names on generic roles,
+   * so it never reached assistive tech at all. Hide the whole node instead of
+   * leaving an unnamed one in the tree.
+   */
+  const decorative = !src && !!name;
 
   return (
     <div
@@ -56,7 +64,7 @@ export default function Avatar({
         className
       )}
       style={{ width: px, height: px }}
-      aria-label={label}
+      aria-hidden={decorative || undefined}
     >
       {src ? (
         <Image
@@ -72,12 +80,11 @@ export default function Avatar({
             "font-heading font-bold text-primary select-none",
             text
           )}
-          aria-hidden="true"
         >
           {getInitials(name)}
         </span>
       ) : (
-        // Blank grey circle if nothing provided
+        // Blank circle if nothing provided
         <span className="sr-only">{label}</span>
       )}
     </div>
