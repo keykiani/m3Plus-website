@@ -31,11 +31,15 @@
     Strict-Transport-Security = "max-age=31536000; includeSubDomains"
 
     # ── Content Security Policy ─────────────────────────────────────────────
-    # Shipped in Report-Only first. Load the homepage, the events page and an
-    # archive event detail page, confirm the Luma calendar and a Google Slides
-    # embed both still render and the console is clean, then rename this key to
-    # `Content-Security-Policy` to enforce it. The Luma embed is the likely
-    # breaker — widen `frame-src` / `connect-src` if its console reports blocks.
+    # Enforced. Shipped Report-Only first; a console check on the live site
+    # returned zero CSP violations — the only console output was third-party
+    # cookie rejections from Luma/Cloudflare, which are the browser's own
+    # privacy behaviour and unrelated to this policy. The Luma iframe was
+    # confirmed to be loading (its Cloudflare and session cookies were being
+    # set), so `frame-src` was admitting it correctly.
+    #
+    # To roll back: rename this key to `Content-Security-Policy-Report-Only`
+    # and push. That reverts to reporting without blocking.
     #
     # Notes on the directives:
     #   script-src 'unsafe-inline'  Next.js App Router injects inline hydration
@@ -50,7 +54,7 @@
     #                               ships now, the wildcards so the calendar keeps
     #                               working if Luma ever moves the embed to a
     #                               subdomain. Still only Luma either way.
-    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; frame-src https://lu.ma https://*.lu.ma https://luma.com https://*.luma.com https://docs.google.com; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; frame-ancestors 'none'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; frame-src https://lu.ma https://*.lu.ma https://luma.com https://*.luma.com https://docs.google.com; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; frame-ancestors 'none'"
 
 # Hashed build assets are immutable — cache them hard.
 [[headers]]
