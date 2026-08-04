@@ -1,7 +1,7 @@
 ---
 heroLabel: "About Us"
 heroHeadline: "Creating Deeper Connections within the Design Community"
-heroSubtext: "Bridging the gap between senior and junior members by creating deeper connections within the SPD Design community."
+heroSubtext: "Bridging the gap between senior and junior members by creating deeper connections within the DFW design community."
 
 whatIsHeadline: "What is M3+?"
 whatIsBody: "M3+ (Multidimensional Mutual Mentorship) bridges the gap between traditional networking and mentorship. Unlike one-directional mentoring, M3+ creates a community where designers at every level exchange knowledge, support one another's goals, and build lasting professional relationships. Whether you're just starting out or leading a team, there's a place for you here."
