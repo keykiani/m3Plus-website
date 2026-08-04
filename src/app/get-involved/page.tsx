@@ -82,8 +82,19 @@ export default async function GetInvolvedPage() {
       </section>
 
       {/* ── Social Platforms (overlapping hero) ────────────────────── */}
-      <section className="bg-sky relative -mt-24">
+      <section className="bg-sky relative -mt-24" aria-labelledby="platforms-heading">
         <div className="container-content relative z-20 py-8">
+          {/* platformsHeadline ("Find Us On") is defined in content and typed on
+              PageData but was never rendered, leaving this section unheaded and
+              skipping the outline straight from h1 to the h3 card titles. */}
+          {p.platformsHeadline && (
+            <h2
+              id="platforms-heading"
+              className="text-2xl md:text-3xl font-heading font-bold text-foreground mb-6"
+            >
+              {p.platformsHeadline}
+            </h2>
+          )}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mx-auto">
             {p.platforms?.map((platform) => {
               const logoMap: Record<string, string> = {
