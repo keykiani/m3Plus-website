@@ -6,6 +6,7 @@ import Button from "@/components/ui/Button";
 import SectionHeader from "@/components/ui/SectionHeader";
 import JsonLd from "@/components/seo/JsonLd";
 import { breadcrumbSchema, eventSchema } from "@/lib/schema";
+import { defaultOgImages } from "@/lib/siteConfig";
 import type { ResourceLink } from "@/lib/types";
 
 interface Props {
@@ -38,7 +39,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: event.title,
       description: event.description,
       url: canonical,
-      ...(event.image && { images: [{ url: event.image }] }),
+      // Fall back to the site card so an event without its own image still
+      // shares with a picture rather than none.
+      images: event.image ? [{ url: event.image }] : defaultOgImages,
     },
   };
 }

@@ -12,6 +12,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import Avatar from "@/components/ui/Avatar";
 import Accordion from "@/components/ui/Accordion";
 import JsonLd from "@/components/seo/JsonLd";
+import { defaultOgImages } from "@/lib/siteConfig";
 import { faqSchema } from "@/lib/schema";
 import TestimonialBlock from "@/components/sections/TestimonialBlock";
 
@@ -28,6 +29,7 @@ export const metadata: Metadata = {
     title: "About M3+ Mutual Mentoring",
     description,
     url: "/about",
+    images: defaultOgImages,
   },
 };
 
