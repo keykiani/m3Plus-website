@@ -7,6 +7,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import TestimonialBlock from "@/components/sections/TestimonialBlock";
 import GetInvolvedForm from "@/components/forms/GetInvolvedForm";
 import NewsletterForm from "@/components/forms/NewsletterForm";
+import { defaultOgImages } from "@/lib/siteConfig";
 
 const description =
   "Join M3+ as a mentor, volunteer, or guide. Find your role in our Dallas–Fort Worth design community.";
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
     title: "Get Involved with M3+",
     description,
     url: "/get-involved",
+    images: defaultOgImages,
   },
 };
 

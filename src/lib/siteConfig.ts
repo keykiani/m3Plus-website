@@ -6,8 +6,11 @@ export const siteConfig: SiteConfig = {
   tagline: "Connect. Grow. Lead.",
   description:
     "M3+ bridges the gap between networking and mentorship through community-driven events, mutual mentorship, and resources for designers at every level.",
-  // Override with NEXT_PUBLIC_SITE_URL in Netlify if the live domain differs.
-  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://m3plus.org").replace(/\/$/, ""),
+  // Canonical origin for every absolute URL on the site (metadataBase, Open
+  // Graph, sitemap). Must be the URL that serves the site directly: the apex
+  // m3plus.org 301s to www, and pointing canonicals at a redirect wastes a hop
+  // on every page. Override with NEXT_PUBLIC_SITE_URL in Netlify if it moves.
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.m3plus.org").replace(/\/$/, ""),
   email: "team@m3plus.org", // Update with real email
   socialLinks: {
     linkedin: "https://www.linkedin.com/company/m3plusmentoring/",  // Update with real URL
@@ -17,6 +20,23 @@ export const siteConfig: SiteConfig = {
   lumaEmbedUrl: "https://luma.com/embed/calendar/cal-eA49a38rdSDAFZD/events",
   formspreeId: "https://formspree.io/f/meelpojy", // Replace after creating Formspree account at formspree.io
 };
+
+/**
+ * Default Open Graph image, for any page that declares its own `openGraph`.
+ *
+ * Next.js REPLACES the parent `openGraph` object rather than deep-merging it,
+ * so a page that sets `openGraph: { title, url }` silently loses the layout's
+ * `images` and ships with no share image. Spread this into every page-level
+ * openGraph block that should use the default card.
+ */
+export const defaultOgImages = [
+  {
+    url: "/og-image.png",
+    width: 1200,
+    height: 630,
+    alt: `${siteConfig.name} — ${siteConfig.tagline}`,
+  },
+];
 
 /** Main navigation links */
 export const navLinks: NavLink[] = [

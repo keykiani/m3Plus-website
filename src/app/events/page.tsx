@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { MapPin, Clock, BookOpen, Images } from "lucide-react";
 import { getArchiveEvents } from "@/lib/markdown";
-import { siteConfig } from "@/lib/siteConfig";
+import { siteConfig, defaultOgImages } from "@/lib/siteConfig";
 import Button from "@/components/ui/Button";
 import SectionHeader from "@/components/ui/SectionHeader";
 import LumaEventSection from "@/components/sections/LumaEventSection";
@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     title: "M3+ Events — Upcoming and Past Sessions",
     description,
     url: "/events",
+    images: defaultOgImages,
   },
 };
 
