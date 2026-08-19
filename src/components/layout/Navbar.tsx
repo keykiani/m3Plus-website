@@ -68,8 +68,11 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* ── Desktop Nav Links ──────────────────────────────────────── */}
-        <ul className="hidden md:flex items-center gap-8" role="list">
+        {/* ── Desktop Nav ── links and CTA share one right-aligned group, so
+               `justify-between` above puts the logo left and all of this
+               right, rather than centring the links between the two. ───── */}
+        <div className="hidden md:flex items-center gap-8">
+        <ul className="flex items-center gap-8" role="list">
           {navLinks.map((link) => {
             const isActive = pathname === link.href || pathname.startsWith(link.href + "/");
             return (
@@ -98,10 +101,10 @@ export default function Navbar() {
           })}
         </ul>
 
-        {/* ── CTA Button ────────────────────────────────────────────── */}
-        <div className="hidden md:block">
-          <Button variant="secondary" size="sm" href="/get-involved">
-            Get Involved
+          {/* ── CTA ── points at the newsletter rather than repeating the
+                 "Get Involved" link sitting directly beside it. ────────── */}
+          <Button variant="secondary" size="sm" href="/get-involved#newsletter">
+            Join Email Newsletter
           </Button>
         </div>
 
@@ -162,10 +165,10 @@ export default function Navbar() {
             <li className="pt-2">
               <Button
                 variant="secondary"
-                href="/get-involved"
+                href="/get-involved#newsletter"
                 className="w-full justify-center"
               >
-                Get Involved
+                Join Email Newsletter
               </Button>
             </li>
           </ul>

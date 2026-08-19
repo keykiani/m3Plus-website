@@ -145,6 +145,14 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height, 100%)", opacity: "1" },
           to:   { height: "0px", opacity: "0" },
         },
+        // Gentle float for the hero stickers, so they read as hovering above
+        // the photo rather than pasted onto it. Translate only — the stickers
+        // carry their own `rotate-*` class, and a transform in the keyframe
+        // would overwrite it, so the rotation lives on a parent wrapper.
+        bob: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%":      { transform: "translateY(-10px)" },
+        },
       },
       animation: {
         "fade-up":        "fade-up 0.5s ease-out forwards",
@@ -152,6 +160,7 @@ const config: Config = {
         "popup-in":       "popup-in 0.25s ease-out forwards",
         "accordion-down": "accordion-down 0.22s ease-out",
         "accordion-up":   "accordion-up 0.22s ease-out",
+        bob:              "bob 4s ease-in-out infinite",
       },
     },
   },

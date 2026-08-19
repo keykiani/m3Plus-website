@@ -22,7 +22,7 @@ export default function HeroSection({
 
   return (
     <section
-      className="bg-sky grid-bg section-pad overflow-hidden"
+      className="bg-yellow grid-bg section-pad overflow-hidden"
       aria-labelledby="hero-heading"
     >
       <div className="container-content">
@@ -64,8 +64,12 @@ export default function HeroSection({
 
           {/* ── Image Collage Column ──────────────────────────────────── */}
           <div className="order-1 lg:order-2 relative flex items-center justify-center py-8">
+            {/* Anchor box — matches the polaroid's width so the stickers hug the
+                photo's corners. Anchoring them to the column instead lets them
+                drift away as the column grows wider than the max-w-sm photo. */}
+            <div className="relative w-full max-w-sm">
             {/* Polaroid frame — thick white border + soft shadow + slight tilt */}
-            <div className="relative w-full max-w-sm rotate-1 bg-white p-4 shadow-[0px_12px_16px_0px_rgba(10,13,18,0.08),0px_4px_6px_0px_rgba(10,13,18,0.03)]">
+            <div className="relative z-10 w-full rotate-1 bg-white p-4 shadow-[0px_12px_16px_0px_rgba(10,13,18,0.08),0px_4px_6px_0px_rgba(10,13,18,0.03)]">
               <div className="relative aspect-[4/3] overflow-hidden">
                 {imageSrc ? (
                   <Image
@@ -87,32 +91,44 @@ export default function HeroSection({
               </div>
             </div>
 
-            {/* Handshake sticker — top-left */}
+            {/* ── Stickers ── layered above the polaroid and gently bobbing so
+                   they read as hovering over it. The wrapper holds the tilt and
+                   the inner element does the floating: both are `transform`, so
+                   animating the same node would cancel the rotation. Animation
+                   is motion-safe only. ─────────────────────────────────────── */}
+
+            {/* Handshake sticker — overlapping the photo's top-left corner */}
             <div
-              className="absolute -top-2 left-2 lg:-top-4 lg:left-0 w-20 h-20 lg:w-28 lg:h-28 -rotate-12 pointer-events-none select-none"
+              className="absolute -top-6 -left-6 lg:-top-8 lg:-left-8 w-20 h-20 lg:w-28 lg:h-28 -rotate-12 pointer-events-none select-none z-20"
               aria-hidden="true"
             >
-              <Image
-                src="/images/hero-sticker-handshake.webp"
-                alt=""
-                fill
-                className="object-contain drop-shadow-lg"
-                sizes="112px"
-              />
+              <div className="relative w-full h-full motion-safe:animate-bob">
+                <Image
+                  src="/images/hero-sticker-handshake.webp"
+                  alt=""
+                  fill
+                  className="object-contain drop-shadow-xl"
+                  sizes="112px"
+                />
+              </div>
             </div>
 
-            {/* M3+ badge sticker — bottom-right */}
+            {/* M3+ badge sticker — bottom-right. Negative delay offsets it half
+                a cycle so the two don't bob in lockstep. */}
             <div
-              className="absolute -bottom-2 right-2 lg:-bottom-4 lg:right-0 w-20 h-20 lg:w-28 lg:h-28 rotate-6 pointer-events-none select-none"
+              className="absolute -bottom-6 -right-6 lg:-bottom-8 lg:-right-8 w-20 h-20 lg:w-28 lg:h-28 rotate-6 pointer-events-none select-none z-20"
               aria-hidden="true"
             >
-              <Image
-                src="/images/hero-sticker-badge.webp"
-                alt=""
-                fill
-                className="object-contain drop-shadow-lg"
-                sizes="112px"
-              />
+              <div className="relative w-full h-full motion-safe:animate-bob [animation-delay:-2s]">
+                <Image
+                  src="/images/hero-sticker-badge.webp"
+                  alt=""
+                  fill
+                  className="object-contain drop-shadow-xl"
+                  sizes="112px"
+                />
+              </div>
+            </div>
             </div>
           </div>
 
