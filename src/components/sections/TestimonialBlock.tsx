@@ -67,7 +67,20 @@ export default function TestimonialBlock({
             <span className="quote-mark text-primary block mb-2" aria-hidden="true">
               &ldquo;
             </span>
-            <blockquote className="text-xl md:text-2xl font-body text-neutral-700 leading-relaxed -mt-6 mb-4">
+            {/* Measure capped at ~60 characters per line.
+
+                Not `60ch`: the `ch` unit is the width of the "0" glyph, which
+                is wider than the average letter, so 60ch actually fits 70–78
+                characters. Measured against the real quotes, 46ch lands at
+                55–58 — under the cap with headroom for the font substitution
+                that happens across platforms (font-body is a system stack:
+                Gill Sans on macOS, Calibri/Trebuchet on Windows), since the
+                glyph-to-"0" ratio differs per font. Tune this one number if a
+                line ever runs long.
+
+                `hyphens-none` carries a word that doesn't fit whole to the
+                next line instead of breaking it. */}
+            <blockquote className="max-w-[46ch] hyphens-none text-xl md:text-2xl font-body text-neutral-700 leading-relaxed -mt-6 mb-4">
               {renderQuote()}
             </blockquote>
             <footer>
