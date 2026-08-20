@@ -15,15 +15,30 @@ missionImageAlt: "M3+ community gathering"
 missionHeadline: "Our Mission"
 missionBody: "To empower designers at every career stage through mutual mentorship, community-driven events, and accessible professional development — because growth is better together."
 
+# Each card pairs a photo with a value. `style` maps to a card colour in
+# src/app/about/page.tsx. Images are existing site photos used as stand-ins —
+# swap the paths when the real value photography is ready.
 values:
-  - text: "An opportunity to work and learn alongside other designers."
-    style: "yellow"
-  - text: "A safe place to practice, try, and fail."
+  - title: "Opportunities to Work and Learn Alongside Other Designers."
+    description: "Grow through real collaboration, shared critique, and the kind of feedback you only get from peers who get it."
+    image: "/images/events-hero.webp"
+    imageAlt: "Designers collaborating around a table at an M3+ workshop"
+    style: "cream"
+  - title: "Safe Place to Practice, Try, and Fail."
+    description: "No pressure, no judgment. Just space to experiment, stumble, and figure it out."
+    image: "/images/about-mission.webp"
+    imageAlt: "Designers working together during an M3+ session"
     style: "blue"
-  - text: "A platform and encouragement to pursue your goals."
-    style: "orange"
-  - text: "A community of #goal-getters."
+  - title: "Everyone is a Mentor."
+    description: "Whether you have 10 months or 10 years of experience, you have something worth sharing."
+    image: "/images/journey-leading.webp"
+    imageAlt: "A designer sharing ideas at a whiteboard"
     style: "green"
+  - title: "Community of #GOAL GETTERS"
+    description: "A network of designers who show up, follow through, and bring others along with them."
+    image: "/images/hero.webp"
+    imageAlt: "The M3+ community gathered for a group photo"
+    style: "pink"
 
 faqHeadline: "FAQ"
 faqs:

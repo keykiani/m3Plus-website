@@ -84,6 +84,8 @@ const config: Config = {
         yellow:        "#F8F5E8",   // = secondary.DEFAULT
         coral:         "#E86048",   // event card thumbnails
         "blue-flower": "#4A8FD5",   // decorative accents
+        mint:          "#CDEAC0",   // "Our Values" card — green
+        blush:         "#FBEFEA",   // "Our Values" card — pink
 
         // Flat legacy aliases kept so existing class names still compile
         "tertiary-dark":  "#122849",
