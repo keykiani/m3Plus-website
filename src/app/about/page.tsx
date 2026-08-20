@@ -4,7 +4,12 @@ import Image from "next/image";
 import Button from "@/components/ui/Button";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Avatar from "@/components/ui/Avatar";
-import Accordion from "@/components/ui/Accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/Accordion";
 import JsonLd from "@/components/seo/JsonLd";
 import { defaultOgImages } from "@/lib/siteConfig";
 import { faqSchema } from "@/lib/schema";
@@ -236,20 +241,24 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* ── FAQ ── Figma Accordion (blue header + ChevronDown) ────── */}
+      {/* ── FAQ ── neobrutalism accordion on Radix primitives ────── */}
       <section className="bg-neutral-100 section-pad">
         <div className="container-content max-w-3xl mx-auto">
           <SectionHeader title={a.faqHeadline} className="mb-10" />
           {a.faqs && (
             <>
-              {/* Answers are present in the SSR HTML (the Accordion collapses
-                  with CSS, it doesn't conditionally render), so this markup
-                  matches what crawlers actually see. */}
+              {/* Every answer is in the SSR HTML — AccordionContent is
+                  forceMount'ed for exactly this reason — so the markup below
+                  describes content that is genuinely on the page. */}
               <JsonLd data={faqSchema(a.faqs)} />
-              <Accordion
-                items={a.faqs}
-                variant="bold"
-              />
+              <Accordion type="single" collapsible className="w-full">
+                {a.faqs.map((faq, i) => (
+                  <AccordionItem key={i} value={`faq-${i}`}>
+                    <AccordionTrigger>{faq.question}</AccordionTrigger>
+                    <AccordionContent>{faq.answer}</AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </>
           )}
         </div>

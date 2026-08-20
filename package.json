@@ -10,6 +10,7 @@
     "optimize-images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
+    "@radix-ui/react-accordion": "^1.2.20",
     "clsx": "^2.1.1",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.400.0",

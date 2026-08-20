@@ -113,6 +113,9 @@ const config: Config = {
         card: "12px",
         btn:  "8px",
         pill: "9999px",
+        // neobrutalism.dev's --radius-base, used by components taken from that
+        // registry. Set to 0 to square them off like the team/value cards.
+        base: "5px",
       },
 
       // ─── Box Shadows ──────────────────────────────────────────────────────
@@ -123,6 +126,8 @@ const config: Config = {
         // Hard (no-blur) drop shadows for button hover — neo-brutalist style
         "btn-hard":       "4px 4px 0px #122849",
         "btn-hard-danger":"4px 4px 0px #991B1B",
+        // neobrutalism.dev's --shadow, on the same 4px step the cards use.
+        shadow:           "4px 4px 0px 0px rgba(0,0,0,1)",
       },
 
       // ─── Keyframes & Animations ───────────────────────────────────────────
