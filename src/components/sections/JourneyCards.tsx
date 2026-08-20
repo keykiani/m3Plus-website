@@ -16,7 +16,7 @@ interface JourneyCardsProps {
 
 export default function JourneyCards({ headline, subtitle, cards }: JourneyCardsProps) {
   return (
-    <section className="bg-neutral-100 section-pad" aria-labelledby="journey-heading">
+    <section className="bg-neutral-100 grid-bg section-pad" aria-labelledby="journey-heading">
       <div className="container-content">
         <SectionHeader
           id="journey-heading"

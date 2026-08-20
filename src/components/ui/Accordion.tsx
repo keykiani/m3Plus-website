@@ -1,127 +1,113 @@
-"use client";
+"use client"
 
 /**
- * Accordion — matches the Figma accordion component.
+ * Accordion — the neobrutalism.dev component, on Radix primitives.
  *
- * Blue primary header + ChevronDown (Lucide) that rotates on open.
- * Smooth height animation via CSS max-height transition.
+ * Two deliberate changes from the upstream source:
  *
- * Usage:
- *   <Accordion items={faqs} />                    // default blue headers
- *   <Accordion items={faqs} variant="subtle" />   // light border style
+ * 1. `forceMount` on Content, plus a grid-rows collapse instead of the
+ *    upstream height animation. Radix unmounts collapsed content by default.
+ *    The About page's FAQPage JSON-LD asserts every answer, and structured
+ *    data may only describe content that is actually on the page — so the
+ *    answers have to stay in the server-rendered HTML. Without this the
+ *    markup would claim answers that aren't in the document, and it fails
+ *    silently: the page looks right and the Rich Results Test still passes.
+ *
+ *    forceMount alone is not enough. Radix does NOT set `hidden` on a
+ *    force-mounted panel, and `animate-accordion-up` has no forwards
+ *    fill-mode, so height snaps back to auto once it finishes — measured at
+ *    84px per closed panel, i.e. every answer visible at once. Animating
+ *    grid-template-rows between 0fr and 1fr collapses cleanly in both
+ *    directions with no initial flash, and `invisible` keeps collapsed
+ *    answers out of the tab order and the accessibility tree while leaving
+ *    them in the DOM for crawlers.
+ *
+ * 2. Theme classes mapped onto this project's tokens. Upstream targets the
+ *    neobrutalism.dev theme (`bg-main`, `border-border`, `shadow-shadow`,
+ *    `font-base`), none of which exist here — and `border` is already a
+ *    light grey used site-wide, so reusing it would have produced grey
+ *    borders instead of black. Structure and API are untouched.
  */
 
-import { useState, useId } from "react";
-import { ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
+import * as AccordionPrimitive from "@radix-ui/react-accordion"
+import { ChevronDown } from "lucide-react"
 
-export interface AccordionItem {
-  question: string;
-  answer:   string;
+import * as React from "react"
+
+import { cn } from "@/lib/utils"
+
+function Accordion({
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Root>) {
+  return <AccordionPrimitive.Root data-slot="accordion" {...props} />
 }
 
-interface AccordionProps {
-  items:     AccordionItem[];
-  /** "bold"   → primary-blue header (Figma default)
-   *  "subtle" → no fill, divider-only style               */
-  variant?:  "bold" | "subtle";
-  className?: string;
-}
-
-export default function Accordion({
-  items,
-  variant   = "bold",
+function AccordionItem({
   className,
-}: AccordionProps) {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-  /** Unique per instance, so two accordions on one page can't collide. */
-  const baseId = useId();
-
-  const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
-
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Item>) {
   return (
-    <div className={cn("w-full", className)} role="list">
-      {items.map((item, i) => {
-        const isOpen    = openIndex === i;
-        const triggerId = `${baseId}-trigger-${i}`;
-        const panelId   = `${baseId}-panel-${i}`;
-
-        return (
-          <div
-            key={i}
-            role="listitem"
-            className={cn(
-              "rounded-btn overflow-hidden mb-3 last:mb-0",
-              variant === "subtle" && "border-b border-neutral-200 rounded-none mb-0"
-            )}
-          >
-            {/* ── Trigger ──────────────────────────────────────────── */}
-            <button
-              type="button"
-              id={triggerId}
-              onClick={() => toggle(i)}
-              aria-expanded={isOpen}
-              aria-controls={panelId}
-              className={cn(
-                "w-full flex items-center justify-between gap-4 px-5 py-4",
-                "font-heading font-bold text-left transition-colors duration-150",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset",
-                // Bold variant: primary-blue header (Figma accordion primitive)
-                variant === "bold" && [
-                  "bg-primary text-white rounded-btn",
-                  isOpen && "rounded-b-none",
-                ],
-                // Subtle variant: no fill
-                variant === "subtle" && [
-                  "bg-transparent text-neutral-900 py-5 px-0",
-                ]
-              )}
-            >
-              <span className="text-base md:text-lg leading-snug">
-                {item.question}
-              </span>
-              <ChevronDown
-                size={20}
-                aria-hidden="true"
-                className={cn(
-                  "shrink-0 transition-transform duration-300",
-                  isOpen && "rotate-180",
-                  variant === "bold"   && "text-white",
-                  variant === "subtle" && "text-primary"
-                )}
-              />
-            </button>
-
-            {/* ── Content — grid-rows animation, no height ceiling ──────
-                grid-rows-[1fr]/[0fr] animates to the content's natural height,
-                so there is no max-height to outgrow. `invisible` is what keeps
-                collapsed content out of the tab order if an answer ever gains a
-                link — the exact bug that hit the mobile nav drawer. */}
-            <div
-              id={panelId}
-              role="region"
-              aria-labelledby={triggerId}
-              className={cn(
-                "grid overflow-hidden",
-                "transition-[grid-template-rows,opacity,visibility] duration-300 ease-in-out",
-                isOpen
-                  ? "grid-rows-[1fr] opacity-100 visible"
-                  : "grid-rows-[0fr] opacity-0 invisible"
-              )}
-            >
-              <div
-                className={cn(
-                  "min-h-0 font-body leading-relaxed text-base",
-                  variant === "bold"   && "bg-white text-neutral-700 px-5 py-4 rounded-b-btn border border-t-0 border-primary/20",
-                  variant === "subtle" && "text-neutral-700 pb-5 px-0"
-                )}
-              >
-                {item.answer}
-              </div>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
+    <AccordionPrimitive.Item
+      data-slot="accordion-item"
+      className={cn(
+        "rounded-base overflow-hidden border-2 border-black shadow-shadow mb-4 last:mb-0",
+        className,
+      )}
+      {...props}
+    />
+  )
 }
+
+function AccordionTrigger({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
+  return (
+    <AccordionPrimitive.Header className="flex">
+      <AccordionPrimitive.Trigger
+        data-slot="accordion-trigger"
+        className={cn(
+          "flex flex-1 items-center justify-between gap-4 text-left text-base md:text-lg text-white border-black focus:outline-none focus-visible:ring-[3px] focus-visible:ring-primary-dark focus-visible:ring-inset bg-primary hover:bg-primary-dark p-4 font-heading font-bold transition-all [&[data-state=open]>svg]:rotate-180 data-[state=open]:rounded-b-none data-[state=open]:border-b-2 disabled:pointer-events-none disabled:opacity-50",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+        <ChevronDown className="pointer-events-none size-5 shrink-0 transition-transform duration-200" />
+      </AccordionPrimitive.Trigger>
+    </AccordionPrimitive.Header>
+  )
+}
+
+function AccordionContent({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Content>) {
+  return (
+    <AccordionPrimitive.Content
+      data-slot="accordion-content"
+      forceMount
+      className={cn(
+        "grid overflow-hidden rounded-b-base bg-white text-neutral-700 text-base font-body leading-relaxed",
+        "transition-[grid-template-rows,opacity,visibility] duration-200 ease-out",
+        "data-[state=open]:grid-rows-[1fr] data-[state=open]:opacity-100 data-[state=open]:visible",
+        "data-[state=closed]:grid-rows-[0fr] data-[state=closed]:opacity-0 data-[state=closed]:invisible",
+      )}
+      {...props}
+    >
+      {/* Two wrappers, both load-bearing. The grid child must carry no padding
+          of its own — `min-h-0` lets its content shrink to zero but does
+          nothing about padding, so p-4 here would pin every collapsed row
+          open at 32px. The padding lives on the inner element. */}
+      <div className="min-h-0 overflow-hidden">
+        <div className={cn("p-4", className)}>{children}</div>
+      </div>
+    </AccordionPrimitive.Content>
+  )
+}
+
+AccordionContent.displayName = AccordionPrimitive.Content.displayName
+
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }

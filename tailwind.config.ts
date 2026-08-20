@@ -84,6 +84,8 @@ const config: Config = {
         yellow:        "#F8F5E8",   // = secondary.DEFAULT
         coral:         "#E86048",   // event card thumbnails
         "blue-flower": "#4A8FD5",   // decorative accents
+        mint:          "#CDEAC0",   // "Our Values" card — green
+        blush:         "#FBEFEA",   // "Our Values" card — pink
 
         // Flat legacy aliases kept so existing class names still compile
         "tertiary-dark":  "#122849",
@@ -111,6 +113,9 @@ const config: Config = {
         card: "12px",
         btn:  "8px",
         pill: "9999px",
+        // neobrutalism.dev's --radius-base, used by components taken from that
+        // registry. Set to 0 to square them off like the team/value cards.
+        base: "5px",
       },
 
       // ─── Box Shadows ──────────────────────────────────────────────────────
@@ -121,6 +126,8 @@ const config: Config = {
         // Hard (no-blur) drop shadows for button hover — neo-brutalist style
         "btn-hard":       "4px 4px 0px #122849",
         "btn-hard-danger":"4px 4px 0px #991B1B",
+        // neobrutalism.dev's --shadow, on the same 4px step the cards use.
+        shadow:           "4px 4px 0px 0px rgba(0,0,0,1)",
       },
 
       // ─── Keyframes & Animations ───────────────────────────────────────────
@@ -145,6 +152,14 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height, 100%)", opacity: "1" },
           to:   { height: "0px", opacity: "0" },
         },
+        // Gentle float for the hero stickers, so they read as hovering above
+        // the photo rather than pasted onto it. Translate only — the stickers
+        // carry their own `rotate-*` class, and a transform in the keyframe
+        // would overwrite it, so the rotation lives on a parent wrapper.
+        bob: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%":      { transform: "translateY(-10px)" },
+        },
       },
       animation: {
         "fade-up":        "fade-up 0.5s ease-out forwards",
@@ -152,6 +167,7 @@ const config: Config = {
         "popup-in":       "popup-in 0.25s ease-out forwards",
         "accordion-down": "accordion-down 0.22s ease-out",
         "accordion-up":   "accordion-up 0.22s ease-out",
+        bob:              "bob 4s ease-in-out infinite",
       },
     },
   },

@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
 import { getMarkdownFile, getTeamMembers, getTestimonials } from "@/lib/markdown";
 import Image from "next/image";
-import {
-  CheckCircle2,
-  Shield,
-  Target,
-  Users,
-} from "lucide-react";
 import Button from "@/components/ui/Button";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Avatar from "@/components/ui/Avatar";
-import Accordion from "@/components/ui/Accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/Accordion";
 import JsonLd from "@/components/seo/JsonLd";
 import { defaultOgImages } from "@/lib/siteConfig";
 import { faqSchema } from "@/lib/schema";
@@ -54,7 +53,13 @@ export default async function AboutPage() {
     missionImageAlt: string;
     missionHeadline: string;
     missionBody:     string;
-    values:          { text: string; style: string }[];
+    values: {
+      title:       string;
+      description: string;
+      image:       string;
+      imageAlt:    string;
+      style:       string;
+    }[];
     faqHeadline:     string;
     faqs:            { question: string; answer: string }[];
   };
@@ -62,20 +67,14 @@ export default async function AboutPage() {
   const testimonial1 = testimonials[0] ?? null;
   const testimonial2 = testimonials[1] ?? null;
 
-  // Map value card style names → Tailwind classes (Figma value cards)
+  // Map value card style names → card background. Each card also carries the
+  // black border and hard offset shadow used by the team and platform cards.
   const valueCardStyles: Record<string, string> = {
-    yellow:  "bg-secondary        border border-secondary-dark/30",
-    green:   "bg-success-subtle   border border-success/20",
-    outline: "bg-white            border-2 border-neutral-200",
+    cream: "bg-yellow",
+    blue:  "bg-sky",
+    green: "bg-mint",
+    pink:  "bg-blush",
   };
-
-  // Icon paired to each value by index (Lucide icons)
-  const valueIcons = [
-    <Users key="users"         size={22} className="text-foreground" aria-hidden="true" />,
-    <Shield key="shield"       size={22} className="text-foreground" aria-hidden="true" />,
-    <Target key="target"       size={22} className="text-foreground" aria-hidden="true" />,
-    <CheckCircle2 key="check"  size={22} className="text-success"    aria-hidden="true" />,
-  ];
 
   return (
     <>
@@ -154,22 +153,41 @@ export default async function AboutPage() {
       {/* ── Testimonial 2 ─────────────────────────────────────────── */}
       {testimonial2 && <TestimonialBlock testimonial={testimonial2} bgVariant="sky" />}
 
-      {/* ── Our Values ────────────────────────────────────────────── */}
-      <section className="bg-navy section-pad">
+      {/* ── Our Values ── photo-and-text cards on a gridded blue field ── */}
+      <section className="bg-light-blue grid-bg section-pad">
         <div className="container-content">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-white uppercase tracking-widest text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground uppercase tracking-wide mb-10">
             Our Values
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {a.values?.map((v, i) => (
               <div
                 key={i}
-                className={`rounded-card p-8 flex items-start gap-4 ${valueCardStyles[v.style] ?? "bg-white border border-neutral-200"}`}
+                className={`border-2 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-5 flex flex-col sm:flex-row gap-5 ${
+                  valueCardStyles[v.style] ?? "bg-white"
+                }`}
               >
-                <span className="mt-0.5 shrink-0">{valueIcons[i % valueIcons.length]}</span>
-                <p className="font-body text-lg text-foreground leading-relaxed">
-                  {v.text}
-                </p>
+                {/* Decorative: the value's own heading carries the meaning. */}
+                <div className="relative w-full sm:w-40 lg:w-44 aspect-square shrink-0 overflow-hidden bg-white/40">
+                  {v.image && (
+                    <Image
+                      src={v.image}
+                      alt=""
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 640px) 100vw, 176px"
+                    />
+                  )}
+                </div>
+
+                <div className="flex-1 sm:py-2">
+                  <h3 className="font-heading font-bold text-lg lg:text-xl text-foreground leading-snug mb-3">
+                    {v.title}
+                  </h3>
+                  <p className="font-body text-sm text-neutral leading-relaxed">
+                    {v.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -180,7 +198,7 @@ export default async function AboutPage() {
       <section className="bg-cream section-pad">
         <div className="container-content">
           <SectionHeader title="Our Team" className="mb-10" />
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto">
             {teamMembers.map((member) => (
               <article
                 key={member.slug}
@@ -197,7 +215,7 @@ export default async function AboutPage() {
                         alt=""
                         fill
                         className="object-cover"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 500px"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />
                     ) : (
                       <Avatar name={member.name} size="xl" />
@@ -223,20 +241,24 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* ── FAQ ── Figma Accordion (blue header + ChevronDown) ────── */}
+      {/* ── FAQ ── neobrutalism accordion on Radix primitives ────── */}
       <section className="bg-neutral-100 section-pad">
         <div className="container-content max-w-3xl mx-auto">
           <SectionHeader title={a.faqHeadline} className="mb-10" />
           {a.faqs && (
             <>
-              {/* Answers are present in the SSR HTML (the Accordion collapses
-                  with CSS, it doesn't conditionally render), so this markup
-                  matches what crawlers actually see. */}
+              {/* Every answer is in the SSR HTML — AccordionContent is
+                  forceMount'ed for exactly this reason — so the markup below
+                  describes content that is genuinely on the page. */}
               <JsonLd data={faqSchema(a.faqs)} />
-              <Accordion
-                items={a.faqs}
-                variant="bold"
-              />
+              <Accordion type="single" collapsible className="w-full">
+                {a.faqs.map((faq, i) => (
+                  <AccordionItem key={i} value={`faq-${i}`}>
+                    <AccordionTrigger>{faq.question}</AccordionTrigger>
+                    <AccordionContent>{faq.answer}</AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </>
           )}
         </div>

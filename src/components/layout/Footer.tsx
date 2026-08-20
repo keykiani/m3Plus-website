@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Linkedin } from "lucide-react";
 import M3Logo from "@/components/ui/M3Logo";
-import ContactForm from "@/components/forms/ContactForm";
 import { siteConfig, navLinks } from "@/lib/siteConfig";
 
 export default function Footer() {
@@ -11,8 +10,9 @@ export default function Footer() {
     <footer className="bg-cream border-t border-neutral-200 mt-auto">
       {/* ── Contact Section ─────────────────────────────────────────── */}
       <div className="container-content py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* Left — prompt */}
+        {/* Single column since the contact form was removed — a two-column grid
+            would leave an empty half. */}
+        <div className="max-w-2xl">
           <div>
             <p className="text-sm font-heading font-bold tracking-widest uppercase text-primary-dark mb-3">
               Get in Touch
@@ -20,8 +20,17 @@ export default function Footer() {
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-neutral-900 leading-tight mb-4">
               Looking for another way to connect?
             </h2>
+            {/* Copy points at email and social now that there is no form here
+                to "send a message" through. */}
             <p className="text-neutral-700 font-body text-lg mb-6">
-              Send us a message and we&apos;ll get back to you as soon as possible.
+              Email us at{" "}
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="text-primary-dark underline underline-offset-2 hover:text-primary transition-colors"
+              >
+                {siteConfig.email}
+              </a>
+              , or find us on LinkedIn and Slack.
             </p>
 
             {/* Social Links */}
@@ -55,9 +64,6 @@ export default function Footer() {
               )}
             </div>
           </div>
-
-          {/* Right — Contact Form */}
-          <ContactForm />
         </div>
       </div>
 
