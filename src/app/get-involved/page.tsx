@@ -79,6 +79,17 @@ export default async function GetInvolvedPage() {
           aria-hidden="true"
           className="hidden lg:block absolute -top-10 -right-32 w-96 h-96 opacity-50 pointer-events-none select-none"
         />
+        {/* Star sticker. The updated art is the existing star plus the hard
+            offset shadow the cards use, so that comes from a CSS drop-shadow
+            rather than a second binary — the filter follows the star's alpha
+            silhouette exactly, and there is one asset to swap, not two. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/Star.png"
+          alt=""
+          aria-hidden="true"
+          className="absolute bottom-28 left-6 lg:bottom-32 lg:left-24 w-16 h-16 lg:w-24 lg:h-24 -rotate-12 pointer-events-none select-none z-20 [filter:drop-shadow(5px_5px_0px_rgb(0_0_0))]"
+        />
         <div className="container-content max-w-3xl mx-auto relative z-10">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-neutral-900 leading-tight mb-4 text-center">
             {p.heroHeadline}
