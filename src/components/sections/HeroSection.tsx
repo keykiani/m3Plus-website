@@ -67,7 +67,7 @@ export default function HeroSection({
             {/* Anchor box — matches the polaroid's width so the stickers hug the
                 photo's corners. Anchoring them to the column instead lets them
                 drift away as the column grows wider than the max-w-sm photo. */}
-            <div className="relative w-full max-w-sm">
+            <div className="relative w-full max-w-xl">
             {/* Polaroid frame — thick white border + soft shadow + slight tilt */}
             <div className="relative z-10 w-full rotate-1 bg-white p-4 shadow-[0px_12px_16px_0px_rgba(10,13,18,0.08),0px_4px_6px_0px_rgba(10,13,18,0.03)]">
               <div className="relative aspect-[4/3] overflow-hidden">
