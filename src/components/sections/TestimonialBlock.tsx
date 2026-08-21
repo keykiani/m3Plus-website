@@ -35,9 +35,14 @@ export default function TestimonialBlock({
       className={`${bg} section-pad`}
       aria-label={`Community testimonial from ${testimonial.author}`}
     >
-      <div className="container-content max-w-4xl mx-auto">
+      {/* The max-width sits on an inner element, not alongside
+          `container-content`. Both compile to a max-width rule of equal
+          specificity, and `.container-content` is emitted later in the
+          stylesheet, so it wins — `container-content max-w-4xl` silently
+          renders at the full 1280px. */}
+      <div className="container-content">
         <div
-          className={`flex flex-col md:flex-row items-center gap-8 md:gap-12 ${
+          className={`mx-auto max-w-4xl flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 ${
             reversed ? "md:flex-row-reverse" : ""
           }`}
         >
@@ -63,7 +68,11 @@ export default function TestimonialBlock({
           </div>
 
           {/* ── Quote ─────────────────────────────────────────────────── */}
-          <div className="flex-1">
+          {/* Not `flex-1`: the blockquote is capped at 46ch, so a growing
+              column just padded empty space onto its right and pushed the
+              whole pairing off-centre. Sizing to content lets justify-center
+              actually centre it. */}
+          <div className="min-w-0">
             <span className="quote-mark text-primary block mb-2" aria-hidden="true">
               &ldquo;
             </span>
